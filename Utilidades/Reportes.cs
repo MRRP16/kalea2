@@ -234,14 +234,18 @@ namespace kalea2.Utilidades
             List<ReportesEventosEntregas> listadoDeEventos = new List<ReportesEventosEntregas>();
             try
             {
-                string query = string.Format(@"SELECT T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.DESCRIPCION FROM Naf47.Pvlineas_movimiento T0 
-                    INNER JOIN naf47.arinda T3 ON T0.NO_ARTI = T3.NO_ARTI 
+                string query = string.Format(@"SELECT T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.DESCRIPCION,T5.COMENTARIOSVENTAS
+                    FROM Naf47.Pvlineas_movimiento T0 
+                    INNER JOIN naf47.arinda T3 ON T0.NO_ARTI = T3.NO_ARTI
+                    LEFT JOIN T_DET_ENTREGAS T4 ON T4.CODIGOEVENTO = T0.NO_TRANSA_MOV
+                    INNER JOIN T_ENC_ENTREGAS T5 ON T5.ID = T4.IDENTREGA
                     WHERE T0.NO_TRANSA_MOV IN (
                     SELECT  T1.CODIGOEVENTO  FROM t_det_entregas T1 INNER JOIN t_enc_entregas T2 ON T1.identrega = T2.ID 
                     WHERE T2.FechaInicio >= to_timestamp('{0} 00:00:00', 'dd/MM/yy hh24:mi:ss') 
                     AND T2.FechaInicio <= to_timestamp('{0} 23:59:59', 'dd/MM/yy hh24:mi:ss')
                     GROUP BY T1.CODIGOEVENTO)
                     AND T0.BODEGA = '{1}'
+                    GROUP BY T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.DESCRIPCION,T5.COMENTARIOSVENTAS
                     order by t0.NO_TRANSA_MOV ASC;", fecha, bodegaId);
 
                 var resultado = dB.ConsultarDB(query, "T_EVENTOS");
@@ -279,6 +283,17 @@ namespace kalea2.Utilidades
             ReportesEventosEntregas reporte = new ReportesEventosEntregas();
             List<ProductosEventosEntregas> listadoProductos = new List<ProductosEventosEntregas>();
             reporte.Evento = item["NO_TRANSA_MOV"].ToString();
+            reporte.Observaciones = item["COMENTARIOSVENTAS"].ToString();
+            reporte.Vendedor = null;
+
+
+            string query = string.Format(@"SELECT NOMBRE_VENDEDOR FROM NAF47.V_EVENTOS_PENDIENTES WHERE EVENTO = '{0}';", reporte.Evento);
+            var resultado = dB.ConsultarDB(query, "T_EVENTOS");
+            foreach (DataRow item2 in resultado.Tables[0].Rows)
+            {
+                reporte.Vendedor = item2["NOMBRE_VENDEDOR"].ToString();
+            }
+
 
             ProductosEventosEntregas producto = new ProductosEventosEntregas
             {

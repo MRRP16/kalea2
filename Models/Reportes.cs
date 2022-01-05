@@ -36,6 +36,8 @@ namespace kalea2.Models
     public class ReportesEventosEntregas
     {
         public string Evento { get; set; }
+        public string Vendedor { get; set; }
+        public string Observaciones { get; set; }
         public List<ProductosEventosEntregas> Productos { get; set; }
     }
     public class ProductosEventosEntregas

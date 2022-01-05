@@ -1,8 +1,10 @@
 ﻿using kalea2.Models;
 using kalea2.Utilidades;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -55,8 +57,133 @@ namespace kalea2.Controllers
                 }
             }
 
-            byte[] respuesta = pdf.CrearReporteDeEntrega(listado: listado, fechaDeEntrega: date.ToString("dd/MM/yyyy"), NombreBodega: nombreBodega);
-            return File(respuesta, "application/pdf", "reporteDeEntregas.pdf");
+            //byte[] respuesta = pdf.CrearReporteDeEntrega(listado: listado, fechaDeEntrega: date.ToString("dd/MM/yyyy"), NombreBodega: nombreBodega);
+            //return File(respuesta, "application/pdf", "reporteDeEntregas.pdf");
+
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.Commercial;
+
+            using (ExcelPackage excel = new ExcelPackage())
+            {
+                string nombreHoja = "Reporte de Bodega";
+                excel.Workbook.Worksheets.Add(nombreHoja);
+
+                var headerRow = new List<string[]>() { new string[] {
+                    "Pendientes: " + nombreBodega ,
+                    null,
+                    null,
+                    "Emisión: " + fecha,
+                    null,
+                    null,
+                    "Reporte: " + fecha,
+                    null,
+                } };
+
+                string headerRange = "A1:" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + "1";
+                var worksheet = excel.Workbook.Worksheets[nombreHoja];
+                worksheet.Cells[headerRange].Style.Font.Bold = true;
+                worksheet.Cells[headerRange].LoadFromArrays(headerRow);
+
+                int SiguienteFila = 2;
+
+                var RowInformacion = new List<string[]>()
+                    { new string[]{
+                        " ",
+                        " ",
+                        " ",
+                        " ",
+                        " ",
+                        " ",
+                        " ",
+                        " ",
+                    } };
+                worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
+                SiguienteFila++;
+
+                RowInformacion = new List<string[]>()
+                    { new string[]{
+                        "Preparó: ",
+                        " ",
+                        " ",
+                        " ",
+                        "Entrego: ",
+                        " ",
+                        " ",
+                        " ",
+                    } };
+                worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
+                SiguienteFila++;
+
+                RowInformacion = new List<string[]>()
+                    { new string[]{
+                        " ",
+                        " ",
+                        " ",
+                        " ",
+                        " ",
+                        " ",
+                        " ",
+                        " ",
+                    } };
+                worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
+                SiguienteFila++;
+
+                RowInformacion = new List<string[]>()
+                    { new string[]{
+                        "Evento",
+                        "Vendedor",
+                        "Observaciones",
+                        "Inm",
+                        "Código",
+                        "Descripción",
+                        "Bod",
+                        "Cant",
+                    } };
+                worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
+                SiguienteFila++;
+
+
+                for (int i = 0; i < listado.Count(); i++)
+                {
+                    RowInformacion = new List<string[]>()
+                    { new string[]{
+                        listado[i].Evento,
+                        listado[i].Vendedor,
+                        listado[i].Observaciones,
+                    } };
+                    worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
+                    SiguienteFila++;
+
+                    for (int j = 0; j < listado[i].Productos.Count; j++)
+                    {
+                        RowInformacion = new List<string[]>()
+                        { new string[]{
+                            "",
+                            "",
+                            "",
+                            //inmediatas
+                            "",
+                            listado[i].Productos[j].Sku,
+                            listado[i].Productos[j].Descripcion,
+                            listado[i].Productos[j].Bodega,
+                            listado[i].Productos[j].Cantidad,
+                        } };
+                        worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
+                        SiguienteFila++;
+                    }
+                }
+                NumberFormatInfo nfi = new CultureInfo("es-GT", false).NumberFormat;
+
+                using (MemoryStream stream = new MemoryStream())
+                {
+                    excel.SaveAs(stream);
+                    var content = stream.ToArray();
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ReporteBodega.xlsx");
+
+                    //archivo.SaveAs(stream);
+                    //return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Grid.xlsx");
+                }
+                //}
+            }
         }
 
 

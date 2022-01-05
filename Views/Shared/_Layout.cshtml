@@ -1,0 +1,303 @@
+﻿    <!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <!-- Page Title -->
+    <title>Programacion Digital - Kalea</title>
+
+    <!-- Meta Data -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/Content/assets/img/favicon.png">
+
+    <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&display=swap" rel="stylesheet">
+
+    <!-- ======= BEGIN GLOBAL MANDATORY STYLES ======= -->
+    <link rel="stylesheet" href="~/Content/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/assets/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="~/Content/assets/plugins/perfect-scrollbar/perfect-scrollbar.min.css">
+    <!-- ======= END BEGIN GLOBAL MANDATORY STYLES ======= -->
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <link rel="stylesheet" href="~/Content/assets/plugins/apex/apexcharts.css">
+    <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <!-- ======= MAIN STYLES ======= -->
+    <link rel="stylesheet" href="~/Content/assets/css/style.css">
+
+    <!-- -------------- FooTable CSS -------------- -->
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/footable/css/footable.core.min.css">
+
+    <!-- ======= END MAIN STYLES ======= -->
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <link rel="stylesheet" href="~/Content/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css">
+    <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <link rel="stylesheet" href="~/Content/assets/fonts/pe-icon-7-stroke/pe-icon-7-stroke.css">
+    <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <link rel="stylesheet" href="~/Content/assets/plugins/datepicker/datepicker.min.css">
+    <link rel="stylesheet" href="~/Content/assets/plugins/timepicker/jquery.timepicker.min.css">
+    <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <!-- ======= BEGIN GOOGLE MAPS ======= -->
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <!-- ======= END GOOGLE MAPS ======= -->
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <link rel="stylesheet" href="~/Content/assets/plugins/sweetalert2/sweetalert2.min.css">
+    <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <link rel="stylesheet" href="~/Content/assets/fonts/elegant_icons/elegant-icons.css">
+    <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+    <link rel="stylesheet" href="~/Content/assets/fonts/et-lineicon/et-lineicons.css">
+    <!-- ======= END BEGIN PAGE LEVEL PLUGINS STYLES ======= -->
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+
+
+</head>
+<body class="sidebar-folded">
+
+
+    <!-- Offcanval Overlay -->
+    <div class="offcanvas-overlay"></div>
+    <!-- Offcanval Overlay -->
+    <!-- Wrapper -->
+    <div class="wrapper">
+
+        <header class="header white-bg fixed-top d-flex align-content-center flex-wrap">
+            <!-- Logo -->
+            <div class="logo">
+                <a href="@Url.Action("Index","Home")" class="default-logo"><img src="~/Content/assets/img/LOGOHOMEPRINCIPAL2.png" alt=""></a>
+                <a href="@Url.Action("Index","Home")" class="mobile-logo"><img src="~/Content/assets/img/LOGOHOMEPRINCIPAL2.png" alt=""></a>
+            </div>
+            <!-- End Logo -->
+            <!-- Main Header -->
+            <div class="main-header">
+                <div class="container-fluid">
+                    <div class="row justify-content-between">
+                        <div class="col-3 col-lg-1 col-xl-4">
+                            <!-- Header Left -->
+                            <div class="main-header-left h-100 d-flex align-items-center">
+                                <!-- Main Header User -->
+                                <div class="main-header-user">
+                                    <a href="#" class="d-flex align-items-center" data-toggle="dropdown">
+                                        <div class="menu-icon">
+                                            <span></span>
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+
+                                        <div class="user-profile d-xl-flex align-items-center d-none">
+                                            <!-- User Avatar -->
+                                            <div class="user-avatar">
+                                                <img src="~/Content/assets/img/avatar/usericon.png" alt="">
+                                            </div>
+                                            <!-- End User Avatar -->
+                                            <!-- User Info -->
+                                            <div class="user-info">
+                                                <h4 class="user-name">@Session["UserName"]</h4>
+                                                @*<p class="user-email">abrilakh@gmail.com</p>*@
+                                            </div>
+                                            <!-- End User Info -->
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        @*<a href="#">My Profile</a>
+                                            <a href="#">task</a>
+                                            <a href="#">Settings</a>*@
+                                        <a href="@Url.Action("Logout","Login")">Log Out</a>
+                                    </div>
+                                </div>
+                                <!-- End Main Header User -->
+                                <!-- Main Header Menu -->
+                                <div class="main-header-menu d-block d-lg-none">
+                                    <div class="header-toogle-menu">
+                                        <!-- <i class="icofont-navigation-menu"></i> -->
+                                        <img src="~/Content/assets/img/menu.png" alt="">
+                                    </div>
+                                </div>
+                                <!-- End Main Header Menu -->
+                            </div>
+                            <!-- End Header Left -->
+                        </div>
+                        <div class="col-9 col-lg-11 col-xl-8">
+                            <!-- Header Right -->
+                            <div class="main-header-right d-flex justify-content-end">
+                                <ul class="nav">
+
+                                    <li class="d-none d-lg-flex">
+                                        <!-- Main Header Time -->
+                                        <div class="main-header-date-time text-right">
+                                            <h3 class="time">
+                                                <span id="hours"></span>
+                                                <span id="point">:</span>
+                                                <span id="min"></span>
+                                            </h3>
+                                            <span class="date"><span id="date"></span></span>
+                                        </div>
+                                        <!-- End Main Header Time -->
+                                    </li>
+
+                                    <li>
+                                        <!-- Main Header Messages -->
+                                        <div class="main-header-message">
+                                            <a href="#" class="header-icon" data-toggle="dropdown">
+                                                <img src="~/Content/assets/img/svg/message-icon.svg" alt="" class="svg">
+                                            </a>
+
+                                        </div>
+                                        <!-- End Main Header Messages -->
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <!-- End Header Right -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Main Header -->
+        </header>
+        <!-- End Header -->
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+            <!-- Sidebar -->
+            <nav class="sidebar" data-trigger="scrollbar">
+                <!-- Sidebar Header -->
+                <div class="sidebar-header d-none d-lg-block">
+                    <!-- Sidebar Toggle Pin Button -->
+                    <div class="sidebar-toogle-pin">
+                        <i class="icofont-tack-pin"></i>
+                    </div>
+                    <!-- End Sidebar Toggle Pin Button -->
+                </div>
+                <!-- End Sidebar Header -->
+                <!-- Sidebar Body -->
+                <div class="sidebar-body">
+                    <!-- Nav -->
+                    <ul class="nav">
+                        <li class="nav-category">Configuraciones</li>
+                        <li class="active">
+                            @Html.ActionLink("Bloqueo de rutas", "Index", "BloqueoRutas")
+                            <i class="et-lock"></i>
+                        </li>
+                        <li class="active">
+                            @Html.ActionLink("Parámetros Generales", "Index", "ParametrosGenerales")
+                            <i class="pe-7s-tools"></i>
+                        </li>
+                        <li class="active">
+                            @Html.ActionLink("Roles", "Index", "Roles")
+                            <i class="pe-7s-id"></i>
+                        </li>
+                        <li class="active">
+                            @Html.ActionLink("Tipos de instalación", "Index", "TiposDeInstalacion")
+                            <i class="pe-7s-note2"></i>
+                        </li>
+                        <li class="active">
+                            @Html.ActionLink("Usuarios", "Index", "Usuarios")
+                            <i class="pe-7s-users"></i>
+                        </li>
+                        <li class="active">
+                            @Html.ActionLink("Vehículos", "Index", "Vehiculos")
+                            <i class="pe-7s-car"></i>
+                        </li>
+                    </ul>
+                    <ul class="nav">
+                        <li class="nav-category">Programación de eventos</li>
+                        <li class="active">
+                            @Html.ActionLink("Entregas", "Index", "CasosEntregas")
+                            <i class="icofont-data"></i>
+                        </li>
+                        <li class="active">
+                            @Html.ActionLink("Reservación de espacio", "Index", "Reservas")
+                            <i class="icofont-truck-alt"></i>
+                        </li>
+                    </ul>
+                    <ul class="nav">
+                        <li class="nav-category">Reportes</li>
+                        <li class="active">
+                            @Html.ActionLink("Reporte de entregas", "Index", "ReporteDeEntregas")
+                            <i class="icofont-data"></i>
+                        </li>
+                        <li class="active">
+                            @Html.ActionLink("Reporte de bodega", "Index", "ReporteDeBodega")
+                            <i class="icofont-truck-alt"></i>
+                        </li>
+                        <li class="active">
+                            @Html.ActionLink("Reporte de programacion", "Index", "ReporteDeProgramacion")
+                            <i class="icofont-truck-alt"></i>
+                        </li>
+                    </ul>
+                    <!-- End Nav -->
+                </div>
+                <!-- End Sidebar Body -->
+            </nav>
+            <!-- End Sidebar -->
+            <!-- Main Content -->
+            @*<div class="main-content">*@
+            <div class="container-fluid">
+                <div class="main-wrapper">
+                    @RenderBody()
+                </div>
+            </div>
+            @*</div>*@
+            <!-- End Main Content -->
+        </div>
+        <!-- End Main Wrapper -->
+        <!-- Footer -->
+        <footer class="footer">
+            Kalea © 2021 K Technology Solutions -<a>KTS</a>
+        </footer>
+        <!-- End Footer -->
+    </div>
+    <!-- End wrapper -->
+    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+    <script src="~/Content/assets/js/jquery.min.js"></script>
+    <script src="~/Content/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="~/Content/assets/js/script.js"></script>
+    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="~/Content/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/Content/assets/js/custom.project.management.js"></script>
+    <script src="~/Content/assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+    <script src="~/Content/assets/plugins/bootstrap-datepicker/custom-datepicker.js"></script>
+    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="~/Content/assets/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/Content/assets/plugins/sweetalert2/sweetalerts.js"></script>
+    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+
+
+    <script src="~/Content/assets/js/MapaInput.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnIlcIlvpnZ6LplbZ7S-quFDZgZMh6Eig&callback=initAutocomplete&libraries=places&v=weekly&channel=2" async></script>
+
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="~/Content/assets/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/Content/assets/plugins/sweetalert2/sweetalerts.js"></script>
+    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="~/Content/assets/plugins/toastr/toastr.min.js"></script>
+    <script src="~/Content/assets/plugins/toastr/toastr.js"></script>
+    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+
+    <!-- -------------- FooTable JS -------------- -->
+    <script src="~/Content/assets/footable/js/footable.all.min.js"></script>
+    <script src="~/Content/assets/footable/js/footable.filter.min.js"></script>
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+
+</html>

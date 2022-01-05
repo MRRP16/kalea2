@@ -1,0 +1,99 @@
+﻿@model kalea2.Models.Roles
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Base Horizontal Form With Icons -->
+                <div class="form-element py-30 multiple-column">
+                    <h4 class="font-20 mb-20">Editar rol de usuario</h4>
+                    <!-- Form -->
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <!-- Form Group -->
+                                <div class="form-group">
+
+                                    @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "font-14 bold mb-2" })
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "theme-input-style", @placeholder = "Ingrese una descripción del rol" } })
+                                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <div class="card-body pt-30">
+                                            <h4 class="font-20 ">Listado de permisos</h4>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <!-- Invoice List Table -->
+                                            <table class="text-nowrap table-bordered dh-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Permiso</th>
+                                                        <th>Crear</th>
+                                                        <th>Visualizar</th>
+                                                        <th>Editar</th>
+                                                        <th>Eliminar</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (int i = 0; i < Model.rol_Permiso.Count; i++)
+                                                    {
+                                                        <tr>
+                                                            <td>
+                                                                @Html.DisplayFor(modelItem => Model.rol_Permiso[i].Descripcion_Permiso)
+                                                                @Html.HiddenFor(modelItem => Model.rol_Permiso[i].Descripcion_Permiso)
+                                                                @Html.HiddenFor(modelItem => Model.rol_Permiso[i].Codigo_Permiso)
+                                                            </td>
+                                                            <td class="text-center chk">
+                                                                @Html.CheckBoxFor(modelItem => Model.rol_Permiso[i].Crear)
+
+
+                                                            <td class="text-center chk">
+                                                                @Html.CheckBoxFor(modelItem => Model.rol_Permiso[i].Visualizar)
+
+                                                            </td>
+                                                            <td class="text-center chk">
+                                                                @Html.CheckBoxFor(modelItem => Model.rol_Permiso[i].Editar)
+
+                                                            </td>
+                                                            <td class="text-center chk">
+                                                                @Html.CheckBoxFor(modelItem => Model.rol_Permiso[i].Eliminar, new { htmlAttributes = new { @class = "form-check-input" } })
+                                                            </td>
+                                                        </tr>
+                                                    }
+
+                                                </tbody>
+                                            </table>
+                                            <!-- End Invoice List Table -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Form Group -->
+
+                        </div>
+                        <div class="form-row">
+                            <div class="col-12 text-right">
+                                <button type="submit" class="btn long">Guardar</button>
+                            </div>
+                        </div>
+                        <!-- End Form Row -->
+                    }
+                </div>
+                <!-- Form Row -->
+                <!-- End Form -->
+            </div>
+            <!-- End Horizontal Form With Icons -->
+        </div>
+    </div>
+</div>
+<!-- End Main Content -->

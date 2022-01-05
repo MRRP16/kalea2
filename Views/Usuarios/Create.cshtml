@@ -1,0 +1,116 @@
+﻿@model kalea2.Models.Usuarios
+
+@if (ViewBag.Mensaje != null)
+{
+
+    <body onload="My_onLoad('@ViewBag.Mensaje')">
+    </body>
+}
+else if (ViewBag.Exitoso != null)
+{
+    <body onload="My_onLoad2('@ViewBag.Exitoso')">
+    </body>
+}
+
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Base Horizontal Form With Icons -->
+                <div class="form-element py-30 multiple-column">
+                    <h4 class="font-20 mb-20">Crear usuario</h4>
+                    <!-- Form -->
+                    <form action="Create" method="POST">
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <!-- Form Group -->
+                                <div class="form-group">
+
+                                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "font-14 bold mb-2" })
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "theme-input-style", @placeholder = "Ingrese un nombre para el usuario" } })
+                                        @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <!-- End Form Group -->
+                                <!-- Form Group -->
+                                <div class="form-group">
+
+                                    @Html.LabelFor(model => model.Apellido, htmlAttributes: new { @class = "font-14 bold mb-2" })
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.Apellido, new { htmlAttributes = new { @class = "theme-input-style", @placeholder = "Ingrese un apellido para el usuario" } })
+                                        @Html.ValidationMessageFor(model => model.Apellido, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <!-- End Form Group -->
+                                <!-- Form Group -->
+                                @*<div class="form-group">
+                                    @Html.LabelFor(model => model.NombreUsuario, htmlAttributes: new { @class = "font-14 bold mb-2" })
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.NombreUsuario, new { htmlAttributes = new { @class = "theme-input-style", @placeholder = "Ingrese un nombre de usuario" } })
+                                        @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>*@
+                                <!-- End Form Group -->
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NombreUsuario, htmlAttributes: new { @class = "mb-2 black bold d-block" })
+                                    <div class="col-md-12">
+                                        @Html.DropDownListFor(modelItem => modelItem.NombreUsuario, Model._Usuarios,
+                            "-- Seleccionar usuario de sistema --", new { @class = "theme-input-style" })
+                                        @Html.ValidationMessageFor(model => model.Rol, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                @*<div class="form-group">
+            @Html.LabelFor(model => model.Contrasenia, htmlAttributes: new { @class = "font-14 bold mb-2" })
+            <div class="col-md-12">
+                @Html.EditorFor(model => model.Contrasenia, new { htmlAttributes = new { @class = "theme-input-style", @id = "password1", @placeholder = "Ingrese Contraseña de usuario" } })
+                @Html.ValidationMessageFor(model => model.Contrasenia, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Rol, htmlAttributes: new { @class = "mb-2 black bold d-block" })
+                                    <div class="col-md-12">
+                                        @Html.DropDownListFor(modelItem => modelItem.Rol, Model.Roles,
+                            "-- Seleccionar rol para usuario --", new { @class = "theme-input-style" })
+                                        @Html.ValidationMessageFor(model => model.Rol, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Form Row -->
+                        <div class="form-row">
+                            <div class="col-12 text-right">
+                                <button type="submit" class="btn long">Guardar</button>
+                            </div>
+                        </div>
+                        <!-- End Form Row -->
+                    </form>
+                    <!-- End Form -->
+                </div>
+                <!-- End Horizontal Form With Icons -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Main Content -->
+
+@section Scripts {
+    <script type="text/javascript">
+        function My_onLoad(mensaje) {
+            Swal.fire({ title: "Error!", text: mensaje, type: "error", confirmButtonClass: "btn long", buttonsStyling: !1 });
+        }
+    </script>
+
+    <script type="text/javascript">
+        function My_onLoad2(mensaje) {
+            Swal.fire({ title: "Excelente!", text: mensaje, type: "success", confirmButtonClass: "btn long", buttonsStyling: !1 });
+        }
+    </script>
+
+}

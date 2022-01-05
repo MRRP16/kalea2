@@ -1,0 +1,137 @@
+﻿@model IEnumerable<kalea2.Models.Reserva>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.Mensaje != null)
+{
+
+    <body onload="My_onLoad('@ViewBag.Mensaje')">
+    </body>
+}
+else if (ViewBag.Exitoso != null)
+{
+    <body onload="My_onLoad2('@ViewBag.Exitoso')">
+    </body>
+}
+
+
+
+<div class="main-content d-flex flex-column flex-md-row">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Card -->
+                <div class="card bg-transparent">
+                    <div class="card-body bg-white mb-30">
+                        <!-- Invoice Header -->
+                        <div class="invoice-header d-flex align-items-sm-center media flex-column flex-sm-row">
+                            <div class="invoice-header-left d-flex align-items-center position-relative">
+                                <div id="PlaceHolderHere"></div>
+                                @*<div class="">
+                    <a class="btn-circle" href="@Url.Action("Create","CasosEntregas")">
+                        <img src="~/Content/assets/img/svg/plus_white.svg" alt="" class="svg">
+                    </a>
+                </div>*@
+                                @*<div class="delete_mail">
+                    <a href="@Url.Action("Delete")"><img src="~/Content/assets/img/svg/delete.svg" alt="" class="svg"></a>
+                </div>*@
+                                <!-- End Delete Mail -->
+                                <!-- Dropdown Button -->
+                                <!-- End Dropdown Button -->
+                            </div>
+
+                            <div class="invoice-header-right d-flex align-items-center justify-content-end media-body mt-3 mt-sm-0">
+                                <!-- Search Form -->
+                                <form action="#" class="search-form">
+                                    <div class="theme-input-group">
+                                        <input id="fooFilter" name="fooFilter" type="text" class="theme-input-style" placeholder="Ingrese un criterio de filtro">
+
+                                        <button type="" >
+
+                                            <img src="~/Content/assets/img/svg/search-icon.svg" alt=""
+                                                 class="svg">
+                                        </button>
+                                    </div>
+                                </form>
+                                <!-- End Search Form -->
+                                <!-- Pagination -->
+                                <div class="pagination style--two d-flex flex-column align-items-center ml-3">
+                                    <ul class="list-inline d-inline-flex align-items-center">
+                                        <li>
+                                            <a href="#">
+                                                <img src="~/Content/assets/img/svg/left-angle.svg" alt="" class="svg">
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="current">
+                                                <img src="~/Content/assets/img/svg/right-angle.svg" alt="" class="svg">
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- End Pagination -->
+                            </div>
+                        </div>
+                        <!-- End Invoice Header -->
+                        @Html.Partial("Tabla")
+                    </div>
+
+                   
+
+                </div>
+                <!-- End Card -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        var PlaceHolderElement = $('#PlaceHolderHere')
+        $('button[data-toggle="ajax-modal"]').click(function (event) {
+            console.log("Entro");
+            var url = $(this).data('url');
+            var decodeurl = decodeURIComponent(url);
+            $.get(decodeurl).done(function (data) {
+                PlaceHolderElement.html(data);
+                PlaceHolderElement.find('.modal').modal('show');
+            })
+        })
+
+
+        PlaceHolderElement.on('click', '[data-save="modal"]', function (event) {
+            event.preventDefault();
+            var form = $(this).parents('.modal').find('form');
+            var actionUrl = form.attr('action');
+
+            var sendData = form.serialize();
+
+            console.log(actionUrl);
+            console.log(sendData);
+
+            $.post(actionUrl, sendData).done(function (data) {
+                PlaceHolderElement.find('.modal').modal('hide');
+                location.reload();
+            }).fail(function () {
+
+                alter("error");
+            })
+        })
+    })
+</script>
+
+<script type="text/javascript">
+    function My_onLoad(mensaje) {
+        Swal.fire({ title: "Error!", text: mensaje, type: "error", confirmButtonClass: "btn long", buttonsStyling: !1 });
+    }
+</script>
+
+<script type="text/javascript">
+    function My_onLoad2(mensaje) {
+        Swal.fire({ title: "Excelente!", text: mensaje, type: "success", confirmButtonClass: "btn long", buttonsStyling: !1 });
+    }
+</script>
+
+

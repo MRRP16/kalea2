@@ -1,0 +1,60 @@
+﻿@model kalea2.Models.ParametroGeneral
+
+<!-- Contact Add New PopUp -->
+<div id="addEmployee" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <!-- Modal Body -->
+            <div class="modal-body">
+                @using (Html.BeginForm())
+                 {
+                    <div class="media flex-column flex-sm-row">
+
+                        <div class="contact-account-setting media-body">
+
+                            <h4 class="mb-4">Parámetro general</h4>
+
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+
+                                <hr />
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.Codigo)
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "bold black mb-2" })
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "theme-input-style" } })
+                                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Valor, htmlAttributes: new { @class = "bold black mb-2" })
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.Valor, new { htmlAttributes = new { @class = "theme-input-style" } })
+                                        @Html.ValidationMessageFor(model => model.Valor, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" data-save="modal" class="btn mr-4">Guardar</button>
+                                    <button type="button" data-dismiss="modal" class="cancel font-14 bold">Cancelar</button>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                 }
+
+            </div>
+            <!-- End Modal Body -->
+        </div>
+    </div>
+</div>
+<!-- End Contact Add New PopUp -->@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}

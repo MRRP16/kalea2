@@ -1,0 +1,114 @@
+﻿@model IEnumerable<kalea2.Models.Usuarios>
+
+
+
+<div class="table-responsive">
+    <!-- Invoice List Table -->
+    <table class="invoice-list-table text-nowrap bg-white table footable" data-filter="#fooFilter">
+        <thead>
+            <tr>
+                <!--<th>-->
+                    <!-- Custom Checkbox -->
+                    <!--<label class="custom-checkbox">
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>-->
+                    <!-- End Custom Checkbox -->
+                <!--</th>-->
+                <th>Nombre<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                <th>Apellido<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                <th>Usuario<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>               
+                <th>Estado<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                  
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                        @Html.HiddenFor(modelItem => item.Codigo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Apellido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NombreUsuario)
+                    </td>                   
+                    <td>
+                        @switch (item.Estado)
+                        {
+                            case "A":
+                                <a class="status-btn completed" href="@Url.Action("Delete", new {id = item.Codigo})">
+                                    Activo
+                                    
+                                </a>
+                                @*<button type="button" class="status-btn completed">Activo</button>*@
+                                @Html.HiddenFor(modelItem => item.Estado)
+                                break;
+                            default:
+
+                                <a class="status-btn un_paid" href="@Url.Action("Delete", new {id = item.Codigo})">
+                                    Inactivo
+                                   
+                                </a>
+
+                                @*<button type="button" class="status-btn un_paid">Inactivo</button>*@
+                                @Html.HiddenFor(modelItem => item.Estado)
+                                break;
+                        }
+                    </td>
+                    <td>
+                        <a class="details-btn" href="@Url.Action("Edit", new {id = item.Codigo})">
+                            Editar
+                            <img src="~/Content/assets/img/svg/plus_white.svg" alt="" class="svg">
+                        </a>
+                        @*<button type="button" class="details-btn" data-toggle="ajax-modal" data-target="#addEmployee" data-url="@Url.Action($"Edit/{item.Codigo}")">
+
+                            </button>*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <!-- End Invoice List Table -->
+</div>
+<script>
+    $(function () {
+
+        var PlaceHolderElement = $('#PlaceHolderHere')
+        $('button[data-toggle="ajax-modal"]').click(function (event) {
+
+            var url = $(this).data('url');
+            var decodeurl = decodeURIComponent(url);
+            $.get(decodeurl).done(function (data) {
+                PlaceHolderElement.html(data);
+                PlaceHolderElement.find('.modal').modal('show');
+            })
+        })
+
+
+        PlaceHolderElement.on('click', '[data-save="modal"]', function (event) {
+            event.preventDefault();
+            var form = $(this).parents('.modal').find('form');
+            var actionUrl = form.attr('action');
+
+            var sendData = form.serialize();
+
+            console.log(actionUrl);
+            console.log(sendData);
+
+            $.post(actionUrl, sendData).done(function (data) {
+                PlaceHolderElement.find('.modal').modal('hide');
+                location.reload();
+            }).fail(function () {
+
+                alter("error");
+            })
+        })
+    })
+</script>
+
+

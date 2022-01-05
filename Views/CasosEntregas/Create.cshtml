@@ -1,0 +1,246 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-content d-flex flex-column flex-md-row">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                <!-- Invoice Top -->
+                <div class="invoice-pd c2-bg" data-bg-img="~/Content/assets/img/media/invoice-pattern.png">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <!-- Invoice Right -->
+                            <div class="invoice-right mt-5 mt-md-0">
+                                <h3 class="white font-20 mb-3">Entrega - Caso</h3>
+
+                                <ul class="status-list">
+                                    <li>
+                                        <span class="key font-14">Tipo de reserva:</span>
+                                        <span class="white bold font-17"></span>
+                                        <input type="text" class="theme-input-style style--four" value="Definitivo" readonly>
+                                    </li>
+                                    <li>
+                                        <span class="key font-14">Fecha entrega:</span>
+                                        <input type="text" class="theme-input-style style--four" value="">
+                                    </li>
+                                    <li>
+                                        <span class="key font-14">Hora inicio:</span>
+                                        <div class="dashboard-date style--three">
+                                            <input type="text" id="time-picker" placeholder="10:00:00 AM">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="key font-14">Hora armado:</span>
+                                        <div class="dashboard-date style--three">
+                                            <input type="text" id="time-picker" placeholder="10:15:00 AM">
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <span class="key font-14">Hora fin:</span>
+                                        <div class="dashboard-date style--three">
+                                            <input type="text" id="time-picker" placeholder="11:00:00 AM">
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <!-- End Invoice Right -->
+                        </div>
+                    </div>
+                </div>
+                <!-- End Invoice Top -->
+                <!-- Invois Wrapper -->
+                <div class="bg-white invoice-pd">
+                    <div class="row">
+                        <div class="col-xl-4 col-md-6">
+                            <!-- Invoice Form -->
+                            <div class="invoice edit invoice-form">
+                                <div class="invoice-title c4 bold font-14 mb-3">Datos de cliente</div>
+
+                                <ul class="list-invoice">
+                                    <li class="user">
+                                        <input type="text" class="theme-input-style style--three" value="">
+                                    </li>
+
+                                    <li class="location">
+                                        <input type="text" class="theme-input-style style--three" value="">
+                                    </li>
+
+                                    <li class="call">
+                                        <input type="number" class="theme-input-style style--three" value="">
+                                    </li>
+                                    <li class="mail">
+                                        <input type="email" class="theme-input-style style--three" value="">
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- End Invoice Form -->
+                        </div>
+                        <div class="col-xl-4 col-md-6">
+                            <!-- Invoice To -->
+                            <div class="invoice edit invoice-to mt-5 mt-md-0">
+                                <div class="invoice-title c4 bold font-14 mb-3">Dirección</div>
+
+                                <ul class="list-invoice">
+                                    <li class="user">
+                                        <input type="text" class="theme-input-style style--three" value="">
+                                    </li>
+                                    <li class="location">
+                                        <input type="text" class="theme-input-style style--three" value="">
+                                    </li>
+                                    <li class="call">
+                                        <input type="number" class="theme-input-style style--three" value="">
+                                    </li>
+                                    <li class="mail">
+                                        <input type="email" class="theme-input-style style--three" value="">
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- End Invoice To -->
+                        </div>
+                        <div class="col-xl-4 col-md-12">
+                            <!-- Invoice Payment Details -->
+                            <div class="invoice edit payment-details mt-5 mt-xl-0">
+                                <div class="invoice-title c4 bold font-14 mb-3">Comentarios:</div>
+
+                                <ul class="status-list">
+                                    <li>
+                                        <span class="key">Observaciones</span>
+                                        <textarea id="exampleTextarea1" class="theme-input-style" placeholder="Ingrese comentarios"></textarea>
+                                    </li>
+                                    <li>
+                                        <span class="key">Torre</span>
+                                        <textarea id="exampleTextarea1" class="theme-input-style" placeholder="Ingrese comentarios"></textarea>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- End Invoice Payment Details -->
+                        </div>
+                    </div>
+                </div>
+                <!-- End Invois Wrapper -->
+                <!-- Invoice Details List Wrapper -->
+                <div class="bg-white details-list-wrap">
+                    <div class="table-responsive position-relative repeater-default pb-4">
+
+                        <button data-repeater-create type="button" class="add-row-btn btn-circle">
+                            <img src="~/Content/assets/img/svg/plus_white.svg" alt="" class="svg">
+                        </button>
+
+                        <!-- Invoice List Table -->
+                        <table id="invoice-edit-list-table" class="invoice-list-table style-two text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Evento</th>
+                                    <th><span>Articulo</span></th>
+                                    <th><span>Cantidad</span></th>
+                                    <th><span>Remisionado</span></th>
+                                    <th><span>Estado</span></th>
+                                    <th><span>Total</span></th>
+                                </tr>
+                            </thead>
+
+                            <tbody data-repeater-list="group-a" class="bg-white">
+                                <tr data-repeater-item>
+                                    <td class="bold">#01</td>
+                                    <td><input type="text" class="theme-input-style style--three" value="000000001"></td>
+                                    <td><input type="text" class="theme-input-style style--three" value="Mesa de vidrio"></td>
+                                    <td><input type="text" class="theme-input-style style--three" value="1"></td>
+                                    <td><input type="text" class="theme-input-style style--three" value="Si"></td>
+                                    <td><input type="text" class="theme-input-style style--three" value="Caja rapida"></td>
+                                    <td class="text-right">
+                                        <div class="">
+                                            <span>Q1000.00</span>
+                                            <span data-repeater-delete class="tr-close">
+                                                <img src="~/Content/assets/img/svg/table-colse.svg" alt="" class="svg">
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                        <!-- End Invoice List Table -->
+                    </div>
+
+                    <!-- Cart Collaterals -->
+                    <div class="cart-collaterals style--two pt-4 pt-xl-0">
+                        <div class="cart_totals calculated_shipping">
+                            <table class="shop_table style-two">
+                                <tbody>
+                                    <tr class="cart-subtotal">
+                                        <th>Subtotal</th>
+                                        <th>
+                                            <span class="Price-amount amount">
+                                                <span class="Price-currencySymbol">$</span>2654.36
+                                            </span>
+                                        </th>
+                                    </tr>
+                                    <tr class="cart-tax">
+                                        <td>Tax (19%)</td>
+                                        <td>
+                                            <span class="Price-amount amount">
+                                                <span class="Price-currencySymbol">$</span>154.45
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <tr class="cart-tax">
+                                        <td>Discount (5%)</td>
+                                        <td>
+                                            <span class="Price-amount amount">
+                                                <span class="Price-currencySymbol">-$</span>54.45
+                                            </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="order-total">
+                                        <td>Total</td>
+                                        <td>
+                                            <strong>
+                                                <span class="Price-amount amount"><span class="Price-currencySymbol">$</span>3654.45</span>
+                                            </strong>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="proceed-to-checkout invoice-edit d-flex align-items-center justify-content-end mr-20 mt-4">
+                                <a href="#" class="btn preview">Regresar</a>
+                                <a href="#" class="btn">Guardar</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Cart Collaterals -->
+                </div>
+                <!-- End Invoice Details List Wrapper -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Main Content -->
+@section Scripts {
+    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+    <script src="~/Content/assets/js/jquery.min.js"></script>
+    <script src="~/Content/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="~/Content/assets/js/script.js"></script>
+    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+    
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="~/Content/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/Content/assets/plugins/datepicker/datepicker.min.js"></script>
+    <script src="~/Content/assets/plugins/datepicker/i18n/datepicker.en.js"></script>
+    <script src="~/Content/assets/plugins/timepicker/jquery.timepicker.min.js"></script>
+    <script src="~/Content/assets/plugins/datepicker/custom-form-datepicker.js"></script>
+    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+   
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="~/Content/assets/plugins/jquery-repeater/repeater.min.js"></script>
+    <script src="~/Content/assets/plugins/jquery-repeater/custom-repeater.js"></script>
+    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+}

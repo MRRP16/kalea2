@@ -1,0 +1,77 @@
+﻿@model IEnumerable<kalea2.Models.Vehiculos>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-content d-flex flex-column flex-md-row">
+    <div class="container-fluid">
+        @if (true)
+        {
+            <script>
+                (function () {
+                    'use strict';
+                    swal("Titulo", "Prueba", "success");
+                    Swal.fire({ type: "error", title: "Oops...", text: "Something went wrong!", footer: "<a href>Why do I have this issue?</a>", confirmButtonClass: "btn long", buttonsStyling: !1 });
+                }());
+            </script>
+        }
+
+
+
+        <form method="get" action="/ReporteDeProgramacion/Details" class="search-form" autocomplete="off">
+            <div class="row">
+                <div class="col-12">
+                    <div class="project-header d-flex align-items-md-center media flex-column flex-md-row bg-white mb-30">
+                        <!-- Form Group -->
+                        <div class="form-group mb-4 col-6">
+                            <label for="exampleSelect1" class="mb-2 black bold d-block">Seleccione el vehiculo</label>
+                            <div class="custom-select style--two">
+                                <select class="theme-input-style" id="exampleSelect1" name="vehiculo">
+                                    @foreach (var item in Model)
+                                    {
+                                        <option value="@Html.DisplayFor(modelItem => item.Codigo)">@Html.DisplayFor(modelItem => item.Descripcion)</option>
+
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <!-- End Form Group -->
+
+                        <div class="theme-input-group col-6">
+                            <div class="member style--two d-flex mb-12 mb-sm-0" style="align-items:center">
+                                <span class="input-group-addon mr-2">
+                                    <img src="~/Content/assets/img/svg/calender.svg" alt="" class="svg">
+                                </span>
+                                <input type="text" name="fecha" id="default-date" class="theme-input-style" placeholder="Seleccione fecha" />
+                            </div>
+
+                            <div class="create-new-board mb-2 mb-sm-0">
+                                <button type="submit" h>
+                                    <img src="~/Content/assets/img/svg/search-icon.svg" alt="" class="svg">
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="~/Content/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/Content/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/Content/assets/plugins/datepicker/datepicker.min.js"></script>
+    <script src="~/Content/assets/plugins/datepicker/i18n/datepicker.en.js"></script>
+    <script src="~/Content/assets/plugins/timepicker/jquery.timepicker.min.js"></script>
+    <script src="~/Content/assets/plugins/datepicker/custom-form-datepicker.js"></script>
+    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="~/Content/assets/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/Content/assets/plugins/sweetalert2/sweetalerts.js"></script>
+    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->\
+}

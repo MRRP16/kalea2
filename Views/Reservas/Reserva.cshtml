@@ -1,0 +1,202 @@
+﻿@model kalea2.Models.ReservaParcial
+
+@*@if (TempData["0"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["0"]
+    </div>
+}*@
+
+
+<div class="main-content d-flex flex-column flex-md-row">
+    <div class="container-fluid">
+
+        @using (Html.BeginForm())
+        {
+            <div class="col-12">
+
+                <!-- Invoice Header -->
+                <div class="invoice-details-header bg-white d-flex align-items-sm-center flex-column flex-sm-row mb-30 justify-content-sm-between">
+                    <div class="d-flex align-items-center">
+                        <a href="#" class="mr-2"><img src="~/Content/assets/img/svg/angle-left.svg" alt="" class="svg"></a>
+                        <h2 class="regular mr-3 font-30">Reserva de espacio parcial</h2>
+                    </div>
+
+                    <div class="invoice-header-right d-flex align-items-center justify-content-around justify-content-sm-end mt-3 mt-sm-0">
+                        <!-- Starred -->
+                        <div class="star mr-20">
+                            <a href="#"><img src="~/Content/assets/img/svg/star.svg" alt="" class="svg"></a>
+                        </div>
+                        <!-- End Starred -->
+                        <!-- Delete Mail -->
+                        <div class="delete_mail">
+                            <a href="#"><img src="~/Content/assets/img/svg/delete.svg" alt="" class="svg"></a>
+                        </div>
+                        <!-- End Delete Mail -->
+                        <!-- Pagination -->
+                        <div class="pagination style--two d-flex flex-column align-items-center ml-2">
+                            <ul class="list-inline d-inline-flex align-items-center">
+                                <li>
+                                    <a href="#">
+                                        <img src="~/Content/assets/img/svg/left-angle.svg" alt="" class="svg">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="current">
+                                        <img src="~/Content/assets/img/svg/right-angle.svg" alt="" class="svg">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- End Pagination -->
+                    </div>
+                </div>
+                <!-- End Invoice Header -->
+                <!-- Invoice Top -->
+                <div class="invoice-pd c2-bg" data-bg-img="../../Content/assets/img/media/invoice-pattern.png">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <!-- Invoice Right -->
+                            <div class="invoice-right mt-5 mt-md-0">
+                                <h3 class="white font-20 mb-3">Entrega</h3>
+
+                                <ul class="status-list">
+                                    <li>
+                                        <span class="key font-14">Entrega No:</span>
+                                        <span class="white bold font-17"></span>
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(modelItem => Model.Id, new { htmlAttributes = new { @class = "theme-input-style style--four", @readonly = "true" } })
+                                        </div>
+                                    </li>
+
+                                    <li>
+                                        @*<span class="key font-14">Fecha:</span>*@
+
+                                        @Html.LabelFor(model => model.FechaEntrega2, htmlAttributes: new { @class = "key font-14" })
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.FechaEntrega2, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                            <div class="col-md-12">
+                                                @Html.ValidationMessageFor(model => model.FechaEntrega2, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        @*<input type="text" id="default-date" placeholder="28 October 2019" />*@
+                                    </li>
+                                    <li>
+                                        @*<span class="key font-14">Fecha:</span>*@
+
+                                        @Html.LabelFor(model => model.FechaRestriccionInicio, htmlAttributes: new { @class = "key font-14" })
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.FechaRestriccionInicio, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                            <div class="col-md-12">
+                                                @Html.ValidationMessageFor(model => model.FechaRestriccionInicio, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        @*<input type="text" id="default-date" placeholder="28 October 2019" />*@
+                                    </li>
+                                    <li>
+                                        @*<span class="key font-14">Fecha:</span>*@
+
+                                        @Html.LabelFor(model => model.FechaRestriccionFin, htmlAttributes: new { @class = "key font-14" })
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.FechaRestriccionFin, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                            @Html.ValidationMessageFor(model => model.FechaRestriccionFin, "", new { @class = "text-danger" })
+                                        </div>
+                                        @*<input type="text" id="default-date" placeholder="28 October 2019" />*@
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <!-- End Invoice Right -->
+                        </div>
+                        <div class="col-md-4">
+                            <!-- Invoice Right -->
+                            <div class="invoice-right mt-5 mt-md-0">
+                                <h3 class="white font-20 mb-3">Horarios</h3>
+
+                                <ul class="status-list">
+
+                                    <li>
+                                        @*<span class="key font-14">Fecha:</span>*@
+
+                                        @Html.LabelFor(model => model.FechaInicio, htmlAttributes: new { @class = "key font-14" })
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.FechaInicio, new { htmlAttributes = new { @class = "theme-input-style style--four", @readonly = "true" } })
+                                            @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
+                                        </div>
+                                        @*<input type="text" id="default-date" placeholder="28 October 2019" />*@
+                                    </li>
+                                    <li>
+                                        @*<span class="key font-14">Fecha:</span>*@
+
+                                        @Html.LabelFor(model => model.FechaFin, htmlAttributes: new { @class = "key font-14" })
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(model => model.FechaFin, new { htmlAttributes = new { @class = "theme-input-style style--four", @readonly = "true" } })
+                                            @Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })
+                                        </div>
+                                        @*<input type="text" id="default-date" placeholder="28 October 2019" />*@
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- End Invoice Right -->
+                        </div>
+                        <div class="col-md-4">
+                            <!-- Invoice Right -->
+                            <div class="invoice-right mt-5 mt-md-0">
+                                <h3 class="white font-20 mb-3">Referencias</h3>
+
+                                <ul class="status-list">
+
+                                    <li>
+                                        <span class="key font-14">Referencia reserva:</span>
+                                        <span class="white bold font-17"></span>
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(modelItem => Model.Referencia, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                            @Html.ValidationMessageFor(model => model.Referencia, "", new { @class = "text-danger" })
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <!-- End Invoice Right -->
+                        </div>
+                    </div>
+                </div>
+                <!-- End Invoice Top -->
+
+
+                <div class="bg-white details-list-wrap">
+
+                    <!-- Cart Collaterals -->
+                    <div class="cart-collaterals style--two pt-4 pt-xl-0">
+                        <div class="cart_totals calculated_shipping">
+
+
+                            <div class="proceed-to-checkout invoice-edit d-flex align-items-center justify-content-end mr-20 mt-4">
+                                <a href="@Url.Action("Index","Reservas")" class="btn preview">Regresar</a>
+                                <button type="submit" class="btn">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Cart Collaterals -->
+                </div>
+                <!-- End Invoice Details List Wrapper -->
+
+            </div>
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="~/Content/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/Content/assets/plugins/datepicker/datepicker.min.js"></script>
+    <script src="~/Content/assets/plugins/datepicker/i18n/datepicker.en.js"></script>
+    <script src="~/Content/assets/plugins/timepicker/jquery.timepicker.min.js"></script>
+    <script src="~/Content/assets/plugins/datepicker/custom-form-datepicker.js"></script>
+    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+}

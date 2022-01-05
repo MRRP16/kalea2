@@ -1,0 +1,127 @@
+﻿@model kalea2.Models.Login
+
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <!-- Page Title -->
+    <title>Kalea - Programacion digital</title>
+
+    <!-- Meta Data -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/Content/assets/img/favicon.png">
+
+    <!-- Web Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&display=swap" rel="stylesheet">
+
+    <!-- ======= BEGIN GLOBAL MANDATORY STYLES ======= -->
+    <link rel="stylesheet" href="~/Content/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/assets/fonts/icofont/icofont.min.css">
+    <link rel="stylesheet" href="~/Content/assets/plugins/perfect-scrollbar/perfect-scrollbar.min.css">
+    <!-- ======= END BEGIN GLOBAL MANDATORY STYLES ======= -->
+    <!-- ======= MAIN STYLES ======= -->
+    <link rel="stylesheet" href="~/Content/assets/css/style.css">
+    <!-- ======= END MAIN STYLES ======= -->
+
+</head>
+
+@if (ViewBag.Mensaje != null)
+{
+
+    <body onload="My_onLoad('@ViewBag.Mensaje')">
+    </body>
+}
+else if (ViewBag.Exitoso != null)
+{
+    <body onload="My_onLoad2('@ViewBag.Exitoso')">
+    </body>
+}
+
+
+<body>
+    <div class="mn-vh-100 d-flex align-items-center">
+        <div class="container">
+            <!-- Card -->
+            <div class="card justify-content-center auth-card">
+                <div class="row justify-content-center">
+                    <div class="col-xl-7 col-lg-9">
+                        <h4 class="mb-5 font-20">Bienvenido al sistema de programación digital</h4>
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+
+                            <!-- Form Group -->
+                            <div class="form-group mb-20">
+
+                                @Html.LabelFor(model => model.NombreUsuario, htmlAttributes: new { @class = "mb-2 font-14 bold black" })
+
+                                @Html.EditorFor(model => model.NombreUsuario, new { htmlAttributes = new { @class = "theme-input-style", @placeholder = "Ingrese nombre de usuario" } })
+                                @Html.ValidationMessageFor(model => model.NombreUsuario, "", new { @class = "text-danger" })
+
+
+                            </div>
+                            <!-- End Form Group -->
+                            <!-- Form Group -->
+                            <div class="form-group mb-20">
+                                @Html.LabelFor(model => model.Contraseña, htmlAttributes: new { @class = "mb-2 font-14 bold black" })
+
+                                @Html.EditorFor(model => model.Contraseña, new { htmlAttributes = new { @class = "theme-input-style", @placeholder = "Ingrese contraseña de usuario" } })
+                                @Html.ValidationMessageFor(model => model.Contraseña, "", new { @class = "text-danger" })
+                            </div>
+                            <!-- End Form Group -->
+
+                            <div class="d-flex align-items-center">
+                                <button type="submit" class="btn long mr-20">Log In</button>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- End Card -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        Kalea © 2021 K Technology Solutions -<a>KTS</a>
+    </footer>
+    <!-- End Footer -->
+    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <script src="~/Content/assets/plugins/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/Content/assets/plugins/sweetalert2/sweetalerts.js"></script>
+    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
+    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+    <script src="~/Content/assets/js/jquery.min.js"></script>
+    <script src="~/Content/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="~/Content/assets/js/script.js"></script>
+    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
+</body>
+
+</html>
+
+<script type="text/javascript">
+    function My_onLoad(mensaje) {
+        Swal.fire({ title: "Error!", text: mensaje, type: "error", confirmButtonClass: "btn long", buttonsStyling: !1 });
+    }
+</script>
+
+<script type="text/javascript">
+    function My_onLoad2(mensaje) {
+        Swal.fire({ title: "Excelente!", text: mensaje, type: "success", confirmButtonClass: "btn long", buttonsStyling: !1 });
+    }
+</script>
+

@@ -273,8 +273,8 @@
                                         <th><span>Descripcion</span></th>
                                         <th><span>Cantidad</span></th>
                                         @*<th><span>Tiempo Armado</span></th>
-                <th><span>Remisionado</span></th>
-                <th><span>Estado</span></th>*@
+                                            <th><span>Remisionado</span></th>
+                                            <th><span>Estado</span></th>*@
                                         <th><span>Accion</span></th>
                                     </tr>
                                 </thead>
@@ -320,12 +320,10 @@
                                                 @Html.HiddenFor(m => Model.Reserva_Articulos[i].EstadoArticulo)
                                                 @Html.HiddenFor(m => Model.Reserva_Articulos[i].NumEvento)
                                             </td>
-                                            <td class="text-right">
-                                                <div class="">
-                                                    <span data-repeater-delete class="tr-close">
-                                                        <img src="~/Content/assets/img/svg/table-colse.svg" alt="" class="svg">
-                                                    </span>
-                                                </div>
+                                            <td>
+                                                <a type="button" id="EliminarLinea" class="tr-close" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar" onclick='productDelete(this);'>
+                                                    <i class="icofont-close"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     }

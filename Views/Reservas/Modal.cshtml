@@ -291,7 +291,7 @@
                                 </thead>
 
                                 <tbody data-repeater-list="group-a" class="bg-white">
-
+                                   
                                     @for (int i = 0; i < Model.Reserva_Articulos.Count; i++)
                                     {
                                         <tr data-repeater-item>
@@ -493,8 +493,6 @@
                 var Observaciones_temp = "";
                 var Observaciones_Add = "";
                 var NumEvento = "";
-                console.log("test");
-                console.log($("#evento").val());
 
                 $.ajax({
                 type: 'POST',
@@ -585,13 +583,12 @@
 
 
                     Observaciones_temp = $("#ComentariosVenta").val();
-                    console.log(Observaciones_temp);
+                  
                     if ($("#ComentariosVenta").val() === "") {
                         Observaciones_temp = "Evento " + NumEvento + ": " + Observaciones_Add;
                     } else {
                         Observaciones_temp = $("#ComentariosVenta").val() + "\n\nEvento " + NumEvento + ": " + Observaciones_Add;
                     }
-                    console.log(Observaciones_temp);
                     document.getElementById("ComentariosVenta").value = Observaciones_temp;
 
                 },
@@ -710,7 +707,9 @@
         function productDelete(ctl) {
            
             $(ctl).closest("tr").remove();
-           
+            var oRows = document.getElementById('invoice-edit-list-table2').getElementsByTagName('tr');
+            var iRowCount = oRows.length;
+            var NumeroLinea = iRowCount - 1;
 
             recorrer();
         }

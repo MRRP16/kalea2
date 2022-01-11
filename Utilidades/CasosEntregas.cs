@@ -47,7 +47,7 @@ namespace kalea2.Utilidades
                     reserva.FechaCreacion = item["FechaCreacion"].ToString();
                     reserva.NumeroEntregaDia = item["NumeroEntregaDia"].ToString();
                     reserva.Vehiculo = item["NombreVehiculo"].ToString();
-                    reserva.FechaEntrega2 = Convert.ToDateTime(item["FechaInicio"].ToString()).ToString("yyyy-MM-dd");
+                    reserva.FechaEntrega2 = Convert.ToDateTime(item["FechaInicio"].ToString()).ToString("dd-MM-yyyy");
                     reserva.ReferenciaReserva = item["Referencia_Reserva"].ToString();
                     reserva.ColorTipoEvento = item["TipoEvento"].ToString();
                     ListadoReservas.Add(reserva);

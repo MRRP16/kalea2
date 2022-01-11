@@ -1,4 +1,4 @@
-﻿@model Kalea.Models.Respuesta
+﻿@model kalea2.Models.Respuesta
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -188,7 +188,7 @@ else if (ViewBag.Exitoso != null)
                     <!-- End Board Header -->
                     <!-- Boards Cards -->
                     <div class="board-cards">
-                        @{ IEnumerable<Kalea.Models.Reserva> someVariable = Model.Reservaciones.Where(ve => ve.Vehiculo.Equals(Model.Vehiculos[i].Codigo.ToString())).OrderBy(ve => ve.NumeroEntregaDia); }
+                        @{ IEnumerable<kalea2.Models.Reserva> someVariable = Model.Reservaciones.Where(ve => ve.Vehiculo.Equals(Model.Vehiculos[i].Codigo.ToString())).OrderBy(ve => ve.NumeroEntregaDia); }
 
                         @foreach (var item in someVariable)
                         {

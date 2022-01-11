@@ -72,8 +72,11 @@ namespace kalea2.Controllers
                 Utilidades.ReservasPorVehiculo rs = new Utilidades.ReservasPorVehiculo();
                 char[] separadores = { ';', ',' };
                 string[] split = id.Split(separadores);
-
+                CultureInfo enUS = new CultureInfo("en-US");
+                
                 DateTime dtI = Convert.ToDateTime(split[0]);
+                DateTime.TryParseExact(split[0], "dd/MM/yyyy", enUS,
+                              DateTimeStyles.None, out dtI);
                 DateTime dtF = DateTime.Today;
                 List<string> Temporal = new List<string>();
                 string PanelId = "";
@@ -84,7 +87,8 @@ namespace kalea2.Controllers
                         PanelId = split[i].Split('-')[3];
                         Temporal.Add(split[i].Split('-')[1].ToString());
                     }
-                    else if (DateTime.TryParse(split[i].ToString(), out dtF))
+                    else if (DateTime.TryParseExact(split[i].ToString(), "dd/MM/yyyy", enUS,
+                              DateTimeStyles.None, out dtF))
                     {
                         if (Temporal.Count>0)
                         {

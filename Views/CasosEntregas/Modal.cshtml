@@ -211,7 +211,6 @@
                                         <li>
                                             @Html.EditorFor(model => model.ComentariosTorre, new { htmlAttributes = new { @class = "theme-input-style", cols = 35, @rows = 3 } })
                                             @Html.HiddenFor(model => model.Vehiculo)
-                                            @Html.HiddenFor(model => model.NumVehiculo)
                                         </li>
 
                                     </ul>
@@ -241,9 +240,20 @@
                                     <ul class="status-list">
                                         <li>
                                             <div class="col-md-6">
-                                                @Html.DropDownListFor(modelItem => modelItem.NumEvento, Model.Eventos_Articulos,
-                                                              " -- Eventos pendientes de programar --", new { @class = "theme-input-style" })
+                                                <div id="divEventos" style="width:100%;">
+                                                    <select class='mi-selector' id="evento" name='evento' style="width:100%;">
+                                                        <option value="">  -- Seleccione -- </option>
+
+                                                        @foreach (var item in @Model.Eventos_Articulos)
+                                                        {
+                                                            <option value="@item.Value"> @item.Value </option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                @*@Html.DropDownListFor(modelItem => modelItem.NumEvento, Model.Eventos_Articulos, " -- Eventos pendientes de programar --", new { @class = "theme-input-style" })*@
                                                 @Html.HiddenFor(modelItem => modelItem.Eventos_Articulos)
+
+
                                             </div>
                                             <div class="col-md-6">
                                                 <a id="AgregarLinea" class="btn long" style="color:white">Agregar</a>
@@ -254,6 +264,7 @@
                                             </div>
                                         </li>
                                     </ul>
+
                                 </div>
                                 <!-- End Invoice Payment Details -->
                             </div>
@@ -279,48 +290,48 @@
                                     </tr>
                                 </thead>
 
-                                <tbody data-repeater-list="group-a" class="bg-white">
+                                <tbody data-repeater-list="group-a" class="bg-white" id="tbodyArticulos">
 
                                     @for (int i = 0; i < Model.Reserva_Articulos.Count; i++)
                                     {
-                                        <tr data-repeater-item>
+                                        <tr class="Articulos" data-repeater-item>
                                             <td class="bold">
                                                 @Html.DisplayFor(m => Model.Reserva_Articulos[i].Id)
                                                 @Html.HiddenFor(m => Model.Reserva_Articulos[i].Id)
                                             </td>
-                                            <td>
+                                            <td class="NumEvento">
                                                 @Html.DisplayFor(m => Model.Reserva_Articulos[i].NumEvento)
                                                 @Html.HiddenFor(m => Model.Reserva_Articulos[i].NumEvento)
                                             </td>
-                                            <td>
+                                            <td class="CodigoArticulo">
                                                 @Html.DisplayFor(m => Model.Reserva_Articulos[i].CodigoArticulo)
                                                 @Html.HiddenFor(m => Model.Reserva_Articulos[i].CodigoArticulo)
                                             </td>
-                                            <td>
+                                            <td class="Descripcion">
                                                 @Html.DisplayFor(m => Model.Reserva_Articulos[i].Descripcion)
                                                 @Html.HiddenFor(m => Model.Reserva_Articulos[i].Descripcion)
                                             </td>
-                                            <td>
+                                            <td class="Cantidad">
                                                 @Html.DisplayFor(m => Model.Reserva_Articulos[i].Cantidad)
                                                 @Html.HiddenFor(m => Model.Reserva_Articulos[i].Cantidad)
                                                 @Html.HiddenFor(m => Model.Reserva_Articulos[i].TiempoArmado)
                                                 @Html.HiddenFor(m => Model.Reserva_Articulos[i].EstadoArticulo)
                                                 @Html.HiddenFor(m => Model.Reserva_Articulos[i].NumEvento)
                                             </td>
-                                            <td style="display:none;">
+                                            <td class="TiempoArmado" style="display:none;">
                                                 @Html.DisplayFor(m => Model.Reserva_Articulos[i].TiempoArmado)
                                                 @Html.HiddenFor(m => Model.Reserva_Articulos[i].TiempoArmado)
                                             </td>
-                                            <td style="display:none;">
+                                            <td class="Remisionado" style="display:none;">
                                                 @Html.DisplayFor(m => Model.Reserva_Articulos[i].Remisionado)
                                                 @Html.HiddenFor(m => Model.Reserva_Articulos[i].Remisionado)
                                             </td>
-                                            <td style="display:none;">
+                                            <td class="EstadoArticulo" style="display:none;">
                                                 @Html.DisplayFor(m => Model.Reserva_Articulos[i].EstadoArticulo)
                                                 @Html.HiddenFor(m => Model.Reserva_Articulos[i].EstadoArticulo)
                                                 @Html.HiddenFor(m => Model.Reserva_Articulos[i].NumEvento)
                                             </td>
-                                            <td>
+                                            <td class="text-right">
                                                 <a type="button" id="EliminarLinea" class="tr-close" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar" onclick='productDelete(this);'>
                                                     <i class="icofont-close"></i>
                                                 </a>
@@ -353,8 +364,17 @@
                                     <ul class="status-list">
                                         <li>
                                             <div class="col-md-6">
-                                                @Html.DropDownListFor(modelItem => modelItem.Casos_Pendientes, Model.Casos_Pendientes,
-                                                              " -- Casos pendientes de programar --", new { @class = "theme-input-style" })
+                                                <div id="divCasos" style="width:100%;">
+                                                    <select class='mi-selector' id="caso" name='evento' style="width:100%;">
+                                                        <option value="">  -- Seleccione -- </option>
+
+                                                        @foreach (var item in @Model.Casos_Pendientes)
+                                                        {
+                                                            <option value="@item.Value"> @item.Value </option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                @*@Html.DropDownListFor(modelItem => modelItem.Casos_Pendientes, Model.Casos_Pendientes, " -- Casos pendientes de programar --", new { @class = "theme-input-style" })*@
                                             </div>
                                             <div class="col-md-6">
                                                 <a id="AgregarLinea2" class="btn long" style="color:white">Agregar</a>
@@ -391,16 +411,16 @@
                                     </tr>
                                 </thead>
 
-                                <tbody data-repeater-list="group-a" class="bg-white">
+                                <tbody data-repeater-list="group-a" class="bg-white" id="TablaCasos">
 
                                     @for (int i = 0; i < Model.Reserva_Casos.Count; i++)
                                     {
-                                        <tr data-repeater-item>
+                                        <tr class="Casos" data-repeater-item>
                                             <td class="bold">
                                                 @Html.DisplayFor(m => Model.Reserva_Casos[i].Id)
                                                 @Html.HiddenFor(m => Model.Reserva_Casos[i].Id)
                                             </td>
-                                            <td>
+                                            <td class="Numcaso">
                                                 @Html.DisplayFor(m => Model.Reserva_Casos[i].NumCaso)
                                                 @Html.HiddenFor(m => Model.Reserva_Casos[i].NumCaso)
                                             </td>
@@ -408,15 +428,16 @@
                                                     @Html.DisplayFor(m => Model.Reserva_Casos[i].Observaciones)
                                                     @Html.HiddenFor(m => Model.Reserva_Casos[i].Observaciones)
                                                 </td>*@
-                                            <td>
+                                            <td class="Acciones">
                                                 @Html.TextAreaFor(m => Model.Reserva_Casos[i].Acciones, new { @class = "theme-input-style style--three" })
                                                 @Html.HiddenFor(m => Model.Reserva_Casos[i].Acciones)
                                             </td>
-                                            <td>
-                                                <a type="button" id="EliminarLinea" class="tr-close" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar" onclick='productDelete(this);'>
+
+                                            <td class="text-right">
+                                                <a type="button" id="EliminarLinea" class="tr-close" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar" onclick='productDeleteCaso(this);'>
+                                                  
                                                     <i class="icofont-close"></i>
                                                 </a>
-
                                             </td>
                                         </tr>
                                     }
@@ -451,33 +472,44 @@
 
 
     <script type="text/javascript">
+        //jQuery(document).ready(function ($) {
+        //    $(document).ready(function () {
+        //        $('.mi-selector').select2();
+        //    });
+        //});
         $(document).ready(function () {
+            $(document).ready(function () {
+                $('.mi-selector').select2();
+            });
             //Dropdownlist Selectedchange event
             $("#AgregarLinea").click(function () {
                 var Observaciones_temp = "";
                 var Observaciones_Add = "";
                 var NumEvento = "";
 
+                var Nombrecl = "";
+                var DEntrega = "";
+                var DiFiscal = "";
+                var Tel = "";
+                var Celular = "";
+
+
                 $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetListadoArticulos", "Reservas")', // we are calling json method
-
                 dataType: 'json',
                 data: {
-                    id: $("#NumEvento").val()
+                    id: $("#evento").val()
                 },
                // here we are get value of selected country and passing same value
                   //as inputto json method GetStates.
                 success: function (states) {
                     // states contains the JSON formatted list
                     // of states passed from the controller
-                    console.log(states);
                     $.each(states, function (i, state) {
-
                         var oRows = document.getElementById('invoice-edit-list-table').getElementsByTagName('tr');
                         var iRowCount = oRows.length;
                         var NumeroLinea = iRowCount - 1;
-
                         var newRowContent =
                             '<tr class="Articulos" data-repeater-item=""> ' +
                             '<td class="bold">' +
@@ -485,80 +517,136 @@
                             +
                             '<input id="Reserva_Articulos_' + NumeroLinea + '__Id" name="Reserva_Articulos[' + NumeroLinea + '].Id" type="hidden" value="' + NumeroLinea + '">' +
                             '</td>' +
-                            '<td class="NumEvento">'+
+                            '<td class="NumEvento">' +
                             state.NumEvento
                             +
-                            '<input id="Reserva_Articulos_' + NumeroLinea + '__NumEvento" name="Reserva_Articulos[' + NumeroLinea + '].NumEvento" type="hidden" value="' + state.NumEvento + '">' +
+                            '<input  id="Reserva_Articulos_' + NumeroLinea + '__NumEvento" name="Reserva_Articulos[' + NumeroLinea + '].NumEvento" type="hidden" value="' + state.NumEvento + '">' +
                             '</td>' +
-                            '<td>' +
+                            '<td class="CodigoArticulo">' +
                             state.CodigoArticulo
                             +
                             '<input id="Reserva_Articulos_' + NumeroLinea + '__CodigoArticulo" name="Reserva_Articulos[' + NumeroLinea + '].CodigoArticulo" type="hidden" value="' + state.CodigoArticulo + '">' +
                             '</td>' +
-
-                            '<td>' +
+                            '<td class="Descripcion">' +
                             state.Descripcion
                             +
                             '<input id="Reserva_Articulos_' + NumeroLinea + '__Descripcion" name="Reserva_Articulos[' + NumeroLinea + '].Descripcion" type="hidden" value="' + state.Descripcion + '">' +
                             '</td>' +
-                            '<td>' +
+                            '<td class="Cantidad">' +
                             state.Cantidad
                             +
                             '<input id="Reserva_Articulos_' + NumeroLinea + '__Cantidad" name="Reserva_Articulos[' + NumeroLinea + '].Cantidad" type="hidden" value="' + state.Cantidad + '">' +
                             '</td>' +
-                            '<td>' +
+                            '<td class="TiempoArmado" style="display:none;">' +
                             state.TiempoArmado
                             +
                             '<input id="Reserva_Articulos_' + NumeroLinea + '__TiempoArmado" name="Reserva_Articulos[' + NumeroLinea + '].TiempoArmado" type="hidden" value="' + state.TiempoArmado + '">' +
                             '</td>' +
-                            '<td>' +
+                            '<td class="Remisionado" style="display:none;">' +
                             state.Remisionado
                             +
                             '<input id="Reserva_Articulos_' + NumeroLinea + '__Remisionado" name="Reserva_Articulos[' + NumeroLinea + '].Remisionado" type="hidden" value="' + state.Remisionado + '">' +
                             '</td>' +
-                            '<td>' +
+                            '<td class="EstadoArticulo" style="display:none;">' +
                             state.EstadoArticulo
                             +
                             '<input id="Reserva_Articulos_' + NumeroLinea + '__EstadoArticulo" name="Reserva_Articulos[' + NumeroLinea + '].EstadoArticulo" type="hidden" value="' + state.EstadoArticulo + '">' +
                             '</td>' +
-                            '<td>' +
+                            '<td >' +
                             '<a type="button" id="EliminarLinea" class="tr-close" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar" onclick=\'productDelete(this);\'>' +
                             '<i class="icofont-close"></i></a>' +
                             '</td>' +
                             '</tr>';
-
                         $("#invoice-edit-list-table").find('tbody').append(newRowContent);
 
                         NumEvento = state.NumEvento;
                         Observaciones_Add = state.Observaciones;
-
-                        document.getElementById("NombreCliente").value = state.NombreCliente;
-                        document.getElementById("DireccionEntrega").value = state.DireccionEntrega;
-                        document.getElementById("DireccionFiscal").value = state.DireccionFiscal;
-                        document.getElementById("Telefono").value = state.Telefono;
+                        Nombrecl = state.NombreCliente;
+                        DEntrega = state.DireccionEntrega;
+                        DiFiscal = state.DireccionFiscal;
+                        Tel = state.Telefono;
+                        Celular = state.Telefono;
                         //$("#SerieSAP").append('<option value="' + state.numero + '">' +
                         //    state.serie + '</option>');
                     // here we are adding option for States
-
                     });
-
-                    console.log(NumEvento);
-                    console.log(Observaciones_Add);
-
                     Observaciones_temp = $("#ComentariosVenta").val();
+
+                    var nombre = document.getElementById("NombreCliente").value;
+
+                    if (nombre == "") {
+                        document.getElementById("NombreCliente").value = Nombrecl;
+                        document.getElementById("DireccionEntrega").value = DEntrega;
+                        document.getElementById("DireccionFiscal").value = DiFiscal;
+                        document.getElementById("Telefono").value = Tel;
+                        document.getElementById("Celular").value = Celular;
+                        if (Tel == null || Tel == "") {
+                            document.getElementById("Telefono").value = Celular;
+                        }
+                        if (Celular == null || Celular == "") {
+                            document.getElementById("Celular").value = Tel;
+                        }
+                    } else {
+
+                        Swal.fire({
+                            title: "Desea actualizar la información del cliente?",
+                            text: "Si acepta, los datos generales del cliente serán modificados por el cliente " + Nombrecl + "!",
+                            type: "warning",
+                            showCancelButton: !0,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Si, actualizar información!",
+                            confirmButtonClass: "btn long",
+                            cancelButtonClass: "btn long bg-danger ml-1",
+                            buttonsStyling: !1,
+                        }).then(function (t) {
+                            if (t.value) {
+                                document.getElementById("NombreCliente").value = Nombrecl;
+                                document.getElementById("DireccionEntrega").value = DEntrega;
+                                document.getElementById("DireccionFiscal").value = DiFiscal;
+                                document.getElementById("Telefono").value = Tel;
+                                document.getElementById("Celular").value = Celular;
+                                if (Tel == null || Tel == "") {
+                                    document.getElementById("Telefono").value = Celular;
+                                }
+                                if (Celular == null || Celular == "") {
+                                    document.getElementById("Celular").value = Tel;
+                                }
+
+                                Observaciones_temp = $("#ComentariosVenta").val();
+                                if ($("#ComentariosVenta").val() === "") {
+                                    Observaciones_temp = "Caso " + NumCaso + ": " + Observaciones;
+                                } else {
+                                    Observaciones_temp = $("#ComentariosVenta").val() + "\n\nCaso " + NumCaso + ": " + Observaciones;
+                                }
+                                document.getElementById("ComentariosVenta").value = Observaciones_temp;
+                            } else {
+                                Observaciones_temp = $("#ComentariosVenta").val();
+                                if ($("#ComentariosVenta").val() === "") {
+                                    Observaciones_temp = "Caso " + NumCaso + ": " + Observaciones;
+                                } else {
+                                    Observaciones_temp = $("#ComentariosVenta").val() + "\n\nCaso " + NumCaso + ": " + Observaciones;
+                                }
+                                document.getElementById("ComentariosVenta").value = Observaciones_temp;
+                            }
+
+
+                        });
+                    }
+
+
                     if ($("#ComentariosVenta").val() === "") {
                         Observaciones_temp = "Evento " + NumEvento + ": " + Observaciones_Add;
                     } else {
                         Observaciones_temp = $("#ComentariosVenta").val() + "\n\nEvento " + NumEvento + ": " + Observaciones_Add;
                     }
-                    document.getElementById("ComentariosVenta").value = Observaciones_temp;
 
+                    document.getElementById("ComentariosVenta").value = Observaciones_temp;
                 },
                 error: function (ex) {
                     alert('Failed to retrieve states.' + ex);
                 }
             });
-
             })
         });
     </script>
@@ -567,31 +655,34 @@
         $(document).ready(function () {
             //Dropdownlist Selectedchange event
             $("#AgregarLinea2").click(function () {
-
                 var Observaciones = "";
                 var Acciones = "";
                 var NumCaso = "";
+
+                var Nombrecl = "";
+                var DEntrega = "";
+                var DiFiscal = "";
+                var Tel = "";
+                var Celular = "";
+
+
                 $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetCaso", "Reservas")', // we are calling json method
-
                 dataType: 'json',
                 data: {
-                    id: $("#Casos_Pendientes").val()
+                    id: $("#caso").val()
                 },
                // here we are get value of selected country and passing same value
                   //as inputto json method GetStates.
                 success: function (states) {
                     // states contains the JSON formatted list
                     // of states passed from the controller
-                    console.log(states);
                     $.each(states, function (i, state) {
-
                         //Observaciones += Observaciones + "\n" + state.Observaciones;
                         //Acciones += Acciones + "\n" + state.Acciones;
                         //NumCaso = state.NumCaso;
-
-                        Observaciones +=  state.Observaciones;
+                        Observaciones =  state.Observaciones;
                         Acciones += state.Acciones;
                         NumCaso = state.NumCaso;
                         if (state.Acciones != '') {
@@ -600,13 +691,13 @@
                             var NumeroLinea = iRowCount - 1;
 
                             var newRowContent =
-                                '<tr data-repeater-item=""> ' +
+                                '<tr class="Casos" data-repeater-item=""> ' +
                                 '<td class="bold">' +
                                 NumeroLinea
                                 +
                                 '<input id="Reserva_Casos_' + NumeroLinea + '__Id" name="Reserva_Casos[' + NumeroLinea + '].Id" type="hidden" value="' + NumeroLinea + '">' +
                                 '</td>' +
-                                '<td>' +
+                                '<td class="Numcaso">' +
                                 '<div class="form-group mb-6">' +
                                 NumCaso
                                 +
@@ -614,30 +705,97 @@
                                 '</div>' +
                                 '</td>' +
                                 //'<td>' +
-
                                 //'<textarea id="Reserva_Casos_' + NumeroLinea + '__Observaciones" name="Reserva_Casos[' + NumeroLinea + '].Observaciones" class="theme-input-style style--three" placeholder="Type Here" disabled>' + Observaciones + '</textarea>' +
-
-
                                 //'</td>' +
-
-                                '<td>' +
-                                '<textarea id="Reserva_Casos_' + NumeroLinea + '__Acciones" name="Reserva_Casos[' + NumeroLinea + '].Acciones" class="theme-input-style style--three" placeholder="Type Here" disabled>' + state.Acciones + '</textarea>' +
-                                '<input id="Reserva_Casos_' + NumeroLinea + '__Acciones" name="Reserva_Casos[' + NumeroLinea + '].Acciones" type="hidden" value="' + state.Acciones + '">' +
+                                '<td class="Acciones">' +
+                                '<textarea  id="Reserva_Casos_' + NumeroLinea + '__Acciones" name="Reserva_Casos[' + NumeroLinea + '].Acciones" class="theme-input-style style--three" value="' + state.Acciones + '" placeholder="Type Here" disabled>' + state.Acciones + '</textarea >' +
+                                '<input id="Reserva_Casos_' + NumeroLinea + '__Acciones" name="Reserva_Casos[' + NumeroLinea + '].Acciones" type="hidden" value="' + state.Acciones + '">'+
                                 '</td>' +
                                 '<td>' +
-                                '<a type="button" id="EliminarLinea" class="tr-close" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar" onclick=\'productDelete(this);\'>' +
+                                '<a type="button" id="EliminarLinea" class="tr-close" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar" onclick=\'productDeleteCaso(this);\'>' +
                                 '<i class="icofont-close"></i></a>' +
                                 '</td>' +
                                 '</tr>';
-
                             $("#invoice-edit-list-table2").find('tbody').append(newRowContent);
+
+                            Nombrecl = state.Cliente;
+                            DEntrega = state.Direccion;
+                            DiFiscal = state.Direccion;
+                            Tel = state.Tel;
+                            Celular = state.Cel;
                         }
-
-
                     });
 
 
+                    var nombre = document.getElementById("NombreCliente").value;
 
+                    console.log(nombre);
+
+                    if (nombre == "") {
+                        document.getElementById("NombreCliente").value = Nombrecl;
+                        document.getElementById("DireccionEntrega").value = DEntrega;
+                        document.getElementById("DireccionFiscal").value = DiFiscal;
+                        document.getElementById("Telefono").value = Tel;
+                        document.getElementById("Celular").value = Celular;
+                        if (Tel == null || Tel == "") {
+                            document.getElementById("Telefono").value = Celular;
+                        }
+                        if (Celular == null || Celular == "") {
+                            document.getElementById("Celular").value = Tel;
+                        }
+
+                        Observaciones_temp = $("#ComentariosVenta").val();
+                        if ($("#ComentariosVenta").val() === "") {
+                            Observaciones_temp = "Caso " + NumCaso + ": " + Observaciones;
+                        } else {
+                            Observaciones_temp = $("#ComentariosVenta").val() + "\n\nCaso " + NumCaso + ": " + Observaciones;
+                        }
+                        document.getElementById("ComentariosVenta").value = Observaciones_temp;
+                    } else {
+
+                        Swal.fire({
+                            title: "Desea actualizar la información del cliente?",
+                            text: "Si acepta, los datos generales del cliente serán modificados por el cliente " + Nombrecl + "!",
+                            type: "warning",
+                            showCancelButton: !0,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Si, actualizar informacion!",
+                            confirmButtonClass: "btn long",
+                            cancelButtonClass: "btn long bg-danger ml-1",
+                            buttonsStyling: !1,
+                        }).then(function (t) {
+                            if (t.value) {
+                                document.getElementById("NombreCliente").value = Nombrecl;
+                                document.getElementById("DireccionEntrega").value = DEntrega;
+                                document.getElementById("DireccionFiscal").value = DiFiscal;
+                                document.getElementById("Telefono").value = Tel;
+                                document.getElementById("Celular").value = Celular;
+                                if (Tel == null || Tel == "") {
+                                    document.getElementById("Telefono").value = Celular;
+                                }
+                                if (Celular == null || Celular == "") {
+                                    document.getElementById("Celular").value = Tel;
+                                }
+
+                                Observaciones_temp = $("#ComentariosVenta").val();
+                                if ($("#ComentariosVenta").val() === "") {
+                                    Observaciones_temp = "Caso " + NumCaso + ": " + Observaciones;
+                                } else {
+                                    Observaciones_temp = $("#ComentariosVenta").val() + "\n\nCaso " + NumCaso + ": " + Observaciones;
+                                }
+                                document.getElementById("ComentariosVenta").value = Observaciones_temp;
+                            } else {
+                                Observaciones_temp = $("#ComentariosVenta").val();
+                                if ($("#ComentariosVenta").val() === "") {
+                                    Observaciones_temp = "Caso " + NumCaso + ": " + Observaciones;
+                                } else {
+                                    Observaciones_temp = $("#ComentariosVenta").val() + "\n\nCaso " + NumCaso + ": " + Observaciones;
+                                }
+                                document.getElementById("ComentariosVenta").value = Observaciones_temp;
+                            }
+                        });
+                    }
 
 
                 },
@@ -645,29 +803,39 @@
                     alert('Failed to retrieve states.' + ex);
                 }
             });
-
             })
         });
     </script>
 
-    <script type="text/javascript">
-        function productDelete(ctl) {
-            $(ctl).parents("tr").remove();
-            recorrer();
-        }
 
-          function recorrer() {
-            console.log("Entro");
+    <script>
+
+         function productDeleteCaso(ctl) {
+
+            $(ctl).closest("tr").remove();
+
+             recorrerCaso();
+        }
+        function recorrerCaso() {
+
             var value = "";
-            $(".Articulos .NumEvento").each(function () {
-                value +="'"+ $(this).text()+"'" + ",";
-                console.log(value);
+            $(".Casos .Numcaso").each(function () {
+                value += $(this).text() + ",";
+
             });
+            value += "|";
+            $(".Casos .Acciones").each(function () {
+                value +=  $(this).text() + ",";
+
+            });
+
+            var Observaciones = "";
+            var Acciones = "";
+            var NumCaso = "";
 
             $.ajax({
             type: 'POST',
-            url: '@Url.Action("ObtenerComentarios", "Reservas")', // we are calling json method
-
+            url: '@Url.Action("OrdenarCasos", "Reservas")', // we are calling json method
             dataType: 'json',
             data: {
                 id: value
@@ -678,8 +846,46 @@
                 // states contains the JSON formatted list
                 // of states passed from the controller
 
-                document.getElementById("ComentariosVenta").value = states;
+                $("#TablaCasos").empty();
 
+                $.each(states, function (i, state) {
+                    var oRows = document.getElementById('invoice-edit-list-table2').getElementsByTagName('tr');
+                    var iRowCount = oRows.length;
+                    var NumeroLinea = iRowCount - 1;
+                    NumCaso = state.Caso;
+                    if (NumCaso !="") {
+                        var newRowContent =
+                            '<tr data-repeater-item=""> ' +
+                            '<td class="bold">' +
+                            NumeroLinea
+                            +
+                            '<input id="Reserva_Casos_' + NumeroLinea + '__Id" name="Reserva_Casos[' + NumeroLinea + '].Id" type="hidden" value="' + NumeroLinea + '">' +
+                            '</td>' +
+                            '<td class="Numcaso">' +
+                            '<div class="form-group mb-6">' +
+                            NumCaso
+                            +
+                            '<input id="Reserva_Casos_' + NumeroLinea + '__NumCaso" name="Reserva_Casos[' + NumeroLinea + '].NumCaso" type="hidden" value="' + NumCaso + '">' +
+                            '</div>' +
+                            '</td>' +
+                            //'<td>' +
+                            //'<textarea id="Reserva_Casos_' + NumeroLinea + '__Observaciones" name="Reserva_Casos[' + NumeroLinea + '].Observaciones" class="theme-input-style style--three" placeholder="Type Here" disabled>' + Observaciones + '</textarea>' +
+                            //'</td>' +
+                            '<td class="Acciones">' +
+                            '<textarea  id="Reserva_Casos_' + NumeroLinea + '__Acciones" name="Reserva_Casos[' + NumeroLinea + '].Acciones" class="theme-input-style style--three" value="' + state.Acciones + '" placeholder="Type Here" disabled>' + state.Acciones + '</textarea >' +
+                            '<input id="Reserva_Casos_' + NumeroLinea + '__Acciones" name="Reserva_Casos[' + NumeroLinea + '].Acciones" type="hidden" value="' + state.Acciones + '">' +
+                            '</td>' +
+                            '<td>' +
+                            '<a type="button" id="EliminarLinea" class="tr-close" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar" onclick=\'productDeleteCaso(this);\'>' +
+                            '<i class="icofont-close"></i></a>' +
+                            '</td>' +
+                            '</tr>';
+                        $("#invoice-edit-list-table2").find('tbody').append(newRowContent);
+                    }
+
+                });
+
+                //document.getElementById("ComentariosVenta").value = states.Comentarios;
             },
             error: function (ex) {
                 alert('Failed to retrieve states.' + ex);
@@ -687,6 +893,136 @@
         });
         }
 
+
+    </script>
+
+    <script type="text/javascript">
+        function productDelete(ctl) {
+
+            $(ctl).closest("tr").remove();
+
+            recorrer();
+        }
+        function recorrer() {
+
+            var value = "";
+            $(".Articulos .NumEvento").each(function () {
+                value +="'"+ $(this).text()+"'" + ",";
+
+            });
+            value += "|";
+            $(".Articulos .CodigoArticulo").each(function () {
+                value +=  $(this).text() + ",";
+
+            });
+
+            value += "|";
+            $(".Articulos .Descripcion").each(function () {
+                value += $(this).text() + ",";
+
+            });
+
+            value += "|";
+            $(".Articulos .Cantidad").each(function () {
+                value +=  $(this).text() + ",";
+
+            });
+            value += "|";
+            $(".Articulos .TiempoArmado").each(function () {
+                value +=  $(this).text() + ",";
+
+            });
+
+            value += "|";
+            $(".Articulos .Remisionado").each(function () {
+                value += $(this).text() + ",";
+
+            });
+
+            value += "|";
+            $(".Articulos .EstadoArticulo").each(function () {
+                value +=  $(this).text() + ",";
+
+            });
+
+            $.ajax({
+            type: 'POST',
+            url: '@Url.Action("ObtenerComentarios", "Reservas")', // we are calling json method
+            dataType: 'json',
+            data: {
+                id: value
+            },
+            // here we are get value of selected country and passing same value
+                //as inputto json method GetStates.
+            success: function (states) {
+                // states contains the JSON formatted list
+                // of states passed from the controller
+
+                $("#tbodyArticulos").empty();
+
+                $.each(states.articulosdet, function (i, state) {
+                    var oRows = document.getElementById('invoice-edit-list-table').getElementsByTagName('tr');
+                    var iRowCount = oRows.length;
+                    var NumeroLinea = iRowCount - 1;
+                    var newRowContent =
+                        '<tr class="Articulos" data-repeater-item=""> ' +
+                        '<td class="bold">' +
+                        NumeroLinea
+                        +
+                        '<input id="Reserva_Articulos_' + NumeroLinea + '__Id" name="Reserva_Articulos[' + NumeroLinea + '].Id" type="hidden" value="' + NumeroLinea + '">' +
+                        '</td>' +
+                        '<td class="NumEvento">' +
+                        state.NumEvento
+                        +
+                        '<input  id="Reserva_Articulos_' + NumeroLinea + '__NumEvento" name="Reserva_Articulos[' + NumeroLinea + '].NumEvento" type="hidden" value="' + state.NumEvento + '">' +
+                        '</td>' +
+                        '<td class="CodigoArticulo">' +
+                        state.CodigoArticulo
+                        +
+                        '<input id="Reserva_Articulos_' + NumeroLinea + '__CodigoArticulo" name="Reserva_Articulos[' + NumeroLinea + '].CodigoArticulo" type="hidden" value="' + state.CodigoArticulo + '">' +
+                        '</td>' +
+                        '<td class="Descripcion">' +
+                        state.Descripcion
+                        +
+                        '<input id="Reserva_Articulos_' + NumeroLinea + '__Descripcion" name="Reserva_Articulos[' + NumeroLinea + '].Descripcion" type="hidden" value="' + state.Descripcion + '">' +
+                        '</td>' +
+                        '<td class="Cantidad">' +
+                        state.Cantidad
+                        +
+                        '<input id="Reserva_Articulos_' + NumeroLinea + '__Cantidad" name="Reserva_Articulos[' + NumeroLinea + '].Cantidad" type="hidden" value="' + state.Cantidad + '">' +
+                        '</td>' +
+                        '<td class="TiempoArmado" style="display:none;">' +
+                        state.TiempoArmado
+                        +
+                        '<input id="Reserva_Articulos_' + NumeroLinea + '__TiempoArmado" name="Reserva_Articulos[' + NumeroLinea + '].TiempoArmado" type="hidden" value="' + state.TiempoArmado + '">' +
+                        '</td>' +
+                        '<td class="Remisionado" style="display:none;">' +
+                        state.Remisionado
+                        +
+                        '<input id="Reserva_Articulos_' + NumeroLinea + '__Remisionado" name="Reserva_Articulos[' + NumeroLinea + '].Remisionado" type="hidden" value="' + state.Remisionado + '">' +
+                        '</td>' +
+                        '<td class="EstadoArticulo" style="display:none;">' +
+                        state.EstadoArticulo
+                        +
+                        '<input id="Reserva_Articulos_' + NumeroLinea + '__EstadoArticulo" name="Reserva_Articulos[' + NumeroLinea + '].EstadoArticulo" type="hidden" value="' + state.EstadoArticulo + '">' +
+                        '</td>' +
+                        '<td >' +
+                        '<a type="button" id="EliminarLinea" class="tr-close" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar" onclick=\'productDelete(this);\'>' +
+                        '<i class="icofont-close"></i></a>' +
+                        '</td>' +
+                        '</tr>';
+                    $("#invoice-edit-list-table").find('tbody').append(newRowContent);
+                });
+
+
+
+                document.getElementById("ComentariosVenta").value = states.Comentarios;
+            },
+            error: function (ex) {
+                alert('Failed to retrieve states.' + ex);
+            }
+        });
+        }
     </script>
     <script type="text/javascript">
         function My_onLoad(mensaje) {

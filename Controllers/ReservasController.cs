@@ -33,30 +33,40 @@ namespace kalea2.Controllers
             }
 
             char[] delimitadores = { '=', '+' };
-           
-            string[] split = this.Request.RawUrl.Split(delimitadores);
-            if (split.Length > 1)
+            if (TempData["7"] != null)
             {
                 Reservas reservas = new Reservas();
-                reservas.AnularEventosReservas();
-                if (string.IsNullOrEmpty(split[1]))
-                {
-                    var listado2 = reservas.ListadoReservas(DateTime.Today);
-                    TempData["5"] = DateTime.Today.ToString("dd/MM/yyyy");
-                    return View("Index", listado2);
-                }
-                DateTime.TryParse(split[1] + " " + split[2] + " " + split[3], out DateTime date);
-                var listado = reservas.ListadoReservas(date);
-                TempData["5"] = date.ToString("dd/MM/yyyy");
+                DateTime dt = Convert.ToDateTime(TempData["7"].ToString());
+                var listado = reservas.ListadoReservas(dt);
+                TempData["5"] = dt.ToString("dd/MM/yyyy");
                 return View("Index", listado);
             }
             else
             {
-                Reservas reservas = new Reservas();
-                reservas.AnularEventosReservas();
-                var listado = reservas.ListadoReservas(DateTime.Today);
-                TempData["5"] = DateTime.Today.ToString("dd/MM/yyyy");
-                return View("Index", listado);
+                string[] split = this.Request.RawUrl.Split(delimitadores);
+                if (split.Length > 1)
+                {
+                    Reservas reservas = new Reservas();
+                    reservas.AnularEventosReservas();
+                    if (string.IsNullOrEmpty(split[1]))
+                    {
+                        var listado2 = reservas.ListadoReservas(DateTime.Today);
+                        TempData["5"] = DateTime.Today.ToString("dd/MM/yyyy");
+                        return View("Index", listado2);
+                    }
+                    DateTime.TryParse(split[1] + " " + split[2] + " " + split[3], out DateTime date);
+                    var listado = reservas.ListadoReservas(date);
+                    TempData["5"] = date.ToString("dd/MM/yyyy");
+                    return View("Index", listado);
+                }
+                else
+                {
+                    Reservas reservas = new Reservas();
+                    reservas.AnularEventosReservas();
+                    var listado = reservas.ListadoReservas(DateTime.Today);
+                    TempData["5"] = DateTime.Today.ToString("dd/MM/yyyy");
+                    return View("Index", listado);
+                }
             }
 
         }
@@ -242,7 +252,7 @@ namespace kalea2.Controllers
                         respuesta = reservas.CrearEntregaDefinitiva(collection, "0");
                       
                         TempData["0"] = respuesta;
-                    
+                        TempData["7"] = collection.FechaEntrega2;
                     }
                     else
                     {
@@ -355,11 +365,115 @@ namespace kalea2.Controllers
             return Json(articulos);
         }
 
+        //public ActionResult GetListadoArticulos(string id)
+        //{
+        //    Reservas reservas = new Reservas();
+        //    List<Models.Reserva_Detalle_Articulos> articulos = reservas.Articulos(id);
+        //    Models.Reserva r = new Models.Reserva();
+        //    r.Reserva_Articulos = articulos;
+        //    return View("GetListadoArticulos", r);
+        //}
+
         public JsonResult ObtenerComentarios(string id)
         {
             Reservas reservas = new Reservas();
-            string articulos = reservas.Comentarios(id);
-            return Json(articulos);
+            string[] sp = id.Split('|');
+
+            Models.ListadoArticulosUpdate la = new Models.ListadoArticulosUpdate();
+            List<Models.Reserva_Detalle_Articulos> articulosdet = new List<Models.Reserva_Detalle_Articulos>();
+            if (!id.Equals("||||||"))
+            {
+                for (int i = 0; i < sp.Length; i++)
+                {
+
+
+                    string[] spGeneral = sp[i].TrimEnd(',').Split(',');
+                    for (int j = 0; j < spGeneral.Length; j++)
+                    {
+                        switch (i)
+                        {
+                            case 0:
+
+                                Models.Reserva_Detalle_Articulos articulo = new Models.Reserva_Detalle_Articulos();
+                                articulo.Id = j;
+                                string[] numNumEvento = spGeneral[j].ToString().Split((char)39);
+                                articulo.NumEvento = numNumEvento[1];
+                                articulosdet.Add(articulo);
+
+
+                                break;
+                            case 1:
+
+                                articulosdet[j].CodigoArticulo = spGeneral[j].ToString();
+
+                                break;
+                            case 2:
+
+                                articulosdet[j].Descripcion = spGeneral[j].ToString();
+
+                                break;
+                            case 3:
+
+                                articulosdet[j].Cantidad = Convert.ToInt32(spGeneral[j].ToString());
+
+                                break;
+                            case 4:
+
+                                articulosdet[j].TiempoArmado = spGeneral[j].ToString();
+                                break;
+                            case 5:
+
+
+                                break;
+                            case 6:
+                                articulosdet[j].EstadoArticulo = spGeneral[j].ToString();
+
+                                break;
+
+                        }
+                    }
+
+                }
+
+                la.articulosdet = articulosdet;
+                la.Comentarios = reservas.Comentarios(sp[0]);
+            }
+            else
+            {
+                la.articulosdet = articulosdet;
+                la.Comentarios = "";
+            }
+          
+           
+            return Json(la);
+        }
+
+        public JsonResult OrdenarCasos(string id)
+        {
+            List<Models.ListadoCasos> CasosDet = new List<Models.ListadoCasos>();
+            string[] sp = id.Split('|');
+
+            for (int i = 0; i < sp.Length; i++)
+            {
+                string[] spGeneral = sp[i].TrimEnd(',').Split(',');
+                for (int j = 0; j < spGeneral.Length; j++)
+                {
+                    switch (i)
+                    {
+                        case 0:
+
+                            Models.ListadoCasos articulo = new Models.ListadoCasos();
+                            articulo.Caso = spGeneral[j].ToString();
+                            CasosDet.Add(articulo);
+
+                            break;
+                        case 1:
+                            CasosDet[j].Acciones = spGeneral[j].ToString();
+                            break;
+                    }
+                }
+            }
+            return Json(CasosDet);
         }
 
         public JsonResult GetCaso(string id)

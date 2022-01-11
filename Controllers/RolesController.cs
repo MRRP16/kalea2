@@ -12,7 +12,7 @@ namespace kalea2.Controllers
 
         private Utilidades.Roles roles;
         // GET: Roles
-            //[AuthorizeUser(idOperacion: 0, pantalla: 2)]
+          [AuthorizeUser(idOperacion: 0, pantalla: 2)]
         public ActionResult Index()
         {
 
@@ -49,7 +49,7 @@ namespace kalea2.Controllers
         }
 
         // GET: Roles/Create
-        //[AuthorizeUser(idOperacion: 1, pantalla: 2)]
+        [AuthorizeUser(idOperacion: 1, pantalla: 2)]
         public ActionResult Create()
         {
             roles = new Utilidades.Roles();
@@ -59,7 +59,7 @@ namespace kalea2.Controllers
 
         // POST: Roles/Create
         [HttpPost]
-        //[AuthorizeUser(idOperacion: 1, pantalla: 2)]
+        [AuthorizeUser(idOperacion: 1, pantalla: 2)]
         public ActionResult Create(Models.Roles collection)
         {
             try
@@ -94,7 +94,7 @@ namespace kalea2.Controllers
         }
 
         // GET: Roles/Edit/5
-        //[AuthorizeUser(idOperacion: 2, pantalla: 2)]
+        [AuthorizeUser(idOperacion: 2, pantalla: 2)]
         public ActionResult Edit(int id)
         {
             roles = new Utilidades.Roles();
@@ -105,7 +105,7 @@ namespace kalea2.Controllers
 
         // POST: Roles/Edit/5
         [HttpPost]
-        //[AuthorizeUser(idOperacion: 2, pantalla: 2)]
+        [AuthorizeUser(idOperacion: 2, pantalla: 2)]
         public ActionResult Edit(int id, Models.Roles collection)
         {
             try
@@ -144,7 +144,7 @@ namespace kalea2.Controllers
         }
 
         // GET: Roles/Delete/5
-        //[AuthorizeUser(idOperacion: 3, pantalla: 2)]
+        [AuthorizeUser(idOperacion: 3, pantalla: 2)]
         public ActionResult Delete(int id)
         {
             try

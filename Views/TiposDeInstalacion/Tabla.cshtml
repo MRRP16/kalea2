@@ -2,59 +2,62 @@
 
 
 
-<div class="table-responsive">
-    <!-- Invoice List Table -->
-    <table class="invoice-list-table text-nowrap bg-white table footable" data-filter="#fooFilter">
-        <thead>
-            <tr>
-                <th>Descripción<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
-                <th>Estado<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
-                <th>Acción</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descripcion)
-                </td>
-                <td>
-                    @switch (item.Estado)
+<div class="panel" id="spy2" style="background-color:#ffffff">
+
+    <div class="panel-body pn">
+        <div class="table-responsive">
+            <table class="table footable" data-filter="#fooFilter">
+                <thead>
+                    <tr>
+                        <th>Descripción<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                        <th>Estado<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
                     {
-                        case "A":
-                            <a class="status-btn completed" href="@Url.Action("Delete", new {id = item.Codigo})">
-                                Activo
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Descripcion)
+                            </td>
+                            <td>
+                                @switch (item.Estado)
+                                {
+                                    case "A":
+                                        <a class="status-btn completed" href="@Url.Action("Delete", new {id = item.Codigo})">
+                                            Activo
 
-                            </a>
-                            @*<button type="button" class="status-btn completed">Activo</button>*@
-                            @Html.HiddenFor(modelItem => item.Estado)
-                            break;
-                        default:
+                                        </a>
+                                        @*<button type="button" class="status-btn completed">Activo</button>*@
+                                        @Html.HiddenFor(modelItem => item.Estado)
+                                        break;
+                                    default:
 
-                            <a class="status-btn un_paid" href="@Url.Action("Delete", new {id = item.Codigo})">
-                                Inactivo
+                                        <a class="status-btn un_paid" href="@Url.Action("Delete", new {id = item.Codigo})">
+                                            Inactivo
 
-                            </a>
+                                        </a>
 
-                            @*<button type="button" class="status-btn un_paid">Inactivo</button>*@
-                            @Html.HiddenFor(modelItem => item.Estado)
-                            break;
+                                        @*<button type="button" class="status-btn un_paid">Inactivo</button>*@
+                                        @Html.HiddenFor(modelItem => item.Estado)
+                                        break;
+                                }
+
+
+                            </td>
+                            <td>
+                                <button type="button" class="details-btn" data-toggle="ajax-modal" data-target="#addEmployee" data-url="@Url.Action($"Edit/{item.Codigo}")">
+                                    Editar
+                                    <img src="~/Content/assets/img/svg/plus_white.svg" alt="" class="svg">
+                                </button>
+                            </td>
+                        </tr>
                     }
-
-
-                </td>
-                <td>
-                    <button type="button" class="details-btn" data-toggle="ajax-modal" data-target="#addEmployee" data-url="@Url.Action($"Edit/{item.Codigo}")">
-                        Editar
-                        <img src="~/Content/assets/img/svg/plus_white.svg" alt="" class="svg">
-                    </button>
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
-    <!-- End Invoice List Table -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 <script>
     $(function () {
@@ -92,4 +95,22 @@
     })
 </script>
 
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+
+        //"use strict";
+
+        //// Init Theme Core
+        //Core.init();
+
+        //// Init Demo JS
+        //Demo.init();
+
+
+        // Init FooTable
+        $('.footable').footable();
+
+
+    });
+</script>
 

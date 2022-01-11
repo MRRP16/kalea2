@@ -1,0 +1,70 @@
+﻿
+@model kalea2.Models.Reserva
+
+<table id="invoice-edit-list-table" class="invoice-list-table style-two text-nowrap">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Evento</th>
+            <th>Articulo</th>
+            <th>Descripcion</th>
+            <th>Cantidad</th>
+            @*<th><span>Tiempo Armado</span></th>
+                <th><span>Remisionado</span></th>
+                <th><span>Estado</span></th>*@
+            <th>Accion</th>
+        </tr>
+    </thead>
+
+    <tbody data-repeater-list="group-a" class="bg-white">
+
+        @for (int i = 0; i < Model.Reserva_Articulos.Count; i++)
+        {
+            <tr data-repeater-item>
+                <td class="bold">
+                    @Html.DisplayFor(m => Model.Reserva_Articulos[i].Id)
+                    @Html.HiddenFor(m => Model.Reserva_Articulos[i].Id)
+                </td>
+                <td class="NumEvento">
+                    @Html.DisplayFor(m => Model.Reserva_Articulos[i].NumEvento)
+                    @Html.HiddenFor(m => Model.Reserva_Articulos[i].NumEvento)
+                </td>
+                <td class="CodigoArticulo">
+                    @Html.DisplayFor(m => Model.Reserva_Articulos[i].CodigoArticulo)
+                    @Html.HiddenFor(m => Model.Reserva_Articulos[i].CodigoArticulo)
+                </td>
+                <td class="Descripcion">
+                    @Html.DisplayFor(m => Model.Reserva_Articulos[i].Descripcion)
+                    @Html.HiddenFor(m => Model.Reserva_Articulos[i].Descripcion)
+                </td>
+                <td class="Cantidad">
+                    @Html.DisplayFor(m => Model.Reserva_Articulos[i].Cantidad)
+                    @Html.HiddenFor(m => Model.Reserva_Articulos[i].Cantidad)
+                    @*@Html.HiddenFor(m => Model.Reserva_Articulos[i].TiempoArmado)
+                        @Html.HiddenFor(m => Model.Reserva_Articulos[i].EstadoArticulo)
+                        @Html.HiddenFor(m => Model.Reserva_Articulos[i].NumEvento)*@
+                </td>
+                @*<td style="display:none;">
+                        @Html.DisplayFor(m => Model.Reserva_Articulos[i].TiempoArmado)
+                        @Html.HiddenFor(m => Model.Reserva_Articulos[i].TiempoArmado)
+                    </td>
+                    <td style="display:none;">
+                        @Html.DisplayFor(m => Model.Reserva_Articulos[i].Remisionado)
+                        @Html.HiddenFor(m => Model.Reserva_Articulos[i].Remisionado)
+                    </td>
+                    <td style="display:none;">
+                        @Html.DisplayFor(m => Model.Reserva_Articulos[i].EstadoArticulo)
+                        @Html.HiddenFor(m => Model.Reserva_Articulos[i].EstadoArticulo)
+                        @Html.HiddenFor(m => Model.Reserva_Articulos[i].NumEvento)
+                    </td>*@
+                <td>
+                    <a type="button" id="EliminarLinea" class="tr-close" data-toggle="tooltip" data-placement="top" data-original-title="Eliminar" onclick='productDelete(this);'>
+                        <i class="icofont-close"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+

@@ -1,79 +1,81 @@
 ﻿@model IEnumerable<kalea2.Models.Vehiculos>
 
-<div class="table-responsive">
-    <!-- Invoice List Table -->
-    <table class="invoice-list-table text-nowrap bg-white table footable" data-filter="#fooFilter">
-        <thead>
-            <tr>
-               
-                <th>Descripción<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
-                <th>Placa<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
-                <th>Piloto<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
-                <th>volumen<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
-                <th>Peso<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
-                <th>Estado<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
-                <th>Acción</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Descripcion)
-                        @Html.HiddenFor(modelItem => item.Codigo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Placa)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Piloto)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.VolumenCarga)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PesoCarga)
-                    </td>
-                    <td>
-                        @switch (item.Estado)
-                        {
-                            case "A":
-                                <a class="status-btn completed" href="@Url.Action("Delete", new {id = item.Codigo})">
-                                    Activo
-                                    
+<div class="panel" id="spy2" style="background-color:#ffffff">
+
+    <div class="panel-body pn">
+        <div class="table-responsive">
+            <table class="table footable" data-filter="#fooFilter">
+                <thead>
+                    <tr>
+                        <th>Descripción<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                        <th>Placa<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                        <th>Piloto<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                        <th>volumen<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                        <th>Peso<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                        <th>Estado<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Descripcion)
+                                @Html.HiddenFor(modelItem => item.Codigo)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Placa)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Piloto)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.VolumenCarga)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PesoCarga)
+                            </td>
+                            <td>
+                                @switch (item.Estado)
+                                {
+                                    case "A":
+                                        <a class="status-btn completed" href="@Url.Action("Delete", new {id = item.Codigo})">
+                                            Activo
+
+                                        </a>
+                                        @*<button type="button" class="status-btn completed">Activo</button>*@
+                                        @Html.HiddenFor(modelItem => item.Estado)
+                                        break;
+                                    default:
+
+                                        <a class="status-btn un_paid" href="@Url.Action("Delete", new {id = item.Codigo})">
+                                            Inactivo
+
+                                        </a>
+
+                                        @*<button type="button" class="status-btn un_paid">Inactivo</button>*@
+                                        @Html.HiddenFor(modelItem => item.Estado)
+                                        break;
+                                }
+
+
+                            </td>
+                            <td>
+                                <a class="details-btn" href="@Url.Action("Edit", new {id = item.Codigo})">
+                                    Editar
+                                    <img src="~/Content/assets/img/svg/plus_white.svg" alt="" class="svg">
                                 </a>
-                                @*<button type="button" class="status-btn completed">Activo</button>*@
-                                @Html.HiddenFor(modelItem => item.Estado)
-                                break;
-                            default:
+                                @*<button type="button" class="details-btn" data-toggle="ajax-modal" data-target="#addEmployee" data-url="@Url.Action($"Edit/{item.Codigo}")">
 
-                                <a class="status-btn un_paid" href="@Url.Action("Delete", new {id = item.Codigo})">
-                                    Inactivo
-                                   
-                                </a>
-
-                                @*<button type="button" class="status-btn un_paid">Inactivo</button>*@
-                                @Html.HiddenFor(modelItem => item.Estado)
-                                break;
-                        }
-
-
-                    </td>
-                    <td>
-                        <a class="details-btn" href="@Url.Action("Edit", new {id = item.Codigo})">
-                            Editar
-                            <img src="~/Content/assets/img/svg/plus_white.svg" alt="" class="svg">
-                        </a>
-                        @*<button type="button" class="details-btn" data-toggle="ajax-modal" data-target="#addEmployee" data-url="@Url.Action($"Edit/{item.Codigo}")">
-
-                            </button>*@
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    <!-- End Invoice List Table -->
+                    </button>*@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 <script>
     $(function () {
@@ -112,3 +114,21 @@
 </script>
 
 
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+
+        //"use strict";
+
+        //// Init Theme Core
+        //Core.init();
+
+        //// Init Demo JS
+        //Demo.init();
+
+
+        // Init FooTable
+        $('.footable').footable();
+
+
+    });
+</script>

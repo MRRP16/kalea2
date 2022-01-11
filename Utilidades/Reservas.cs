@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -174,7 +175,13 @@ namespace kalea2.Utilidades
             List<SelectListItem> Eventos;
             try
             {
-                string query = "SELECT * FROM Naf47.V_EVENTOS_PENDIENTES WHERE EVENTO NOT IN (SELECT CodigoEvento FROM T_DET_ENTREGAS) AND FECHA >= TO_DATE('01-OCT-2021');";
+                string query = @"SELECT * FROM Naf47.V_EVENTOS_PENDIENTES T5 WHERE EVENTO NOT IN (SELECT CodigoEvento FROM T_DET_ENTREGAS) AND FECHA >= TO_DATE('01-OCT-2021')
+                                AND (SELECT count(*)
+                                FROM Naf47.Pvlineas_movimiento T0
+                                LEFT JOIN Naf47.Arinda T1 ON T0.NO_ARTI = T1.NO_ARTI
+                                LEFT JOIN Naf47.Pvencabezado_movimientos T2 ON T2.NO_TRANSA_MOV = T0.NO_TRANSA_MOV
+                                LEFT JOIN Naf47.pvclientes T3 ON T3.COD_CLIENTE = T2.COD_CLIENTE
+                                WHERE T0.NO_TRANSA_MOV = T5.EVENTO AND T0.ENTREGADOMICILIO = 'D') >=1;";
                 var resultado = dB.ConsultarDB(query, "T_EVENTOS");
 
 
@@ -267,8 +274,10 @@ namespace kalea2.Utilidades
                 List<Models.Reserva_Detalle_Articulos> articulos;
                 try
                 {
-
-                    id = id.TrimEnd(new char[] { ',' });
+                    id = Regex.Replace(id, @"\r\n?|\n|\t", String.Empty);
+                    id = id.Replace(" ", "");
+                    
+                    id = id.TrimEnd(new char[] { ',','\n' });
 
                     articulos = new List<Models.Reserva_Detalle_Articulos>();
 

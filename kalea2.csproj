@@ -164,6 +164,8 @@
     <Compile Include="Models\BloqueoRutas.cs" />
     <Compile Include="Models\Bodegas.cs" />
     <Compile Include="Models\CasosEntregas.cs" />
+    <Compile Include="Models\ListadoArticulosUpdate.cs" />
+    <Compile Include="Models\ListadoCasos.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\ParametroGeneral.cs" />
     <Compile Include="Models\PdfCelda.cs" />
@@ -795,6 +797,7 @@
     <Content Include="Views\Vehiculos\Edit.cshtml" />
     <Content Include="Views\Vehiculos\Index.cshtml" />
     <Content Include="Views\Vehiculos\Tabla.cshtml" />
+    <Content Include="Views\Reservas\GetListadoArticulos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

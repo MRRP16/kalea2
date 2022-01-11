@@ -33,8 +33,8 @@ else if (ViewBag.Exitoso != null)
                                     </a>
                                 </div>
                                 @*<div class="delete_mail">
-                                        <a href="@Url.Action("Delete")"><img src="~/Content/assets/img/svg/delete.svg" alt="" class="svg"></a>
-                                    </div>*@
+                    <a href="@Url.Action("Delete")"><img src="~/Content/assets/img/svg/delete.svg" alt="" class="svg"></a>
+                </div>*@
                                 <!-- End Delete Mail -->
                                 <!-- Dropdown Button -->
                                 <!-- End Dropdown Button -->
@@ -72,9 +72,10 @@ else if (ViewBag.Exitoso != null)
                             </div>
                         </div>
                         <!-- End Invoice Header -->
+                        @Html.Partial("Tabla")
                     </div>
 
-                    @Html.Partial("Tabla")
+                   
 
                 </div>
                 <!-- End Card -->

@@ -1,4 +1,4 @@
-﻿@model kalea2.Models.Respuesta
+﻿@model Kalea.Models.Respuesta
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -21,6 +21,10 @@ else if (ViewBag.Exitoso != null)
 <!-- Main Content -->
 <div class="main-content d-flex flex-column flex-md-row">
     <div class="container-fluid">
+
+        <div class="progress" id="barraProgreso" style="display: none;">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" id="barraProgresoContenido" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%"></div>
+        </div>
 
         <div class="row">
             <div class="col-12">
@@ -184,7 +188,7 @@ else if (ViewBag.Exitoso != null)
                     <!-- End Board Header -->
                     <!-- Boards Cards -->
                     <div class="board-cards">
-                        @{ IEnumerable<kalea2.Models.Reserva> someVariable = Model.Reservaciones.Where(ve => ve.Vehiculo.Equals(Model.Vehiculos[i].Codigo.ToString())).OrderBy(ve => ve.NumeroEntregaDia); }
+                        @{ IEnumerable<Kalea.Models.Reserva> someVariable = Model.Reservaciones.Where(ve => ve.Vehiculo.Equals(Model.Vehiculos[i].Codigo.ToString())).OrderBy(ve => ve.NumeroEntregaDia); }
 
                         @foreach (var item in someVariable)
                         {
@@ -192,177 +196,177 @@ else if (ViewBag.Exitoso != null)
                             switch (item.ColorTipoEvento)
                             {
                                 case "#00b050": //VERDE
-                        <div class="board-card label-2 tarjetaReserva ov-hidden"
-                             style="--colorTarjeta: @Html.DisplayFor(modelItem => item.ColorTipoEvento); --AltoTarjeta:@Html.DisplayFor(modelItem => item.TamanioTarjeta)px;"
-                             id="card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)">
+                                    <div class="board-card label-2 tarjetaReserva ov-hidden"
+                                         style="--colorTarjeta: @Html.DisplayFor(modelItem => item.ColorTipoEvento); --AltoTarjeta:@Html.DisplayFor(modelItem => item.TamanioTarjeta)px;"
+                                         id="card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)">
 
-                            <div class="row">
-                                <div class="col-sm d-inline-flex justify-content-between">
-                                    <p class="black mb-2">#@Html.DisplayFor(modelItem => item.Id) - @Html.DisplayFor(modelItem => item.NombreCliente)</p>
+                                        <div class="row">
+                                            <div class="col-sm d-inline-flex justify-content-between">
+                                                <p class="black mb-2">#@Html.DisplayFor(modelItem => item.Id) - @Html.DisplayFor(modelItem => item.NombreCliente)</p>
 
-                                    @if (item.TamanioTarjeta < 160)
-                                    {
-                                        <p id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir"
-                                           onclick="expandir('@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
-                                           estadoExpandir="true">
-                                            <i class="arrow_carrot-down"></i>
-                                        </p>
-                                    }
-                                </div>
-                            </div>
+                                                @if (item.TamanioTarjeta < 160)
+                                                {
+                                                    <p id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir"
+                                                       onclick="expandir('@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
+                                                       estadoExpandir="true">
+                                                        <i class="arrow_carrot-down"></i>
+                                                    </p>
+                                                }
+                                            </div>
+                                        </div>
 
-                            <div id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir">
-                                <p class="black mb-1">Evento/Caso: @Html.DisplayFor(modelItem => item.ListadoEventosCasos)</p>
-                                <p class="black mb-1">GPS: @Html.DisplayFor(modelItem => item.Geolocalizacion)</p>
-                                <p class="black mb-1">Direccion: @Html.DisplayFor(modelItem => item.DireccionEntrega)</p>
-                                <p class="black mb-1">Armado: @Html.DisplayFor(modelItem => item.TiempoArmado)</p>
-                                @if (!item.FechaRestriccionInicio.Contains("00:00"))
-                                {
-                                    <p class="black mb-1">Restriccion: @Html.DisplayFor(modelItem => item.FechaRestriccionInicio) - @Html.DisplayFor(modelItem => item.FechaRestriccionFin) </p>
-                                }
-                                else
-                                {
-                                    <p class="black mb-1">Restriccion: 08:00 - 16:00 </p>
-                                }
+                                        <div id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir">
+                                            <p class="black mb-1">Evento/Caso: @Html.DisplayFor(modelItem => item.ListadoEventosCasos)</p>
+                                            <p class="black mb-1">GPS: @Html.DisplayFor(modelItem => item.Geolocalizacion)</p>
+                                            <p class="black mb-1">Direccion: @Html.DisplayFor(modelItem => item.DireccionEntrega)</p>
+                                            <p class="black mb-1">Armado: @Html.DisplayFor(modelItem => item.TiempoArmado)</p>
+                                            @if (!item.FechaRestriccionInicio.Contains("00:00"))
+                                            {
+                                                <p class="black mb-1">Restriccion: @Html.DisplayFor(modelItem => item.FechaRestriccionInicio) - @Html.DisplayFor(modelItem => item.FechaRestriccionFin) </p>
+                                            }
+                                            else
+                                            {
+                                                <p class="black mb-1">Restriccion: 08:00 - 16:00 </p>
+                                            }
 
-                            </div>
+                                        </div>
 
-                            <div class="d-flex flex-column justify-content-between">
-                                <div class="d-flex flex-row">
-                                    <div class="m-1 d-flex justify-content-between align-items-center">
-                                        <div class="left d-flex align-items-center">
-                                            <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
-                                            <a href="#" class="text_color font-10" data-toggle="tooltip" data-placement="top" title="Tiempo en Ruta">TR @Html.DisplayFor(modelItem => item.TiempoRuta) -</a>
+                                        <div class="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 180 ? "d-flex flex-column justify-content-between" : "d-flex flex-row")">
+                                            <div class="d-flex flex-row">
+                                                <div class="m-1 d-flex justify-content-between align-items-center">
+                                                    <div class="left d-flex align-items-center">
+                                                        <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
+                                                        <a href="#" class="text_color font-10" data-toggle="tooltip" data-placement="top" title="Tiempo en Ruta">TR @Html.DisplayFor(modelItem => item.TiempoRuta) -</a>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between align-items-center m-1">
+                                                    <div class="left d-flex align-items-center">
+                                                        <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
+                                                        <a href="#" class="text_color font-10" data-toggle="tooltip" data-placement="top" title="Hora de llegada">HL @Html.DisplayFor(modelItem => item.FechaArmado)</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="m-1 d-flex justify-content-between align-items-center" style="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 180 ? "position: absolute;" : "")  bottom: 0;">
+                                                <div class="left d-flex align-items-center">
+                                                    <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
+                                                    <a href="#" class="text_color font-10" data-toggle="tooltip" data-placement="top" title="Hora fin">HF @Html.DisplayFor(modelItem => item.FechaFin) </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-between align-items-center m-1">
-                                        <div class="left d-flex align-items-center">
-                                            <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
-                                            <a href="#" class="text_color font-10" data-toggle="tooltip" data-placement="top" title="Hora de llegada">HL @Html.DisplayFor(modelItem => item.FechaArmado)</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="m-1 d-flex justify-content-between align-items-center" style="position: absolute; bottom: 0;">
-                                    <div class="left d-flex align-items-center">
-                                        <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
-                                        <a href="#" class="text_color font-10" data-toggle="tooltip" data-placement="top" title="Hora fin">HF @Html.DisplayFor(modelItem => item.FechaFin) </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                                     break;
                                 case "#FF0000": //ROJO
-                    <div class="board-card label-2 tarjetaReserva ov-hidden"
-                         style="--colorTarjeta: @Html.DisplayFor(modelItem => item.ColorTipoEvento); --AltoTarjeta:@Html.DisplayFor(modelItem => item.TamanioTarjeta)px;"
-                         id="card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)">
+                                    <div class="board-card label-2 tarjetaReserva ov-hidden"
+                                         style="--colorTarjeta: @Html.DisplayFor(modelItem => item.ColorTipoEvento); --AltoTarjeta:@Html.DisplayFor(modelItem => item.TamanioTarjeta)px;"
+                                         id="card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)">
 
-                        <div class="row">
-                            <div class="col-sm d-inline-flex justify-content-between">
-                                <p class="black mb-2">Entrega #@Html.DisplayFor(modelItem => item.Id)</p>
-                                @if (item.TamanioTarjeta < 160)
-                                {
-                                    <p id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir"
-                                       onclick="expandir('@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
-                                       estadoExpandir="true">
-                                        <i class="arrow_carrot-down"></i>
-                                    </p>
-                                }
-                            </div>
-                        </div>
+                                        <div class="row">
+                                            <div class="col-sm d-inline-flex justify-content-between">
+                                                <p class="black mb-2">Entrega #@Html.DisplayFor(modelItem => item.Id)</p>
+                                                @if (item.TamanioTarjeta < 160)
+                                                {
+                                                    <p id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir"
+                                                       onclick="expandir('@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
+                                                       estadoExpandir="true">
+                                                        <i class="arrow_carrot-down"></i>
+                                                    </p>
+                                                }
+                                            </div>
+                                        </div>
 
-                        <div id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir">
-                            <p class="black mb-1">Evento/Caso: @Html.DisplayFor(modelItem => item.ListadoEventosCasos)</p>
-                            <p class="black mb-1">GPS: @Html.DisplayFor(modelItem => item.Geolocalizacion)</p>
-                            <p class="black mb-1">Direccion: @Html.DisplayFor(modelItem => item.DireccionEntrega)</p>
-                            <p class="black mb-1">Armado: @Html.DisplayFor(modelItem => item.TiempoArmado)</p>
-                            @if (!item.FechaRestriccionInicio.Contains("12:00:00 AM"))
-                            {
-                                <p class="black mb-1">Restriccion: @Html.DisplayFor(modelItem => item.FechaRestriccionInicio) - @Html.DisplayFor(modelItem => item.FechaRestriccionFin) </p>
-                            }
-                            else
-                            {
-                                <p class="black mb-1">Restriccion: 08:00 - 16:00 </p>
-                            }
+                                        <div id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir">
+                                            <p class="black mb-1">Evento/Caso: @Html.DisplayFor(modelItem => item.ListadoEventosCasos)</p>
+                                            <p class="black mb-1">GPS: @Html.DisplayFor(modelItem => item.Geolocalizacion)</p>
+                                            <p class="black mb-1">Direccion: @Html.DisplayFor(modelItem => item.DireccionEntrega)</p>
+                                            <p class="black mb-1">Armado: @Html.DisplayFor(modelItem => item.TiempoArmado)</p>
+                                            @if (!item.FechaRestriccionInicio.Contains("12:00:00 AM"))
+                                            {
+                                                <p class="black mb-1">Restriccion: @Html.DisplayFor(modelItem => item.FechaRestriccionInicio) - @Html.DisplayFor(modelItem => item.FechaRestriccionFin) </p>
+                                            }
+                                            else
+                                            {
+                                                <p class="black mb-1">Restriccion: 08:00 - 16:00 </p>
+                                            }
 
-                        </div>
+                                        </div>
 
-                        <div class="d-flex flex-column justify-content-between">
-                            <div class="d-flex flex-row">
-                                <div class="m-1 d-flex justify-content-between align-items-center">
-                                    <div class="left d-flex align-items-center">
-                                        <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
-                                        <a href="#" class="text_color font-10" data-toggle="tooltip" data-placement="top" title="Tiempo en Ruta">TR @Html.DisplayFor(modelItem => item.TiempoRuta) -</a>
+                                        <div class="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 180 ? "d-flex flex-column justify-content-between" : "d-flex flex-row")">
+                                            <div class="d-flex flex-row">
+                                                <div class="m-1 d-flex justify-content-between align-items-center">
+                                                    <div class="left d-flex align-items-center">
+                                                        <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
+                                                        <a href="#" class="text_color font-10" data-toggle="tooltip" data-placement="top" title="Tiempo en Ruta">TR @Html.DisplayFor(modelItem => item.TiempoRuta) -</a>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between align-items-center m-1">
+                                                    <div class="left d-flex align-items-center">
+                                                        <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
+                                                        <a href="#" class="text_color font-10" data-toggle="tooltip" data-placement="top" title="Hora de llegada">HL @Html.DisplayFor(modelItem => item.FechaArmado)</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="m-1 d-flex justify-content-between align-items-center" style="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 180 ? "position: absolute;" : "")  bottom: 0;">
+                                                <div class="left d-flex align-items-center">
+                                                    <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
+                                                    <a href="#" class="text_color font-10" data-toggle="tooltip" data-placement="top" title="Hora fin">HF @Html.DisplayFor(modelItem => item.FechaFin) </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center m-1">
-                                    <div class="left d-flex align-items-center">
-                                        <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
-                                        <a href="#" class="text_color font-10" data-toggle="tooltip" data-placement="top" title="Hora de llegada">HL @Html.DisplayFor(modelItem => item.FechaArmado)</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="m-1 d-flex justify-content-between align-items-center" style="position: absolute; bottom: 0;">
-                                <div class="left d-flex align-items-center">
-                                    <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
-                                    <a href="#" class="text_color font-10" data-toggle="tooltip" data-placement="top" title="Hora fin">HF @Html.DisplayFor(modelItem => item.FechaFin) </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                                     break;
                                 case "#376092":
-                    <div class="board-card label-2 tarjetaReserva ov-hidden"
-                         style="--colorTarjeta: @Html.DisplayFor(modelItem => item.ColorTipoEvento); --AltoTarjeta:120px;"
-                         id="card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)">
+                                    <div class="board-card label-2 tarjetaReserva ov-hidden"
+                                         style="--colorTarjeta: @Html.DisplayFor(modelItem => item.ColorTipoEvento); --AltoTarjeta:120px;"
+                                         id="card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)">
 
-                        <div class="row">
-                            <div class="col-sm d-inline-flex justify-content-between">
-                                <p class="black mb-1">#@Html.DisplayFor(modelItem => item.Id) - Reserva</p>
-                            </div>
-                            @if (item.TamanioTarjeta < 160)
-                            {
-                                <p id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir"
-                                   onclick="expandir('@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
-                                   estadoExpandir="true">
-                                    <i class="arrow_carrot-down"></i>
-                                </p>
-                            }
-                        </div>
-                        <div id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir">
-                            <p class="black mb-1">Referencia: @Html.DisplayFor(modelItem => item.ReferenciaReserva) </p>
-                            <p class="black mb-1">Minutos restantes: @Html.DisplayFor(modelItem => item.TiempoRestante) min</p>
-                            <p class="black mb-1"></p>
-                            <p class="black mb-1"></p>
+                                        <div class="row">
+                                            <div class="col-sm d-inline-flex justify-content-between">
+                                                <p class="black mb-1">#@Html.DisplayFor(modelItem => item.Id) - Reserva</p>
+                                            </div>
+                                            @if (item.TamanioTarjeta < 160)
+                                            {
+                                                <p id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir"
+                                                   onclick="expandir('@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
+                                                   estadoExpandir="true">
+                                                    <i class="arrow_carrot-down"></i>
+                                                </p>
+                                            }
+                                        </div>
+                                        <div id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir">
+                                            <p class="black mb-1">Referencia: @Html.DisplayFor(modelItem => item.ReferenciaReserva) </p>
+                                            <p class="black mb-1">Minutos restantes: @Html.DisplayFor(modelItem => item.TiempoRestante) min</p>
+                                            <p class="black mb-1"></p>
+                                            <p class="black mb-1"></p>
 
 
-                        </div>
+                                        </div>
 
-                        <div class="d-flex flex-column">
-                            <div class="d-flex flex-row">
-                                <div class="m-1 d-flex justify-content-between align-items-center">
-                                    <div class="left d-flex align-items-center">
-                                        <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
-                                        <a href="#" class="text_color font-12" data-toggle="tooltip" data-placement="top" title="Tiempo en Ruta">TR @Html.DisplayFor(modelItem => item.TiempoRuta) -</a>
+                                        <div class="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 180 ? "d-flex flex-column justify-content-between" : "d-flex flex-row")">
+                                            <div class="d-flex flex-row">
+                                                <div class="m-1 d-flex justify-content-between align-items-center">
+                                                    <div class="left d-flex align-items-center">
+                                                        <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
+                                                        <a href="#" class="text_color font-12" data-toggle="tooltip" data-placement="top" title="Tiempo en Ruta">TR @Html.DisplayFor(modelItem => item.TiempoRuta) -</a>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-between align-items-center m-1">
+                                                    <div class="left d-flex align-items-center">
+                                                        <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
+                                                        <a href="#" class="text_color font-12" data-toggle="tooltip" data-placement="top" title="Hora de llegadaa">HL @Html.DisplayFor(modelItem => item.FechaArmado)</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="m-1 d-flex justify-content-between align-items-center" style="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 180 ? "position: absolute;" : "")  bottom: 0;">
+                                                <div class="left d-flex align-items-center">
+                                                    <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
+                                                    <a href="#" class="text_color font-12" data-toggle="tooltip" data-placement="top" title="Hora fin">HF @Html.DisplayFor(modelItem => item.FechaFin) </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center m-1">
-                                    <div class="left d-flex align-items-center">
-                                        <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
-                                        <a href="#" class="text_color font-12" data-toggle="tooltip" data-placement="top" title="Hora de llegadaa">HL @Html.DisplayFor(modelItem => item.FechaArmado)</a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="m-1 d-flex justify-content-between align-items-center" style="position: absolute; bottom: 0;">
-                                <div class="left d-flex align-items-center">
-                                    <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
-                                    <a href="#" class="text_color font-12" data-toggle="tooltip" data-placement="top" title="Hora fin">HF @Html.DisplayFor(modelItem => item.FechaFin) </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                                     break;
                                 case "#FF5733":
                                     <div class="board-card label-2 tarjetaReserva" style="--colorTarjeta: @Html.DisplayFor(modelItem => item.ColorTipoEvento); --AltoTarjeta:1000px;" id="card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)">
@@ -465,6 +469,12 @@ else if (ViewBag.Exitoso != null)
 
         function enviarTablasDeEntregas(arreglo) {
 
+
+            $("#barraProgreso").css("display", "flex");
+            contadorBarraProgreso = 0;
+            barraProgreso = 10;
+            barraDeProgreso();
+
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("ActualizarEventos", "Reservas")',
@@ -473,15 +483,12 @@ else if (ViewBag.Exitoso != null)
                 data: {
                     id: arreglo.toString()
                 },
-                success: function (states) {
-                   /* alert("Orden");*/
-                    Swal.fire({ title: "Excelente!", text: "Entregas ordenadas exitosamente!", type: "success", confirmButtonClass: "btn long", buttonsStyling: !1 });
-                    var delayInMilliseconds = 6000; //1 second
+                success: async function (states) {
 
-                    setTimeout(function () {
-                        //your code to be executed after 1 second
-                        location.reload();
-                    }, delayInMilliseconds);
+                    await Swal.fire({ title: "Excelente!", text: "Entregas ordenadas exitosamente!", type: "success", confirmButtonClass: "btn long", buttonsStyling: !1 });
+                    contadorBarraProgreso = 10;
+                    $("#barraProgresoContenido").css("width", "100%");
+                    location.reload();
 
                 },
                 error: function (ex) {
@@ -491,6 +498,20 @@ else if (ViewBag.Exitoso != null)
         }
 
     })
+
+    var contadorBarraProgreso ;
+    var barraProgreso = 10;
+    function barraDeProgreso() {
+
+        setTimeout(function () {
+            $("#barraProgresoContenido").css("width", barraProgreso+"%");
+            barraProgreso += 12
+            contadorBarraProgreso++;
+            if (contadorBarraProgreso < 6) {
+                barraDeProgreso()
+            }
+        }, 1000);
+    }
 
 
     function expandir(idExpandir, idTarjeta, tamanioTarjeta) {

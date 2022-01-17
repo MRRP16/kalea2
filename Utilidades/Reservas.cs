@@ -112,7 +112,36 @@ namespace kalea2.Utilidades
                         DataRow[] drow = resultado.Tables[0].Select("ID = '" + reserva.Id + "'");
                         foreach (DataRow item2 in drow)
                         {
-                            reserva.ListadoEventosCasos += item2[30].ToString() + ";";
+                            if (!string.IsNullOrEmpty(item2[30].ToString()))
+                            {
+                                if (!string.IsNullOrEmpty(reserva.ListadoEventosCasos))
+                                {
+                                    if (!reserva.ListadoEventosCasos.Contains(item2[30].ToString()))
+                                    {
+                                        reserva.ListadoEventosCasos += item2[30].ToString() + ";";
+                                    }
+                                }
+                                else
+                                {
+                                    reserva.ListadoEventosCasos += item2[30].ToString() + ";";
+                                } 
+                            }
+                            if (!string.IsNullOrEmpty(item2[31].ToString()))
+                            {
+                                if (!string.IsNullOrEmpty(reserva.ListadoEventosCasos))
+                                {
+                                    if (!reserva.ListadoEventosCasos.Contains(item2[31].ToString()))
+                                    {
+                                        reserva.ListadoEventosCasos += item2[31].ToString() + ";";
+                                    }
+                                }
+                                else
+                                {
+                                    reserva.ListadoEventosCasos += item2[31].ToString() + ";";
+                                }
+
+                            }
+
                         }
                         ListadoReservas.Add(reserva);
                         inicial = item["Id"].ToString();
@@ -150,8 +179,11 @@ namespace kalea2.Utilidades
             List<SelectListItem> Casos;
             try
             {
+                //string query = @"SELECT T0.Caso FROM Naf47.rec_detalle_caso T0 inner join Naf47.rec_caso T1 ON T0.Caso = T1.Caso
+                //                 WHERE T0.Caso NOT IN (SELECT NumCaso FROM T_DET_CASOS_ENTREGAS) AND T1.Estado <> 'F' GROUP BY T0.Caso";
+
                 string query = @"SELECT T0.Caso FROM Naf47.rec_detalle_caso T0 inner join Naf47.rec_caso T1 ON T0.Caso = T1.Caso
-                                 WHERE T0.Caso NOT IN (SELECT NumCaso FROM T_DET_CASOS_ENTREGAS) AND T1.Estado <> 'F' GROUP BY T0.Caso";
+                                 WHERE T1.Estado <> 'F' GROUP BY T0.Caso";
                 var resultado = dB.ConsultarDB(query, "T_EVENTOS");
 
 

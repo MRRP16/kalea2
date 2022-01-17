@@ -165,7 +165,7 @@
                                 <div class="row">
                                     <div class="col-sm d-inline-flex justify-content-between">
                                         <p class="black mb-2">Entrega #@Html.DisplayFor(modelItem => item.Id)</p>
-                                        @if (item.TamanioTarjeta < 160)
+                                        @if (item.TamanioTarjeta < 180)
                                         {
                                             <p id="@Html.DisplayFor(modelItem => item.Id)-@Html.DisplayFor(modelItem => item.Id)-expandir"
                                                onclick="expandir('@Html.DisplayFor(modelItem => item.Id)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => item.Id)-@Html.DisplayFor(modelItem => item.Id)-@Html.DisplayFor(modelItem => item.Vehiculo)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
@@ -187,7 +187,7 @@
                                 {
                                     <p class="black mb-1">Restriccion: 08:00 - 16:00 </p>
                                 }
-                                <div class="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 180 ? "d-flex flex-column justify-content-between" : "d-flex flex-row")">
+                                <div class="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 210 ? "d-flex flex-column justify-content-between" : "d-flex flex-row")">
                                     <div class="d-flex flex-row">
                                         <div class="m-1 d-flex justify-content-between align-items-center">
                                             <div class="left d-flex align-items-center">
@@ -203,7 +203,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="m-1 d-flex justify-content-between align-items-center" style="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 180 ? "position: absolute;" : "")  bottom: 0;">
+                                    <div class="m-1 d-flex justify-content-between align-items-center" style="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 210 ? "position: absolute;" : "")  bottom: 0;">
                                         <div class="left d-flex align-items-center">
                                             <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
                                             <a href="#" class="text_color font-12" data-toggle="tooltip" data-placement="top" title="Hora fin">HF @Html.DisplayFor(modelItem => item.FechaFin) </a>
@@ -366,41 +366,21 @@
 
 @section Scripts {
 
-    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
     <script src="~/Content/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
     <script src="~/Content/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
     <script src="~/Content/assets/plugins/datepicker/datepicker.min.js"></script>
     <script src="~/Content/assets/plugins/datepicker/i18n/datepicker.en.js"></script>
     <script src="~/Content/assets/plugins/timepicker/jquery.timepicker.min.js"></script>
     <script src="~/Content/assets/plugins/datepicker/custom-form-datepicker.js"></script>
-    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
-    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
-    <!--<script src="~/Content/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
-    <script src="~/Content/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
-    <script src="~/Content/assets/plugins/datepicker/datepicker.min.js"></script>
-    <script src="~/Content/assets/plugins/datepicker/i18n/datepicker.en.js"></script>
-    <script src="~/Content/assets/plugins/timepicker/jquery.timepicker.min.js"></script>
-    <script src="~/Content/assets/plugins/datepicker/custom-form-datepicker.js"></script>-->
-    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
-    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
-    <!--<script src="~/Content/assets/js/jquery.min.js"></script>
-    <script src="~/Content/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="~/Content/assets/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    <script src="~/Content/assets/js/script.js"></script>-->
-    <!-- ======= BEGIN GLOBAL MANDATORY SCRIPTS ======= -->
-    <!-- ======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
     <script src="~/Content/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
     <script src="~/Content/assets/plugins/moment/moment.min.js"></script>
     <script src="~/Content/assets/plugins/datepicker/datepicker.min.js"></script>
     <script src="~/Content/assets/plugins/timepicker/jquery.timepicker.min.js"></script>
     <script src="~/Content/assets/plugins/daterangepicker/daterangepicker.js"></script>
-
     <script src="~/Content/assets/plugins/datepicker/i18n/datepicker.en.js"></script>
     <script src="~/Content/assets/plugins/datepicker/i18n/datepicker-ar.js"></script>
     <script src="~/Content/assets/plugins/datepicker/i18n/datepicker-fr.js"></script>
     <script src="~/Content/assets/plugins/datepicker/i18n/datepicker-he.js"></script>
     <script src="~/Content/assets/plugins/datepicker/i18n/datepicker-zh-TW.js"></script>
-
     <script src="~/Content/assets/plugins/datepicker/custom-form-datepicker.js"></script>
-    <!-- ======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= -->
 }

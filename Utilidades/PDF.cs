@@ -59,11 +59,14 @@ namespace kalea2.Utilidades
                     int total = 0;
                     foreach (var item2 in item.Productos)
                     {
-                        table.AddCell(GetCell(Texto: item2.Sku,         Rowspan: 1, Colspan: 1, HorizontalAlignment: 0));
-                        table.AddCell(GetCell(Texto: item2.Descripcion, Rowspan: 1, Colspan: 7, HorizontalAlignment: 0));
-                        table.AddCell(GetCell(Texto: item2.Bodega,      Rowspan: 1, Colspan: 1, HorizontalAlignment: 0));
-                        table.AddCell(GetCell(Texto: item2.Cantidad,    Rowspan: 1, Colspan: 1, HorizontalAlignment: 1));
-                        total += int.Parse(item2.Cantidad);
+                        if (item2.Sku != "")
+                        {
+                            table.AddCell(GetCell(Texto: item2.Sku, Rowspan: 1, Colspan: 1, HorizontalAlignment: 0));
+                            table.AddCell(GetCell(Texto: item2.Descripcion, Rowspan: 1, Colspan: 7, HorizontalAlignment: 0));
+                            table.AddCell(GetCell(Texto: item2.Bodega, Rowspan: 1, Colspan: 1, HorizontalAlignment: 0));
+                            table.AddCell(GetCell(Texto: item2.Cantidad, Rowspan: 1, Colspan: 1, HorizontalAlignment: 1));
+                            total += int.Parse(item2.Cantidad);
+                        }
                     }
 
                     table.AddCell(GetCell(Texto: " ",               Rowspan: 1, Colspan: 10, HorizontalAlignment: 2));

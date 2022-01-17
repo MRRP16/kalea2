@@ -5,7 +5,14 @@
 }
 
 <div class="main-content d-flex flex-column flex-md-row">
+    
+
     <div class="container-fluid">
+
+        <div class="row d-flex justify-content-center mb-2 mt-2">
+            <h3>Guías de Transporte</h3>
+        </div>
+
         <form method="get" action="/ReporteDeEntregas/Details" class="search-form" autocomplete="off">
             <div class="row">
                 <div class="col-12">
@@ -15,6 +22,7 @@
                             <label for="exampleSelect1" class="mb-2 black bold d-block">Seleccione el vehiculo</label>
                             <div class="custom-select style--two">
                                 <select class="theme-input-style" id="exampleSelect1" name="vehiculo">
+                                    <option value="todos">Todos</option>
                                     @foreach (var item in Model)
                                     {
                                         <option value="@Html.DisplayFor(modelItem => item.Codigo)">@Html.DisplayFor(modelItem => item.Descripcion)</option>
@@ -60,16 +68,12 @@
 
 
 @section Scripts {
-     @*======= BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS =======*@ 
     <script src="~/Content/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
     <script src="~/Content/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
     <script src="~/Content/assets/plugins/datepicker/datepicker.min.js"></script>
     <script src="~/Content/assets/plugins/datepicker/i18n/datepicker.en.js"></script>
     <script src="~/Content/assets/plugins/timepicker/jquery.timepicker.min.js"></script>
     <script src="~/Content/assets/plugins/datepicker/custom-form-datepicker.js"></script>
-     ===@*==== End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= 
-     =======*@ BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= 
     <script src="~/Content/assets/plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <script src="~/Content/assets/plugins/sweetalert2/sweetalerts.js"></script>
-     @*======= End BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS ======= \*@
 }

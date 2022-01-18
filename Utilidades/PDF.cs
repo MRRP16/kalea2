@@ -236,10 +236,7 @@ namespace kalea2.Utilidades
                     Reportes reportes = new Reportes();
                     List<ReportesGuias> listado = reportes.GetEventosCasosParaGuiasDeTransporte(vehiculoId: vehiculo.Codigo.ToString(), fecha: fechaDeEntrega);
 
-
-
                     PdfPTable table = new PdfPTable(10);
-                    table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, Border: 2));
                     table.AddCell(GetCell(Texto: "Vehiculo: " + vehiculo.Descripcion, Rowspan: 1, Colspan: 10, HorizontalAlignment: 1, Size: 10));
 
                     table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, Border: 2));

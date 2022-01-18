@@ -38,6 +38,8 @@ namespace kalea2.Models
         public string Evento { get; set; }
         public string Vendedor { get; set; }
         public string Observaciones { get; set; }
+        public string Bodega { get; set; }
+       
         public List<ProductosEventosEntregas> Productos { get; set; }
     }
     public class ProductosEventosEntregas
@@ -46,5 +48,6 @@ namespace kalea2.Models
         public string Descripcion { get; set; }
         public string Cantidad { get; set; }
         public string Bodega { get; set; }
+        public string Vehiculo { get; set; }
     }
 }

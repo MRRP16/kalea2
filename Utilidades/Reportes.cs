@@ -22,6 +22,7 @@ namespace kalea2.Utilidades
             {
                 try
                 {
+
                     string query = string.Format("SELECT T.id, T.codigoevento, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, " +
                         "T.telefono, T.celular, T.tiempoarmado, T.comentariostorre, T.VEHICULO, SUM(T.PESO) AS PESO, SUM(T.VOLUMEN)AS VOLUMEN, SUM(T.COSTO) AS COSTO, " +
                         "1 AS RADIO, T.ETIQUETAS, T.PRIORIDAD, T.FechaRestriccionInicio, T.FECHARECTRICCIONFIN " +
@@ -234,19 +235,55 @@ namespace kalea2.Utilidades
             List<ReportesEventosEntregas> listadoDeEventos = new List<ReportesEventosEntregas>();
             try
             {
-                string query = string.Format(@"SELECT T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.DESCRIPCION,T5.COMENTARIOSVENTAS
-                    FROM Naf47.Pvlineas_movimiento T0 
-                    INNER JOIN naf47.arinda T3 ON T0.NO_ARTI = T3.NO_ARTI
-                    LEFT JOIN T_DET_ENTREGAS T4 ON T4.CODIGOEVENTO = T0.NO_TRANSA_MOV
-                    INNER JOIN T_ENC_ENTREGAS T5 ON T5.ID = T4.IDENTREGA
-                    WHERE T0.NO_TRANSA_MOV IN (
-                    SELECT  T1.CODIGOEVENTO  FROM t_det_entregas T1 INNER JOIN t_enc_entregas T2 ON T1.identrega = T2.ID 
-                    WHERE T2.FechaInicio >= to_timestamp('{0} 00:00:00', 'dd/MM/yy hh24:mi:ss') 
-                    AND T2.FechaInicio <= to_timestamp('{0} 23:59:59', 'dd/MM/yy hh24:mi:ss')
-                    GROUP BY T1.CODIGOEVENTO)
-                    AND T0.BODEGA = '{1}'
-                    GROUP BY T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.DESCRIPCION,T5.COMENTARIOSVENTAS
-                    order by t0.NO_TRANSA_MOV ASC;", fecha, bodegaId);
+                string query = string.Empty;
+                switch (bodegaId)
+                {
+                    case "0000":
+                        Controllers.ReporteDeBodegaController n = new Controllers.ReporteDeBodegaController();
+                        string bodegas = string.Empty;
+                        foreach (var item in n.ListadoBodegas())
+                        {
+                            if (!item.Codigo.Equals("0000"))
+                            {
+                                bodegas += "'" + item.Codigo + "',";
+                            }
+                           
+                        }
+                        bodegas = bodegas.TrimEnd(',');
+                        query = string.Format(@"SELECT T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.DESCRIPCION,T5.COMENTARIOSVENTAS,T8.DESCRIPCION AS VEHICULO
+                                                FROM Naf47.Pvlineas_movimiento T0 
+                                                INNER JOIN naf47.arinda T3 ON T0.NO_ARTI = T3.NO_ARTI
+                                                LEFT JOIN T_DET_ENTREGAS T4 ON T4.CODIGOEVENTO = T0.NO_TRANSA_MOV
+                                                INNER JOIN T_ENC_ENTREGAS T5 ON T5.ID = T4.IDENTREGA
+                                                LEFT JOIN T_VEHICULOS T8 ON T8.ID = T5.VEHICULO
+                                                WHERE T0.NO_TRANSA_MOV IN (
+                                                SELECT  T1.CODIGOEVENTO  FROM t_det_entregas T1 INNER JOIN t_enc_entregas T2 ON T1.identrega = T2.ID 
+                                                WHERE T2.FechaInicio >= to_timestamp('{0} 00:00:00', 'dd/MM/yy hh24:mi:ss') 
+                                                AND T2.FechaInicio <= to_timestamp('{0} 23:59:59', 'dd/MM/yy hh24:mi:ss')
+                                                GROUP BY T1.CODIGOEVENTO)
+                                                AND T0.BODEGA IN({1})
+                                                GROUP BY T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.DESCRIPCION,T5.COMENTARIOSVENTAS,T8.DESCRIPCION
+                                                order by t0.NO_TRANSA_MOV ASC;", fecha, bodegas);
+                        break;
+                    default:
+                        query = string.Format(@"SELECT T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.DESCRIPCION,T5.COMENTARIOSVENTAS ,T8.DESCRIPCION AS VEHICULO
+                                                FROM Naf47.Pvlineas_movimiento T0 
+                                                INNER JOIN naf47.arinda T3 ON T0.NO_ARTI = T3.NO_ARTI
+                                                LEFT JOIN T_DET_ENTREGAS T4 ON T4.CODIGOEVENTO = T0.NO_TRANSA_MOV
+                                                INNER JOIN T_ENC_ENTREGAS T5 ON T5.ID = T4.IDENTREGA
+                                                LEFT JOIN T_VEHICULOS T8 ON T8.ID = T5.VEHICULO
+                                                WHERE T0.NO_TRANSA_MOV IN (
+                                                SELECT  T1.CODIGOEVENTO  FROM t_det_entregas T1 INNER JOIN t_enc_entregas T2 ON T1.identrega = T2.ID 
+                                                WHERE T2.FechaInicio >= to_timestamp('{0} 00:00:00', 'dd/MM/yy hh24:mi:ss') 
+                                                AND T2.FechaInicio <= to_timestamp('{0} 23:59:59', 'dd/MM/yy hh24:mi:ss')
+                                                GROUP BY T1.CODIGOEVENTO)
+                                                AND T0.BODEGA = '{1}'
+                                                GROUP BY T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.DESCRIPCION,T5.COMENTARIOSVENTAS,T8.DESCRIPCION
+                                                order by t0.NO_TRANSA_MOV ASC;", fecha, bodegaId);
+                        break;
+                }
+
+               
 
                 var resultado = dB.ConsultarDB(query, "T_EVENTOS");
 
@@ -284,6 +321,8 @@ namespace kalea2.Utilidades
             List<ProductosEventosEntregas> listadoProductos = new List<ProductosEventosEntregas>();
             reporte.Evento = item["NO_TRANSA_MOV"].ToString();
             reporte.Observaciones = item["COMENTARIOSVENTAS"].ToString();
+            reporte.Bodega = item["BODEGA"].ToString();
+           
             reporte.Vendedor = null;
 
 
@@ -300,8 +339,10 @@ namespace kalea2.Utilidades
                 Sku = item["NO_ARTI"].ToString(),
                 Descripcion = item["DESCRIPCION"].ToString(),
                 Cantidad = item["CANTIDAD"].ToString(),
-                Bodega = item["BODEGA"].ToString()
-            };
+                Bodega = item["BODEGA"].ToString(),
+                Vehiculo = item["VEHICULO"].ToString()
+
+        };
             listadoProductos.Add(producto);
             reporte.Productos = listadoProductos;
 
@@ -330,7 +371,8 @@ namespace kalea2.Utilidades
                 Sku = item["NO_ARTI"].ToString(),
                 Descripcion = item["DESCRIPCION"].ToString(),
                 Cantidad = item["CANTIDAD"].ToString(),
-                Bodega = item["BODEGA"].ToString()
+                Bodega = item["BODEGA"].ToString(),
+                Vehiculo = item["VEHICULO"].ToString()
             };
 
             listadoProductos.Add(producto);

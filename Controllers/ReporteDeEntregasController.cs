@@ -38,52 +38,25 @@ namespace kalea2.Controllers
             DateTime date = Convert.ToDateTime(fecha, CultureInfo.InvariantCulture);
             Utilidades.Vehiculos vehiculos = new Utilidades.Vehiculos();
 
-            //if (vehiculo == "todos")
-            //{
-            //    List<Models.Vehiculos> listadoVehiculos = vehiculos.ListadoVehiculos();
+            if (vehiculo == "todos")
+            {
+                List<Models.Vehiculos> listadoVehiculos = vehiculos.ListadoVehiculos();
 
+                //List<ReportesGuias> listado = reportes.GetEventosCasosParaGuiasDeTransporte(vehiculoId: item.Codigo.ToString(), fecha: date.ToString("dd/MM/yyyy"));
+                //Models.Vehiculos respuestaVehiculo = vehiculos.ObtenerVehiculo(int.Parse(item.Codigo.ToString()));
+                byte[] respuesta = pdf.CrearTodosLosReportesDeTransporte(listadoVehiculos, date.ToString("dd/MM/yyyy"));
+                string nombreArchivo = "TodosGuiasDeTransporte_" + date.ToString("dd/MM/yyyy") + ".pdf";
+                return File(respuesta, "application/pdf", nombreArchivo);
 
-
-            //    using (var memoryStream = new MemoryStream())
-            //    {
-            //        using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
-            //        {
-            //            var file1 = archive.CreateEntry("file1.txt");
-            //            using (var streamWriter = new StreamWriter(file1.Open()))
-            //            {
-            //                streamWriter.Write("content1");
-            //            }
-
-            //            var file2 = archive.CreateEntry("file2.txt");
-            //            using (var streamWriter = new StreamWriter(file2.Open()))
-            //            {
-            //                streamWriter.Write("content2");
-            //            }
-            //        }
-
-            //        return File(memoryStream.ToArray(), "application/zip", "Images.zip");
-            //    }
-
-
-            //    foreach (var item in listadoVehiculos)
-            //    {
-            //        List<ReportesGuias> listado = reportes.GetEventosCasosParaGuiasDeTransporte(vehiculoId: item.Codigo.ToString(), fecha: date.ToString("dd/MM/yyyy"));
-            //        Models.Vehiculos respuestaVehiculo = vehiculos.ObtenerVehiculo(int.Parse(item.Codigo.ToString()));
-            //        byte[] respuesta = pdf.CrearReporteDeTransporte(listado, date.ToString("dd/MM/yyyy"), respuestaVehiculo.Descripcion);
-            //        string nombreArchivo = respuestaVehiculo.Descripcion.ToString() + "_" + date.ToString("dd/MM/yyyy") + ".pdf";
-            //    return File(respuesta, "application/pdf", nombreArchivo);
-            //    }
-            //    return View();
-                
-            //}
-            //else
-            //{
+            }
+            else
+            {
                 List<ReportesGuias> listado = reportes.GetEventosCasosParaGuiasDeTransporte(vehiculoId: vehiculo, fecha: date.ToString("dd/MM/yyyy"));
                 Models.Vehiculos respuestaVehiculo = vehiculos.ObtenerVehiculo(int.Parse(vehiculo));
                 byte[] respuesta = pdf.CrearReporteDeTransporte(listado, date.ToString("dd/MM/yyyy"), respuestaVehiculo.Descripcion);
                 string nombreArchivo = respuestaVehiculo.Descripcion.ToString() + "_" + date.ToString("dd/MM/yyyy") + ".pdf";
                 return File(respuesta, "application/pdf", nombreArchivo);
-            //}
+            }
         }
     }
 }

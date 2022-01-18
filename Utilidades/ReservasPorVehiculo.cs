@@ -99,7 +99,35 @@ namespace kalea2.Utilidades
                                 DataRow[] drow = resultado.Tables[0].Select("ID = '" + reserva.Id + "'");
                                 foreach (DataRow item2 in drow)
                                 {
-                                    reserva.ListadoEventosCasos += item2[30].ToString() + ";";
+                                    if (!string.IsNullOrEmpty(item2[30].ToString()))
+                                    {
+                                        if (!string.IsNullOrEmpty(reserva.ListadoEventosCasos))
+                                        {
+                                            if (!reserva.ListadoEventosCasos.Contains(item2[30].ToString()))
+                                            {
+                                                reserva.ListadoEventosCasos += item2[30].ToString() + ";";
+                                            }
+                                        }
+                                        else
+                                        {
+                                            reserva.ListadoEventosCasos += item2[30].ToString() + ";";
+                                        }
+                                    }
+                                    if (!string.IsNullOrEmpty(item2[31].ToString()))
+                                    {
+                                        if (!string.IsNullOrEmpty(reserva.ListadoEventosCasos))
+                                        {
+                                            if (!reserva.ListadoEventosCasos.Contains(item2[31].ToString()))
+                                            {
+                                                reserva.ListadoEventosCasos += item2[31].ToString() + ";";
+                                            }
+                                        }
+                                        else
+                                        {
+                                            reserva.ListadoEventosCasos += item2[31].ToString() + ";";
+                                        }
+
+                                    }
                                 }
                                 listadoreservas.Add(reserva);
                                 inicial = item["Id"].ToString();

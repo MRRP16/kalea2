@@ -49,5 +49,6 @@ namespace kalea2.Models
         public string Cantidad { get; set; }
         public string Bodega { get; set; }
         public string Vehiculo { get; set; }
+        public string Inmediatas { get; set; }
     }
 }

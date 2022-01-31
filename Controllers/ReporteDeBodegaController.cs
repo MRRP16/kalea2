@@ -173,7 +173,7 @@ namespace kalea2.Controllers
                             "",
                             "",
                             //inmediatas
-                            "",
+                            listado2[i].Productos[j].Inmediatas,
                             listado2[i].Productos[j].Sku,
                             listado2[i].Productos[j].Descripcion,
                             listado2[i].Productos[j].Bodega,
@@ -303,7 +303,7 @@ namespace kalea2.Controllers
                             "",
                             "",
                             //inmediatas
-                            "",
+                            listado[i].Productos[j].Inmediatas,
                             listado[i].Productos[j].Sku,
                             listado[i].Productos[j].Descripcion,
                             listado[i].Productos[j].Bodega,
@@ -315,7 +315,7 @@ namespace kalea2.Controllers
                         }
                     }
                     NumberFormatInfo nfi = new CultureInfo("es-GT", false).NumberFormat;
-                    string NombreReporte = "Pendietes_" + nombreBodega + "_" + date.ToString("ddMMyyyy");
+                    string NombreReporte = "Pendientes_" + nombreBodega + "_" + date.ToString("ddMMyyyy");
                     using (MemoryStream stream = new MemoryStream())
                     {
                         excel.SaveAs(stream);

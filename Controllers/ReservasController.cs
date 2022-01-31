@@ -532,7 +532,7 @@ namespace kalea2.Controllers
             }
         }
 
-
+        [AuthorizeUser(idOperacion: 1, pantalla: 12)]
         public JsonResult BloquerRuta(string id,string fecha)
         {
             Reservas reservas = new Reservas();

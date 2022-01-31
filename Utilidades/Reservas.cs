@@ -61,6 +61,7 @@ namespace kalea2.Utilidades
                 double tArmado = 0;
 
                 string inicial = string.Empty;
+
                 foreach (DataRow item in resultado.Tables[0].Rows)
                 {
                     if (inicial != item["Id"].ToString())
@@ -150,6 +151,51 @@ namespace kalea2.Utilidades
                 }
 
                 respuesta.Reservaciones = ListadoReservas;
+
+                if (resultado.Tables[0].Rows.Count>0)
+                {
+
+               
+                foreach (var item in respuesta.Vehiculos)
+                {
+
+                    List<Models.Reserva> someVariable2 = (from s in respuesta.Reservaciones
+                                        where s.NumeroEntregaDia == "1"
+                                        select s).ToList();
+
+                        foreach (var item2 in someVariable2)
+                        {
+                            Models.Reserva reserva = new Models.Reserva();
+                            reserva.Id = 0;
+                            reserva.FechaInicio = "07:00";
+                            reserva.FechaFin = item2.FechaInicio;  
+                            reserva.Coordenadas = "14.644836805197727, -90.47603107394566";
+                            reserva.Geolocalizacion = "14.644836805197727, -90.47603107394566";
+                            reserva.Vehiculo = item2.Vehiculo;
+                            reserva.NumeroEntregaDia = "0";
+   
+                            DataRow dt = resultado.Tables[0].Select("ID = '" + item2.Id + "'").First();
+
+                            DateTime dtm = Convert.ToDateTime(dt["FechaInicio"].ToString());
+
+                            dtm = dtm.AddHours(-dtm.Hour);
+                            dtm = dtm.AddMinutes(-dtm.Minute);
+
+                            dtm = dtm.AddHours(7);
+
+
+                            int NumMinutos = (Convert.ToDateTime(dt["FechaInicio"].ToString()).Minute - dtm.Minute) + (Convert.ToDateTime(dt["FechaInicio"].ToString()) - dtm).Hours * 60;
+                            int SumEspacios = (NumMinutos / 60) * 40 * -1;
+                            if (SumEspacios == 0)
+                            {
+                                SumEspacios = 40;
+                            }
+                            reserva.TamanioTarjeta = (NumMinutos * 4 * -1) + SumEspacios;
+                            respuesta.Reservaciones.Add(reserva);
+                        }
+                    }
+                }
+
                 return respuesta;
             }
             catch (Exception ex)

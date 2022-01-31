@@ -164,8 +164,7 @@
             buttonsStyling: !1,
         }).then(function (t) {
 
-            console.log(t.value)
-            console.log(id);
+          
             t.value
 
             if (t.value) {
@@ -190,7 +189,8 @@
                         /*location.reload();*/
                     }
                 },
-                error: function (ex) {
+                    error: function (ex) {
+                        console.log(states);
                     Swal.fire({ title: "Error!", text: "Ocurrio un error al ordenes las entregas. Error:" + ex, type: "error", confirmButtonClass: "btn long", buttonsStyling: !1 });
                 }
             })

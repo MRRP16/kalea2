@@ -207,13 +207,22 @@ namespace kalea2.Utilidades
             List<SelectListItem> Eventos;
             try
             {
-                string query = @"SELECT * FROM Naf47.V_EVENTOS_PENDIENTES T5 WHERE EVENTO NOT IN (SELECT CodigoEvento FROM T_DET_ENTREGAS) AND FECHA >= TO_DATE('01-OCT-2021')
+                //string query = @"SELECT * FROM Naf47.V_EVENTOS_PENDIENTES T5 WHERE EVENTO NOT IN (SELECT CodigoEvento FROM T_DET_ENTREGAS) AND FECHA >= TO_DATE('01-OCT-2021')
+                //                AND (SELECT count(*)
+                //                FROM Naf47.Pvlineas_movimiento T0
+                //                LEFT JOIN Naf47.Arinda T1 ON T0.NO_ARTI = T1.NO_ARTI
+                //                LEFT JOIN Naf47.Pvencabezado_movimientos T2 ON T2.NO_TRANSA_MOV = T0.NO_TRANSA_MOV
+                //                LEFT JOIN Naf47.pvclientes T3 ON T3.COD_CLIENTE = T2.COD_CLIENTE
+                //                WHERE T0.NO_TRANSA_MOV = T5.EVENTO AND T0.ENTREGADOMICILIO = 'D') >=1;";
+
+                string query = @"SELECT * FROM Naf47.V_EVENTOS_PENDIENTES T5 WHERE FECHA >= TO_DATE('01-NOV-2021')
                                 AND (SELECT count(*)
                                 FROM Naf47.Pvlineas_movimiento T0
                                 LEFT JOIN Naf47.Arinda T1 ON T0.NO_ARTI = T1.NO_ARTI
                                 LEFT JOIN Naf47.Pvencabezado_movimientos T2 ON T2.NO_TRANSA_MOV = T0.NO_TRANSA_MOV
                                 LEFT JOIN Naf47.pvclientes T3 ON T3.COD_CLIENTE = T2.COD_CLIENTE
                                 WHERE T0.NO_TRANSA_MOV = T5.EVENTO AND T0.ENTREGADOMICILIO = 'D') >=1;";
+
                 var resultado = dB.ConsultarDB(query, "T_EVENTOS");
 
 

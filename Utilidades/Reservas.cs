@@ -149,7 +149,7 @@ namespace kalea2.Utilidades
                     }
 
                 }
-
+                respuesta.HorasAmostrar = new List<string>();
                 respuesta.Reservaciones = ListadoReservas;
 
                 if (resultado.Tables[0].Rows.Count > 0)
@@ -172,7 +172,10 @@ namespace kalea2.Utilidades
                             dtmInicial = Convert.ToDateTime(dt["FechaInicio"].ToString());
                         } 
                     }
+                   
                     dtmInicial = dtmInicial.AddHours(-1);
+                    DateTime dtmInicialC = dtmInicial;
+                    List<Models.Reserva> Iniciales = new List<Models.Reserva>();
                     foreach (var item2 in someVariable2)
                     {
                         Models.Reserva reserva = new Models.Reserva();
@@ -183,7 +186,7 @@ namespace kalea2.Utilidades
                         reserva.Coordenadas = "14.644836805197727, -90.47603107394566";
                         reserva.Geolocalizacion = "14.644836805197727, -90.47603107394566";
                         reserva.Vehiculo = item2.Vehiculo;
-                        reserva.NumeroEntregaDia = "0";
+                        reserva.NumeroEntregaDia = "I";
                         reserva.ColorTipoEvento = "#00b050";
 
                         DataRow dt = resultado.Tables[0].Select("ID = '" + item2.Id + "'").First();
@@ -201,7 +204,7 @@ namespace kalea2.Utilidades
                         {
                             reserva.TamanioTarjeta = reserva.TamanioTarjeta * -1;
                         }
-                        respuesta.Reservaciones.Add(reserva);
+                        Iniciales.Add(reserva);
                     }
                     DateTime dtmFinal = DateTime.Today;
                     foreach (var item in respuesta.Vehiculos)
@@ -221,7 +224,7 @@ namespace kalea2.Utilidades
                             
                             DateTime Fechainicio = Convert.ToDateTime(dt["FechaFin"].ToString());
                             reserva.Id = -1;
-                            reserva.NumeroEntregaDia = "-1";
+                            reserva.NumeroEntregaDia = "F";
                             reserva.Vehiculo = someVariable3.Vehiculo;
                             reserva.Geolocalizacion = "14.644836805197727, -90.47603107394566";
                             reserva.FechaInicio = Convert.ToDateTime(dt["FechaFin"].ToString()).ToString("HH:mm");
@@ -265,6 +268,22 @@ namespace kalea2.Utilidades
 
                         }
                      
+                    }
+
+                    dtmInicialC = dtmInicialC.AddMinutes(-dtmInicialC.Minute);
+                    int DiferenciaHoras = dtmFinal.Hour - dtmInicialC.Hour;
+                    respuesta.HorasAmostrar.Add(dtmInicialC.ToString("hh:mm tt "));
+                    for (int i = 0; i < DiferenciaHoras; i++)
+                    {
+                        dtmInicialC = dtmInicialC.AddHours(1);
+                        respuesta.HorasAmostrar.Add(dtmInicialC.ToString("hh:mm tt"));
+                    }
+                    dtmInicialC = dtmInicialC.AddHours(1);
+                    respuesta.HorasAmostrar.Add(dtmInicialC.ToString("hh:mm tt"));
+
+                    for (int i = 0; i < Iniciales.Count; i++)
+                    {
+                        respuesta.Reservaciones.Add(Iniciales[i]) ;
                     }
 
                 }

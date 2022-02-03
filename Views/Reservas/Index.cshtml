@@ -98,45 +98,49 @@ else if (ViewBag.Exitoso != null)
                     <!-- Timeline Wrap -->
                     <div id="timeline-wrap">
                         <ul class="timeline">
-                            <li class="event horario">
-                                <span>7:00 AM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>8:00 AM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>9:00 AM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>10:00 AM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>11:00 AM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>12:00 PM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>1:00 PM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>2:00 PM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>3:00 PM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>4:00 PM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>5:00 PM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>6:00 PM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>7:00 PM</span>
-                            </li>
+                            @foreach (var item in Model.HorasAmostrar)
+                            {
+                                <li class="event horario">
+                                    <span>@item</span>
+                                </li>
+                            }
+
+                            @*<li class="event horario">
+            <span>8:00 AM</span>
+        </li>
+        <li class="event horario">
+            <span>9:00 AM</span>
+        </li>
+        <li class="event horario">
+            <span>10:00 AM</span>
+        </li>
+        <li class="event horario">
+            <span>11:00 AM</span>
+        </li>
+        <li class="event horario">
+            <span>12:00 PM</span>
+        </li>
+        <li class="event horario">
+            <span>1:00 PM</span>
+        </li>
+        <li class="event horario">
+            <span>2:00 PM</span>
+        </li>
+        <li class="event horario">
+            <span>3:00 PM</span>
+        </li>
+        <li class="event horario">
+            <span>4:00 PM</span>
+        </li>
+        <li class="event horario">
+            <span>5:00 PM</span>
+        </li>
+        <li class="event horario">
+            <span>6:00 PM</span>
+        </li>
+        <li class="event horario">
+            <span>7:00 PM</span>
+        </li>*@
                         </ul>
                     </div>
                 </div>
@@ -191,7 +195,7 @@ else if (ViewBag.Exitoso != null)
 
                         @* Evento Inicial *@
 
-                        @{ IEnumerable<kalea2.Models.Reserva> someVariable2 = Model.Reservaciones.Where(ve => ve.Vehiculo.Equals(Model.Vehiculos[i].Codigo.ToString())).Where(x => x.NumeroEntregaDia == "0").OrderBy(ve => ve.NumeroEntregaDia); }
+                        @{ IEnumerable<kalea2.Models.Reserva> someVariable2 = Model.Reservaciones.Where(ve => ve.Vehiculo.Equals(Model.Vehiculos[i].Codigo.ToString())).Where(x => x.NumeroEntregaDia == "I").OrderBy(ve => ve.NumeroEntregaDia); }
 
                         @foreach (var item in someVariable2)
                         {
@@ -246,7 +250,7 @@ else if (ViewBag.Exitoso != null)
 
                         @* Evento intermedios *@
 
-                        @{ IEnumerable<kalea2.Models.Reserva> someVariable = Model.Reservaciones.Where(ve => ve.Vehiculo.Equals(Model.Vehiculos[i].Codigo.ToString())).Where(x => x.NumeroEntregaDia != "0").Where(x => x.NumeroEntregaDia != "-1").OrderBy(ve => ve.NumeroEntregaDia); }
+                        @{ IEnumerable<kalea2.Models.Reserva> someVariable = Model.Reservaciones.Where(ve => ve.Vehiculo.Equals(Model.Vehiculos[i].Codigo.ToString())).Where(x => x.NumeroEntregaDia != "I").Where(x => x.NumeroEntregaDia != "F").OrderBy(ve => ve.NumeroEntregaDia); }
 
                         @foreach (var item in someVariable)
                         {
@@ -450,7 +454,7 @@ else if (ViewBag.Exitoso != null)
                         }
 
                         @* Evento final *@
-                        @{ IEnumerable<kalea2.Models.Reserva> someVariable3 = Model.Reservaciones.Where(ve => ve.Vehiculo.Equals(Model.Vehiculos[i].Codigo.ToString())).Where(x => x.NumeroEntregaDia == "-1").OrderBy(ve => ve.NumeroEntregaDia); }
+                        @{ IEnumerable<kalea2.Models.Reserva> someVariable3 = Model.Reservaciones.Where(ve => ve.Vehiculo.Equals(Model.Vehiculos[i].Codigo.ToString())).Where(x => x.NumeroEntregaDia == "F").OrderBy(ve => ve.NumeroEntregaDia); }
 
                         @foreach (var item in someVariable3)
                         {
@@ -568,6 +572,7 @@ else if (ViewBag.Exitoso != null)
 
                         var texto = "";
                         for (var i = 0; i < elementos2.length; i++) {
+
                             texto += elementos2[i].getAttribute("id");
                             texto += ";";
                         }

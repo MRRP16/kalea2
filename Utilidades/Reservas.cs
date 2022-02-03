@@ -108,8 +108,8 @@ namespace kalea2.Utilidades
 
                         reserva.TamanioTarjeta = (NumMinutos * 4 * -1) + SumEspacios;
                         reserva.TiempoRuta = string.IsNullOrEmpty(item["TiempoRuta"].ToString()) ? 0 : (Convert.ToInt32(item["TiempoRuta"].ToString()) + HolguraInicio);
-                        reserva.TamanioTarjeta = (NumMinutos * 4*-1)+ SumEspacios;
-                        reserva.TiempoRuta = string.IsNullOrEmpty(item["TiempoRuta"].ToString()) ? 0 : (Convert.ToInt32(item["TiempoRuta"].ToString() ) + HolguraInicio);
+                        reserva.TamanioTarjeta = (NumMinutos * 4 * -1) + SumEspacios;
+                        reserva.TiempoRuta = string.IsNullOrEmpty(item["TiempoRuta"].ToString()) ? 0 : (Convert.ToInt32(item["TiempoRuta"].ToString()) + HolguraInicio);
                         DataRow[] drow = resultado.Tables[0].Select("ID = '" + reserva.Id + "'");
                         foreach (DataRow item2 in drow)
                         {
@@ -125,7 +125,7 @@ namespace kalea2.Utilidades
                                 else
                                 {
                                     reserva.ListadoEventosCasos += item2[30].ToString() + ";";
-                                } 
+                                }
                             }
                             if (!string.IsNullOrEmpty(item2[31].ToString()))
                             {
@@ -152,48 +152,121 @@ namespace kalea2.Utilidades
 
                 respuesta.Reservaciones = ListadoReservas;
 
-                if (resultado.Tables[0].Rows.Count>0)
+                if (resultado.Tables[0].Rows.Count > 0)
                 {
-
-               
-                foreach (var item in respuesta.Vehiculos)
-                {
-
                     List<Models.Reserva> someVariable2 = (from s in respuesta.Reservaciones
-                                        where s.NumeroEntregaDia == "1"
-                                        select s).ToList();
+                                                          where s.NumeroEntregaDia == "1"
+                                                          select s).ToList();
 
-                        foreach (var item2 in someVariable2)
+                    int contador = 0;
+                    DateTime dtmInicial = DateTime.Today;
+                    foreach (var item2 in someVariable2)
+                    {
+                        DataRow dt = resultado.Tables[0].Select("ID = '" + item2.Id + "'").First();
+                        if (dtmInicial.Equals(DateTime.Today))
                         {
+                            dtmInicial = Convert.ToDateTime(dt["FechaInicio"].ToString());
+                        }
+                        if (dtmInicial > Convert.ToDateTime(dt["FechaInicio"].ToString()))
+                        {
+                            dtmInicial = Convert.ToDateTime(dt["FechaInicio"].ToString());
+                        } 
+                    }
+                    dtmInicial = dtmInicial.AddHours(-1);
+                    foreach (var item2 in someVariable2)
+                    {
+                        Models.Reserva reserva = new Models.Reserva();
+                        reserva.Id = 0;
+                        
+                        reserva.FechaInicio = dtmInicial.ToString("HH:mm");
+                        reserva.FechaFin = item2.FechaInicio;
+                        reserva.Coordenadas = "14.644836805197727, -90.47603107394566";
+                        reserva.Geolocalizacion = "14.644836805197727, -90.47603107394566";
+                        reserva.Vehiculo = item2.Vehiculo;
+                        reserva.NumeroEntregaDia = "0";
+                        reserva.ColorTipoEvento = "#00b050";
+
+                        DataRow dt = resultado.Tables[0].Select("ID = '" + item2.Id + "'").First();
+
+                        //DateTime dtm = Convert.ToDateTime(dt["FechaInicio"].ToString());
+
+                        int NumMinutos = (Convert.ToDateTime(dt["FechaInicio"].ToString()).Minute - dtmInicial.Minute) + (Convert.ToDateTime(dt["FechaInicio"].ToString()) - dtmInicial).Hours * 60;
+                        int SumEspacios = (NumMinutos / 60) * 40 * 1;
+                        if (SumEspacios == 0)
+                        {
+                            SumEspacios = 40;
+                        }
+                        reserva.TamanioTarjeta = (NumMinutos * 4 * 1) + SumEspacios;
+                        if (reserva.TamanioTarjeta < 0)
+                        {
+                            reserva.TamanioTarjeta = reserva.TamanioTarjeta * -1;
+                        }
+                        respuesta.Reservaciones.Add(reserva);
+                    }
+                    DateTime dtmFinal = DateTime.Today;
+                    foreach (var item in respuesta.Vehiculos)
+                    {
+                        try
+                        {
+                            Models.Reserva someVariable3 = respuesta.Reservaciones.Where(ve => ve.Vehiculo.Equals(item.Codigo.ToString())).OrderByDescending(ve => ve.NumeroEntregaDia).First();
+
+                            DataRow dt = resultado.Tables[0].Select("ID = '" + someVariable3.Id + "'").First();
+
+                           
+
+                            int temp = 0;
+                            temp = Gettiempo(someVariable3.Geolocalizacion.TrimStart('(').TrimEnd(')'), "14.644836805197727, -90.47603107394566") / 60;
+
                             Models.Reserva reserva = new Models.Reserva();
-                            reserva.Id = 0;
-                            reserva.FechaInicio = "07:00";
-                            reserva.FechaFin = item2.FechaInicio;  
-                            reserva.Coordenadas = "14.644836805197727, -90.47603107394566";
+                            
+                            DateTime Fechainicio = Convert.ToDateTime(dt["FechaFin"].ToString());
+                            reserva.Id = -1;
+                            reserva.NumeroEntregaDia = "-1";
+                            reserva.Vehiculo = someVariable3.Vehiculo;
                             reserva.Geolocalizacion = "14.644836805197727, -90.47603107394566";
-                            reserva.Vehiculo = item2.Vehiculo;
-                            reserva.NumeroEntregaDia = "0";
-   
-                            DataRow dt = resultado.Tables[0].Select("ID = '" + item2.Id + "'").First();
+                            reserva.FechaInicio = Convert.ToDateTime(dt["FechaFin"].ToString()).ToString("HH:mm");
 
-                            DateTime dtm = Convert.ToDateTime(dt["FechaInicio"].ToString());
+                            DateTime FechaFin = Fechainicio.AddMinutes(temp);                           
+                            reserva.FechaFin = FechaFin.ToString("HH:mm");
 
-                            dtm = dtm.AddHours(-dtm.Hour);
-                            dtm = dtm.AddMinutes(-dtm.Minute);
+                            if (FechaFin.Hour> 16)
+                            {
+                                reserva.ColorTipoEvento = "#FF0000";
+                            }
+                            else
+                            {
+                                reserva.ColorTipoEvento = "#00b050";
+                            }
 
-                            dtm = dtm.AddHours(7);
+                            if (dtmFinal.Equals(DateTime.Today))
+                            {
+                                dtmFinal = FechaFin;
+                            }
+                            if (dtmFinal < FechaFin)
+                            {
+                                dtmFinal = FechaFin;
+                            }
 
-
-                            int NumMinutos = (Convert.ToDateTime(dt["FechaInicio"].ToString()).Minute - dtm.Minute) + (Convert.ToDateTime(dt["FechaInicio"].ToString()) - dtm).Hours * 60;
-                            int SumEspacios = (NumMinutos / 60) * 40 * -1;
+                            int NumMinutos = (Convert.ToDateTime(dt["FechaInicio"].ToString()).Minute - FechaFin.Minute) + (Convert.ToDateTime(dt["FechaInicio"].ToString()) - FechaFin).Hours * 60;
+                            int SumEspacios = (NumMinutos / 60) * 40 * 1;
                             if (SumEspacios == 0)
                             {
                                 SumEspacios = 40;
                             }
-                            reserva.TamanioTarjeta = (NumMinutos * 4 * -1) + SumEspacios;
+                            reserva.TamanioTarjeta = (NumMinutos * 4 * 1) + SumEspacios;
+                            if (reserva.TamanioTarjeta < 0)
+                            {
+                                reserva.TamanioTarjeta = reserva.TamanioTarjeta * -1;
+                            }
                             respuesta.Reservaciones.Add(reserva);
                         }
+                        catch (Exception e)
+                        {
+
+                        }
+                     
                     }
+
                 }
 
                 return respuesta;
@@ -275,7 +348,7 @@ namespace kalea2.Utilidades
                 Eventos = new List<SelectListItem>();
                 foreach (DataRow item in resultado.Tables[0].Rows)
                 {
-                    Eventos.Add(new SelectListItem { Text = item["EVENTO"].ToString(), Value = item["EVENTO"].ToString() });                    
+                    Eventos.Add(new SelectListItem { Text = item["EVENTO"].ToString(), Value = item["EVENTO"].ToString() });
                 }
 
                 return Eventos;
@@ -338,7 +411,7 @@ namespace kalea2.Utilidades
                     catch (Exception)
                     {
 
-                        articulo.TiempoArmado = totalT.ToString() ;
+                        articulo.TiempoArmado = totalT.ToString();
                     }
 
                     articulos.Add(articulo);
@@ -363,8 +436,8 @@ namespace kalea2.Utilidades
                 {
                     id = Regex.Replace(id, @"\r\n?|\n|\t", String.Empty);
                     id = id.Replace(" ", "");
-                    
-                    id = id.TrimEnd(new char[] { ',','\n' });
+
+                    id = id.TrimEnd(new char[] { ',', '\n' });
 
                     articulos = new List<Models.Reserva_Detalle_Articulos>();
 
@@ -393,7 +466,7 @@ namespace kalea2.Utilidades
             {
                 return "";
             }
-           
+
         }
         public List<Models.Reserva_Detalle_Casos> Caso(string id)
         {
@@ -434,7 +507,7 @@ namespace kalea2.Utilidades
             }
         }
 
-        public string BloquearRuta(string id,string fecha)
+        public string BloquearRuta(string id, string fecha)
         {
             try
             {
@@ -446,7 +519,7 @@ namespace kalea2.Utilidades
                                                 and FechaInicio <= to_timestamp('{0} 23:59:59', 'yyyy-MM-dd hh24:mi:ss')
                                                 AND T0.Estado = 'A'
                                                 AND T0.VEHICULO = '{1}'
-                                                ORDER BY T0.ID ASC;", dt.ToString("yyyy-MM-dd"),id);
+                                                ORDER BY T0.ID ASC;", dt.ToString("yyyy-MM-dd"), id);
                 var resultado = dB.ConsultarDB(query, "T_EVENTOS");
 
                 int total = 0;
@@ -456,7 +529,7 @@ namespace kalea2.Utilidades
                 }
                 if (total.Equals(0))
                 {
-                   
+
 
 
                     using (OdbcConnection myConnection = new OdbcConnection(strgConexion()))
@@ -512,8 +585,8 @@ namespace kalea2.Utilidades
             {
                 return "Error:" + e.Message;
             }
-        
-        
+
+
         }
 
         public string CrearEntregaDefinitiva(Models.Reserva reserva, string UsrCreacion)
@@ -531,8 +604,8 @@ namespace kalea2.Utilidades
                     NumEntrega = item["nextval"].ToString();
                 }
 
-                temp = dB.ConsultarDB(string.Format("SELECT MAX(NUMEROENTREGADIA) AS EntregaMax FROM T_ENC_ENTREGAS WHERE VEHICULO = '{0}';",reserva.Vehiculo), "NUM_ENTREGA");
-                int  NumEntregaDia = 0;
+                temp = dB.ConsultarDB(string.Format("SELECT MAX(NUMEROENTREGADIA) AS EntregaMax FROM T_ENC_ENTREGAS WHERE VEHICULO = '{0}';", reserva.Vehiculo), "NUM_ENTREGA");
+                int NumEntregaDia = 0;
 
                 foreach (DataRow item in temp.Tables[0].Rows)
                 {
@@ -844,9 +917,9 @@ namespace kalea2.Utilidades
                         string rresultado = reser.ReOrdenarEntregas(FechaInicio, reserva.NumVehiculo, reserva);
                         //transaction.Commit();
 
-                        
 
-                        return string.Format("Entrega #{0} editada exitosamente",id);
+
+                        return string.Format("Entrega #{0} editada exitosamente", id);
                     }
                     catch (Exception e)
                     {
@@ -917,7 +990,7 @@ namespace kalea2.Utilidades
 
                 string query = string.Empty;
                 DateTime horainicioLabores = DateTime.Today;
-                DateTime FechaInicio = FechaEntrega.AddHours(FechaEntrega.Hour*-1);
+                DateTime FechaInicio = FechaEntrega.AddHours(FechaEntrega.Hour * -1);
                 FechaInicio = FechaInicio.AddMinutes(FechaInicio.Minute * -1);
                 FechaInicio = FechaInicio.AddSeconds(FechaInicio.Second * -1);
                 DateTime FechaArmado = FechaEntrega;
@@ -954,7 +1027,7 @@ namespace kalea2.Utilidades
                     FechaArmado = FechaInicio;
                     FechaArmado = FechaArmado.AddMinutes(HolguraInicio);
                     FechaArmado = FechaArmado.AddMinutes(temp);
-                    
+
 
                     FechaFin = FechaArmado;
                     FechaFin = FechaFin.AddMinutes(Convert.ToDouble(ListaTemporal[i].TiempoArmado));
@@ -1063,10 +1136,10 @@ namespace kalea2.Utilidades
                 }
 
                 ListaTemporal = ListadoReservas.Where(x => x.ColorTipoEvento.Equals("#376092")).OrderBy(x => x.NumeroEntregaDia).ToList();
-                
+
                 for (int i = 0; i < ListaTemporal.Count(); i++)
                 {
-                  
+
                     NUMEROENTREGADIA++;
                     FechaArmado = FechaInicio;
                     FechaArmado = FechaArmado.AddMinutes(HolguraInicio);
@@ -1210,7 +1283,7 @@ namespace kalea2.Utilidades
                 for (int i = 1; i < split.Length; i++)
                 {
                     var temp = listado.Find(x => x.Descripcion.Equals(split[i]));
-                    if (temp==null)
+                    if (temp == null)
                     {
                         Temporal.Add(split[i]);
                     }
@@ -1670,7 +1743,7 @@ namespace kalea2.Utilidades
                 string to = Fin.Replace('(', ' ');
                 to = to.Replace(')', ' ');
 
-                string url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + from.Trim() + "&destinations=" + to.Trim() + "&key=AIzaSyBjmB6paM6r62Rh6baf5O2ulK7SY7GNUOU";
+                string url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + from.Trim() + "&destinations=" + to.Trim() + "&key=AIzaSyB3tmC4S6FKOj0nFPr7vVDicbheIk8DyVs";
                 string requesturl = url.Trim();
                 //string requesturl = @"http://maps.googleapis.com/maps/api/directions/json?origin=" + from + "&alternatives=false&units=imperial&destination=" + to + "&sensor=false";
                 string content = fileGetContents(requesturl);
@@ -1735,13 +1808,13 @@ namespace kalea2.Utilidades
 
                 temp = dB.ConsultarDB("SELECT ID,FECHACREACION,FECHAINICIO,VEHICULO FROM T_ENC_ENTREGAS WHERE TIPOEVENTO = '#376092' AND ESTADO<>'AN';", "NUM_ENTREGA");
                 DateTime dt = new DateTime();
-                
+
                 foreach (DataRow item in temp.Tables[0].Rows)
                 {
                     dt = Convert.ToDateTime(item["FECHACREACION"].ToString());
 
-                    int NumMinutos = (DateTime.Now -dt).Minutes + (DateTime.Now - dt).Hours*60;
-                    if (NumMinutos>Tiempo)
+                    int NumMinutos = (DateTime.Now - dt).Minutes + (DateTime.Now - dt).Hours * 60;
+                    if (NumMinutos > Tiempo)
                     {
                         using (OdbcConnection myConnection = new OdbcConnection(strgConexion()))
                         {
@@ -1766,7 +1839,7 @@ namespace kalea2.Utilidades
 
                                 dtf = Convert.ToDateTime(dtf.ToString("yyyy-MM-dd"));
 
-                                ReOrdenarEntregas(dtf, item["VEHICULO"].ToString(),new Models.Reserva());
+                                ReOrdenarEntregas(dtf, item["VEHICULO"].ToString(), new Models.Reserva());
                             }
                             catch (Exception e)
                             {
@@ -1798,7 +1871,7 @@ namespace kalea2.Utilidades
         }
 
 
-        
-        
+
+
     }
 }

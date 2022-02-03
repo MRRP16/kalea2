@@ -223,7 +223,6 @@ namespace kalea2.Utilidades
 
         public byte[] CrearTodosLosReportesDeTransporte(List<Models.Vehiculos> listadoVehiculos, string fechaDeEntrega)
         {
-            PdfCelda parametros;
             using (System.IO.MemoryStream ms = new System.IO.MemoryStream())
             {
                 var fecha = DateTime.Now;
@@ -305,6 +304,7 @@ namespace kalea2.Utilidades
                     }
 
                     doc.Add(table);
+                    doc.NewPage();
                 }
 
                 

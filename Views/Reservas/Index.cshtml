@@ -534,11 +534,16 @@ else if (ViewBag.Exitoso != null)
     $(function () {
 
         $(".board-card").mouseup(function () {
-            $item = $(this).css("left").replace(/[^-\d\.]/g, '');;
-            if ($item > 0 | $item < 0) {
-                setTimeout(function () {
-                    actualizarTablaDeEntregas()
-                }, 1000);
+            var idTarjeta = $(this).attr("id");
+            var arregloId = idTarjeta.split("-");
+
+            if (arregloId[2] != "I" && arregloId[2] != "F") {
+                $item = $(this).css("left").replace(/[^-\d\.]/g, '');;
+                if ($item > 0 | $item < 0) {
+                    setTimeout(function () {
+                        actualizarTablaDeEntregas()
+                    }, 1000);
+                }
             }
         });
 
@@ -546,6 +551,7 @@ else if (ViewBag.Exitoso != null)
             new toastr.warning("Have fun storming the castle!", "Progress Bar", { progressBar: !0 });
             var arreglo = []
             var tabla = document.querySelectorAll(".board");
+
             tabla.forEach(function (element) {
                 var id = element.getAttribute("id");
                 var elementos = element.children[1];
@@ -585,8 +591,6 @@ else if (ViewBag.Exitoso != null)
         }
 
         function enviarTablasDeEntregas(arreglo) {
-
-
             $("#barraProgreso").css("display", "flex");
             contadorBarraProgreso = 0;
             barraProgreso = 10;

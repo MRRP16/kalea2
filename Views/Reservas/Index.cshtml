@@ -20,7 +20,7 @@ else if (ViewBag.Exitoso != null)
 
 <!-- Main Content -->
 <div class="main-content d-flex flex-column flex-md-row">
-    <div class="container-fluid">
+    <div class="container-fluid teest">
 
         <div class="progress" id="barraProgreso" style="display: none;">
             <div class="progress-bar progress-bar-striped progress-bar-animated" id="barraProgresoContenido" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="width: 10%"></div>
@@ -157,7 +157,7 @@ else if (ViewBag.Exitoso != null)
                 <div class="board" id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Descripcion)" otro="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)">
                     <!-- Board Header -->
 
-                    <div class="board-header d-flex justify-content-between align-items-center mb-10">
+                    <div class="board-header d-flex justify-content-between align-items-center mb-10 fijoArriba">
 
                         <h4 class="c2">@Html.DisplayFor(modelItem => Model.Vehiculos[i].Descripcion)</h4>
 
@@ -531,7 +531,24 @@ else if (ViewBag.Exitoso != null)
 <!-- End Main Content -->
 
 <script>
+
+    $(window).scroll(function () {
+        var valor = $(window).scrollTop();
+        var documentScrollLeft = $(document).scrollLeft();
+        console.log("Scroll en x: " + documentScrollLeft);
+
+        if (valor <= 80) {
+            $(".fijoArriba").css({ "position": "initial"});
+        } else {
+            $(".fijoArriba").css({ "position": "fixed", "top": "93px", "z-index": "1030", "width": "240px"});
+        }
+
+    });
+
+
     $(function () {
+
+        
 
         $(".board-card").mouseup(function () {
             var idTarjeta = $(this).attr("id");

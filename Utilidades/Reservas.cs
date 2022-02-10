@@ -179,7 +179,7 @@ namespace kalea2.Utilidades
                     foreach (var item2 in someVariable2)
                     {
                         Models.Reserva reserva = new Models.Reserva();
-                        reserva.Id = 0;
+                       
                         
                         reserva.FechaInicio = dtmInicial.ToString("HH:mm");
                         reserva.FechaFin = item2.FechaInicio;
@@ -223,7 +223,7 @@ namespace kalea2.Utilidades
                             Models.Reserva reserva = new Models.Reserva();
                             
                             DateTime Fechainicio = Convert.ToDateTime(dt["FechaFin"].ToString());
-                            reserva.Id = -1;
+                            
                             reserva.NumeroEntregaDia = "F";
                             reserva.Vehiculo = someVariable3.Vehiculo;
                             reserva.Geolocalizacion = "14.644836805197727, -90.47603107394566";
@@ -250,12 +250,13 @@ namespace kalea2.Utilidades
                                 dtmFinal = FechaFin;
                             }
 
-                            int NumMinutos = (Convert.ToDateTime(dt["FechaInicio"].ToString()).Minute - FechaFin.Minute) + (Convert.ToDateTime(dt["FechaInicio"].ToString()) - FechaFin).Hours * 60;
+                            int NumMinutos = (FechaFin.Minute - Fechainicio.Minute) + (FechaFin.Hour  - Fechainicio.Hour) * 60;
                             int SumEspacios = (NumMinutos / 60) * 40 * 1;
                             if (SumEspacios == 0)
                             {
                                 SumEspacios = 40;
                             }
+
                             reserva.TamanioTarjeta = (NumMinutos * 4 * 1) + SumEspacios;
                             if (reserva.TamanioTarjeta < 0)
                             {
@@ -1329,7 +1330,12 @@ namespace kalea2.Utilidades
             dB = new conexionDB();
             try
             {
-                string split = Temporal[0].Split('-')[2];
+                string split = string.Empty;
+                if (!Temporal[0].Split('-')[2].Equals("0"))
+                {
+                    split = Temporal[0].Split('-')[2];
+                }
+                
 
                 if (Temporal.Count > 1)
                 {
@@ -1337,11 +1343,16 @@ namespace kalea2.Utilidades
                     {
                         if (!string.IsNullOrEmpty(Temporal[j]))
                         {
-                            split += "," + Temporal[j].Split('-')[2];
+                            if (!Temporal[j].Split('-')[2].Equals("0"))
+                            {
+                                split += "," + Temporal[j].Split('-')[2];
+                            }
+                            
                         }
                     }
                 }
-
+                split = split.TrimStart(',');
+                split = split.TrimEnd(',');
                 string VehiculoFinal = string.Empty;
                 var resultado = dB.ConsultarDB(string.Format("SELECT ID FROM T_VEHICULOS WHERE DESCRIPCION = '{0}'", PanelInicial), "T_ENC_ENTREGAS");
                 foreach (DataRow item in resultado.Tables[0].Rows)
@@ -1762,7 +1773,7 @@ namespace kalea2.Utilidades
                 string to = Fin.Replace('(', ' ');
                 to = to.Replace(')', ' ');
 
-                string url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + from.Trim() + "&destinations=" + to.Trim() + "&key=AIzaSyB3tmC4S6FKOj0nFPr7vVDicbheIk8DyVs";
+                string url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=" + from.Trim() + "&destinations=" + to.Trim() + "&key=AIzaSyDnIlcIlvpnZ6LplbZ7S-quFDZgZMh6Eig";
                 string requesturl = url.Trim();
                 //string requesturl = @"http://maps.googleapis.com/maps/api/directions/json?origin=" + from + "&alternatives=false&units=imperial&destination=" + to + "&sensor=false";
                 string content = fileGetContents(requesturl);

@@ -154,8 +154,66 @@
                     <!-- Boards Cards -->
                     <div class="board-cards">
                         @*@{ IEnumerable<Kalea.Models.Reserva> someVariable = Model.Reservaciones.Where(ve => ve.Vehiculo.Equals(Model.Vehiculos[i].Codigo.ToString())); }*@
+                        @* Evento Inicial *@
 
-                        @foreach (var item in Model.Listado[i].Listado)
+                        @{ IEnumerable<kalea2.Models.Reserva> someVariable2 = Model.Listado[i].Listado.Where(x => x.NumeroEntregaDia == "I").OrderBy(ve => ve.NumeroEntregaDia); }
+
+                        @foreach (var item in someVariable2)
+                        {
+                            contiene = true;
+                            <div class="board-card label-2 tarjetaReserva ov-hidden"
+                                 style="--colorTarjeta: @Html.DisplayFor(modelItem => item.ColorTipoEvento); --AltoTarjeta:@Html.DisplayFor(modelItem => item.TamanioTarjeta)px;"
+                                 id="card-@Html.DisplayFor(modelItem => item.Id)-@Html.DisplayFor(modelItem => item.Id)-@Html.DisplayFor(modelItem => item.Vehiculo)">
+
+                                <div class="row">
+                                    <div class="col-sm d-inline-flex justify-content-between">
+                                        <p class="black mb-2">Evento inicial del dia</p>
+                                        @if (item.TamanioTarjeta < 180)
+                                        {
+                                            <p id="@Html.DisplayFor(modelItem => item.Id)-@Html.DisplayFor(modelItem => item.Id)-expandir"
+                                               onclick="expandir('@Html.DisplayFor(modelItem => item.Id)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => item.Id)-@Html.DisplayFor(modelItem => item.Id)-@Html.DisplayFor(modelItem => item.Vehiculo)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
+                                               estadoExpandir="true">
+                                                <i class="arrow_carrot-down"></i>
+                                            </p>
+                                        }
+                                    </div>
+                                </div>
+                                <p class="black mb-1"></p>
+                                <p class="black mb-1"></p>
+                                <p class="black mb-1"></p>
+                                <p class="black mb-1"></p>
+
+                                <div class="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 210 ? "d-flex flex-column justify-content-between" : "d-flex flex-row")">
+                                    <div class="d-flex flex-row">
+                                        <div class="m-1 d-flex justify-content-between align-items-center">
+                                            <div class="left d-flex align-items-center">
+                                                <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
+                                                <a href="#" class="text_color font-12" data-toggle="tooltip" data-placement="top" title="Tiempo en Ruta">TR @Html.DisplayFor(modelItem => item.TiempoRuta) -</a>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center m-1">
+                                            <div class="left d-flex align-items-center">
+                                                <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
+                                                <a href="#" class="text_color font-12" data-toggle="tooltip" data-placement="top" title="Hora de llegada">HL @Html.DisplayFor(modelItem => item.FechaArmado)</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="m-1 d-flex justify-content-between align-items-center" style="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 210 ? "position: absolute;" : "")  bottom: 0;">
+                                        <div class="left d-flex align-items-center">
+                                            <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
+                                            <a href="#" class="text_color font-12" data-toggle="tooltip" data-placement="top" title="Hora fin">HF @Html.DisplayFor(modelItem => item.FechaFin) </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                        @{ IEnumerable<kalea2.Models.Reserva> someVariable = Model.Listado[i].Listado.Where(x => x.NumeroEntregaDia != "I").Where(x => x.NumeroEntregaDia != "F").OrderBy(ve => ve.NumeroEntregaDia); }
+
+                        @* Evento intermedios *@
+                        @foreach (var item in someVariable)
                         {
                             contiene = true;
                             <div class="board-card label-2 tarjetaReserva ov-hidden"
@@ -187,6 +245,58 @@
                                 {
                                     <p class="black mb-1">Restriccion: 08:00 - 16:00 </p>
                                 }
+                                <div class="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 210 ? "d-flex flex-column justify-content-between" : "d-flex flex-row")">
+                                    <div class="d-flex flex-row">
+                                        <div class="m-1 d-flex justify-content-between align-items-center">
+                                            <div class="left d-flex align-items-center">
+                                                <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
+                                                <a href="#" class="text_color font-12" data-toggle="tooltip" data-placement="top" title="Tiempo en Ruta">TR @Html.DisplayFor(modelItem => item.TiempoRuta) -</a>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center m-1">
+                                            <div class="left d-flex align-items-center">
+                                                <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
+                                                <a href="#" class="text_color font-12" data-toggle="tooltip" data-placement="top" title="Hora de llegada">HL @Html.DisplayFor(modelItem => item.FechaArmado)</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="m-1 d-flex justify-content-between align-items-center" style="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 210 ? "position: absolute;" : "")  bottom: 0;">
+                                        <div class="left d-flex align-items-center">
+                                            <img src="~/Content/assets/img/svg/watch.svg" alt="" class="svg mr-1">
+                                            <a href="#" class="text_color font-12" data-toggle="tooltip" data-placement="top" title="Hora fin">HF @Html.DisplayFor(modelItem => item.FechaFin) </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        @{ IEnumerable<kalea2.Models.Reserva> someVariable3 = Model.Listado[i].Listado.Where(x => x.NumeroEntregaDia == "F").OrderBy(ve => ve.NumeroEntregaDia); }
+                        @foreach (var item in someVariable3)
+                        {
+                            contiene = true;
+                            <div class="board-card label-2 tarjetaReserva ov-hidden"
+                                 style="--colorTarjeta: @Html.DisplayFor(modelItem => item.ColorTipoEvento); --AltoTarjeta:@Html.DisplayFor(modelItem => item.TamanioTarjeta)px;"
+                                 id="card-@Html.DisplayFor(modelItem => item.Id)-@Html.DisplayFor(modelItem => item.Id)-@Html.DisplayFor(modelItem => item.Vehiculo)">
+
+                                <div class="row">
+                                    <div class="col-sm d-inline-flex justify-content-between">
+                                        <p class="black mb-2">Evento final del dia</p>
+                                        @if (item.TamanioTarjeta < 180)
+                                        {
+                                            <p id="@Html.DisplayFor(modelItem => item.Id)-@Html.DisplayFor(modelItem => item.Id)-expandir"
+                                               onclick="expandir('@Html.DisplayFor(modelItem => item.Id)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => item.Id)-@Html.DisplayFor(modelItem => item.Id)-@Html.DisplayFor(modelItem => item.Vehiculo)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
+                                               estadoExpandir="true">
+                                                <i class="arrow_carrot-down"></i>
+                                            </p>
+                                        }
+                                    </div>
+                                </div>
+                                <p class="black mb-1"></p>
+                                <p class="black mb-1"></p>
+                                <p class="black mb-1"></p>
+                                <p class="black mb-1"></p>
+
                                 <div class="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 210 ? "d-flex flex-column justify-content-between" : "d-flex flex-row")">
                                     <div class="d-flex flex-row">
                                         <div class="m-1 d-flex justify-content-between align-items-center">

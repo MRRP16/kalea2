@@ -179,9 +179,12 @@ namespace kalea2.Utilidades
                     foreach (var item2 in someVariable2)
                     {
                         Models.Reserva reserva = new Models.Reserva();
-                       
-                        
-                        reserva.FechaInicio = dtmInicial.ToString("HH:mm");
+                        DataRow dt = resultado.Tables[0].Select("ID = '" + item2.Id + "'").First();
+
+                        DateTime dtInit = Convert.ToDateTime(dt["FechaInicio"].ToString());
+                        dtInit = dtInit.AddMinutes(-dtInit.Minute);
+                        dtInit = dtInit.AddHours(-1);
+                        reserva.FechaInicio = dtInit.ToString("HH:mm");
                         reserva.FechaFin = item2.FechaInicio;
                         reserva.Coordenadas = "14.644836805197727, -90.47603107394566";
                         reserva.Geolocalizacion = "14.644836805197727, -90.47603107394566";
@@ -189,12 +192,21 @@ namespace kalea2.Utilidades
                         reserva.NumeroEntregaDia = "I";
                         reserva.ColorTipoEvento = "#00b050";
 
-                        DataRow dt = resultado.Tables[0].Select("ID = '" + item2.Id + "'").First();
-
-                        //DateTime dtm = Convert.ToDateTime(dt["FechaInicio"].ToString());
-
-                        int NumMinutos = (Convert.ToDateTime(dt["FechaInicio"].ToString()).Minute - dtmInicial.Minute) + (Convert.ToDateTime(dt["FechaInicio"].ToString()) - dtmInicial).Hours * 60;
+                       
+                        int NumMinutos = (dtmInicial.Minute - dtInit.Minute) + (dtmInicial - dtInit).Hours * 60;
+                      
                         int SumEspacios = (NumMinutos / 60) * 40 * 1;
+                        reserva.TamanioTarjetaTranspareante = (NumMinutos * 4 * 1) + SumEspacios;
+                        if (reserva.TamanioTarjetaTranspareante < 0)
+                        {
+                            reserva.TamanioTarjetaTranspareante = reserva.TamanioTarjetaTranspareante * -1;
+                        }
+                       
+
+                        dtInit = Convert.ToDateTime(dt["FechaInicio"].ToString());
+                        dtInit = dtInit.AddHours(-1);
+                        NumMinutos = (Convert.ToDateTime(dt["FechaInicio"].ToString()).Minute - dtInit.Minute) + (Convert.ToDateTime(dt["FechaInicio"].ToString()) - dtInit).Hours * 60;
+                        SumEspacios = (NumMinutos / 60) * 40 * 1;
                         if (SumEspacios == 0)
                         {
                             SumEspacios = 40;

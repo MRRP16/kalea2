@@ -164,6 +164,16 @@
 
                         @{ IEnumerable<kalea2.Models.Reserva> someVariable2 = Model.Listado[i].Listado.Where(x => x.NumeroEntregaDia == "I").OrderBy(ve => ve.NumeroEntregaDia); }
 
+                        @if (someVariable2.Count() > 0)
+                        {
+                            if (someVariable2.First().TamanioTarjetaTranspareante > 0)
+                            {
+
+                                <div class="board-card label-2 tarjetaReserva ov-hidden" style="--AltoTarjeta:  @Html.DisplayFor(modelItem => someVariable2.First().TamanioTarjetaTranspareante)px; background-color: transparent; cursor: auto; ">
+                                </div>
+                            }
+                        }
+
                         @foreach (var item in someVariable2)
                         {
                             contiene = true;

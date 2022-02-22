@@ -131,7 +131,7 @@ namespace kalea2.Utilidades
                     LEFT JOIN t_det_entregas T2 ON t0.id = t2.identrega
                     LEFT JOIN naf47.arinda T3 ON t2.codigoarticulo = t3.no_arti
                     LEFT JOIN naf47.v_eventos_pendientes T4 ON t4.evento = t2.codigoevento
-                    LEFT JOIN t_det_casos_entregas T5 ON T2.identrega = t5.identrega
+                    LEFT JOIN t_det_casos_entregas T5 ON t0.id = t5.identrega
                     WHERE FechaInicio >= to_timestamp('{0} 00:00:00', 'dd/MM/yy hh24:mi:ss') AND FechaInicio <= to_timestamp('{0} 23:59:59', 'dd/MM/yy hh24:mi:ss') AND t0.vehiculo = {1};", fecha, vehiculoId);
 
                 var resultado = dB.ConsultarDB(query, "T_EVENTOS");

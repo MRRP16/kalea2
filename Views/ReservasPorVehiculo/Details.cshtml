@@ -83,42 +83,48 @@
                             @*<li class="event horario">
                                     <span>7:00 AM</span>
                                 </li>*@
-                            <li class="event horario">
-                                <span>8:00 AM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>9:00 AM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>10:00 AM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>11:00 AM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>12:00 PM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>1:00 PM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>2:00 PM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>3:00 PM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>4:00 PM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>5:00 PM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>6:00 PM</span>
-                            </li>
-                            <li class="event horario">
-                                <span>7:00 PM</span>
-                            </li>
+                            @foreach (var item in Model.Horas)
+                            {
+                                <li class="event horario">
+                                    <span>@item</span>
+                                </li>
+                            }
+                            @*<li class="event horario">
+                                    <span>8:00 AM</span>
+                                </li>
+                                <li class="event horario">
+                                    <span>9:00 AM</span>
+                                </li>
+                                <li class="event horario">
+                                    <span>10:00 AM</span>
+                                </li>
+                                <li class="event horario">
+                                    <span>11:00 AM</span>
+                                </li>
+                                <li class="event horario">
+                                    <span>12:00 PM</span>
+                                </li>
+                                <li class="event horario">
+                                    <span>1:00 PM</span>
+                                </li>
+                                <li class="event horario">
+                                    <span>2:00 PM</span>
+                                </li>
+                                <li class="event horario">
+                                    <span>3:00 PM</span>
+                                </li>
+                                <li class="event horario">
+                                    <span>4:00 PM</span>
+                                </li>
+                                <li class="event horario">
+                                    <span>5:00 PM</span>
+                                </li>
+                                <li class="event horario">
+                                    <span>6:00 PM</span>
+                                </li>
+                                <li class="event horario">
+                                    <span>7:00 PM</span>
+                                </li>*@
                         </ul>
                     </div>
                 </div>

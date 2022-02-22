@@ -232,7 +232,7 @@ namespace kalea2.Utilidades
                             DateTime FechaFin = Fechainicio.AddMinutes(temp);                           
                             reserva.FechaFin = FechaFin.ToString("HH:mm");
 
-                            if (FechaFin.Hour> 16)
+                            if (FechaFin.Hour>= 16 && FechaFin.Minute >= 0 )
                             {
                                 reserva.ColorTipoEvento = "#FF0000";
                             }

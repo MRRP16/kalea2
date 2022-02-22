@@ -60,6 +60,10 @@ namespace kalea2.Utilidades
 
 
                 string inicial = string.Empty;
+                DateTime dtmInicial = DateTime.Today;
+                DateTime dtmFinal = DateTime.Today;
+                DateTime dtmInicialC = DateTime.Today;
+                DataRow dt = null;
                 foreach (var fecha2 in Enumerable.Range(0, NumDias).Select(i => FechaInicio.AddDays(i).ToString("yyyy-MM-dd")))
                 {
                     string Query = string.Format(@"SELECT T0.*,T1.CODIGOEVENTO,T2.NUMCASO FROM T_ENC_ENTREGAS T0 
@@ -170,23 +174,24 @@ namespace kalea2.Utilidades
                                                               select s).ToList();
 
                         int contador = 0;
-                        DateTime dtmInicial = DateTime.Today;
-                        DataRow dt = null;
+                       
                         foreach (var item2 in someVariable2)
                         {
                             dt = resultado.Tables[0].Select("ID = '" + item2.Id + "'").First();
                             if (dtmInicial.Equals(DateTime.Today))
                             {
                                 dtmInicial = Convert.ToDateTime(dt["FechaInicio"].ToString());
+                                dtmInicial = dtmInicial.AddHours(-1);
+                                dtmInicialC = dtmInicial;
                             }
                             if (dtmInicial > Convert.ToDateTime(dt["FechaInicio"].ToString()))
                             {
                                 dtmInicial = Convert.ToDateTime(dt["FechaInicio"].ToString());
+                                dtmInicial = dtmInicial.AddHours(-1);
+                                dtmInicialC = dtmInicial;
                             }
                         }
 
-                        dtmInicial = dtmInicial.AddHours(-1);
-                        DateTime dtmInicialC = dtmInicial;
                         int NumMinutos = 0;
                         int SumEspacios = 0;
                         List<Models.Reserva> Iniciales = new List<Models.Reserva>();
@@ -215,7 +220,7 @@ namespace kalea2.Utilidades
                             }
                             listadoreservas.Add(reserva);
                         }
-                        DateTime dtmFinal = DateTime.Today;
+                       
  
                         List<Models.Reserva> listTemp = new List<Reserva>();
                         listTemp = listadoreservas.Where(ve => ve.Id != 0).OrderBy(x => x.NumeroEntregaDia).ToList();
@@ -282,6 +287,18 @@ namespace kalea2.Utilidades
                     listadoFinal.Add(res);
                 }
                 respuesta.Listado = listadoFinal;
+                respuesta.Horas = new List<string>();
+                dtmInicialC = dtmInicialC.AddMinutes(-dtmInicialC.Minute);
+                int DiferenciaHoras = dtmFinal.Hour - dtmInicialC.Hour;
+                respuesta.Horas.Add(dtmInicialC.ToString("hh:mm tt "));
+                for (int i = 0; i < DiferenciaHoras; i++)
+                {
+                    dtmInicialC = dtmInicialC.AddHours(1);
+                    respuesta.Horas.Add(dtmInicialC.ToString("hh:mm tt"));
+                }
+                dtmInicialC = dtmInicialC.AddHours(1);
+                respuesta.Horas.Add(dtmInicialC.ToString("hh:mm tt"));
+
                 return respuesta;
             }
             catch (Exception ex)

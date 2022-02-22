@@ -10,5 +10,7 @@ namespace kalea2.Models
         public List<Models.Vehiculos> Vehiculos { get; set; }
         public List<Models.Reserva> Reservaciones { get; set; }
         public List<string> HorasAmostrar { get; set; }
+
+        
     }
 }

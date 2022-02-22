@@ -103,5 +103,6 @@ namespace kalea2.Models
         public List<Models.Reserva_Detalle_Articulos> Reserva_Articulos { get; set; }
         public List<SelectListItem> Eventos_Articulos;
         public List<SelectListItem> Casos_Pendientes;
+        public int TamanioTarjetaTranspareante { get; set; }
     }
 }

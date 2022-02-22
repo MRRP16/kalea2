@@ -193,14 +193,23 @@ else if (ViewBag.Exitoso != null)
                     <!-- Boards Cards -->
                     <div class="board-cards">
 
+                        @{ IEnumerable<kalea2.Models.Reserva> someVariable2 = Model.Reservaciones.Where(ve => ve.Vehiculo.Equals(Model.Vehiculos[i].Codigo.ToString())).Where(x => x.NumeroEntregaDia == "I").OrderBy(ve => ve.NumeroEntregaDia); }
+
                         @* Tarjeta vacia *@
-                        <div class="board-card label-2 tarjetaReserva ov-hidden" style="--AltoTarjeta: 40px; background-color: transparent; cursor: auto; ">
-                        </div>
+                        @if (someVariable2.Count() > 0)
+                        {
+                            if (someVariable2.First().TamanioTarjetaTranspareante > 0)
+                            {
+
+                                <div class="board-card label-2 tarjetaReserva ov-hidden" style="--AltoTarjeta:  @Html.DisplayFor(modelItem => someVariable2.First().TamanioTarjetaTranspareante)px; background-color: transparent; cursor: auto; ">
+                                </div>
+                            }
+                        }
+
 
 
                         @* Evento Inicial *@
 
-                        @{ IEnumerable<kalea2.Models.Reserva> someVariable2 = Model.Reservaciones.Where(ve => ve.Vehiculo.Equals(Model.Vehiculos[i].Codigo.ToString())).Where(x => x.NumeroEntregaDia == "I").OrderBy(ve => ve.NumeroEntregaDia); }
 
                         @foreach (var item in someVariable2)
                         {

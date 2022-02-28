@@ -307,14 +307,14 @@ namespace kalea2.Utilidades
                 respuesta.Horas = new List<string>();
                 dtmInicialC = dtmInicialC.AddMinutes(-dtmInicialC.Minute);
                 int DiferenciaHoras = dtmFinal.Hour - dtmInicialC.Hour;
-                respuesta.Horas.Add(dtmInicialC.ToString("hh:mm tt "));
+                respuesta.Horas.Add(dtmInicialC.ToString("HH:mm"));
                 for (int i = 0; i < DiferenciaHoras; i++)
                 {
                     dtmInicialC = dtmInicialC.AddHours(1);
-                    respuesta.Horas.Add(dtmInicialC.ToString("hh:mm tt"));
+                    respuesta.Horas.Add(dtmInicialC.ToString("HH:mm"));
                 }
                 dtmInicialC = dtmInicialC.AddHours(1);
-                respuesta.Horas.Add(dtmInicialC.ToString("hh:mm tt"));
+                respuesta.Horas.Add(dtmInicialC.ToString("HH:mm"));
 
                 return respuesta;
             }
@@ -484,9 +484,9 @@ namespace kalea2.Utilidades
 
                         }
                     }
-                    if (listaTemp.ColorTipoEvento.SequenceEqual("#376092"))
+                    if (listaTemp.ColorTipoEvento.SequenceEqual("#ffff00"))
                     {
-                        Color = "#376092";
+                        Color = "#ffff00";
                     }
 
                     using (OdbcConnection myConnection = new OdbcConnection(strgConexion()))

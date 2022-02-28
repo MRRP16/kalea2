@@ -285,14 +285,14 @@ namespace kalea2.Utilidades
 
                     dtmInicialC = dtmInicialC.AddMinutes(-dtmInicialC.Minute);
                     int DiferenciaHoras = dtmFinal.Hour - dtmInicialC.Hour;
-                    respuesta.HorasAmostrar.Add(dtmInicialC.ToString("hh:mm tt "));
+                    respuesta.HorasAmostrar.Add(dtmInicialC.ToString("HH:mm"));
                     for (int i = 0; i < DiferenciaHoras; i++)
                     {
                         dtmInicialC = dtmInicialC.AddHours(1);
-                        respuesta.HorasAmostrar.Add(dtmInicialC.ToString("hh:mm tt"));
+                        respuesta.HorasAmostrar.Add(dtmInicialC.ToString("HH:mm"));
                     }
                     dtmInicialC = dtmInicialC.AddHours(1);
-                    respuesta.HorasAmostrar.Add(dtmInicialC.ToString("hh:mm tt"));
+                    respuesta.HorasAmostrar.Add(dtmInicialC.ToString("HH:mm"));
 
                     for (int i = 0; i < Iniciales.Count; i++)
                     {
@@ -400,13 +400,13 @@ namespace kalea2.Utilidades
                 articulos = new List<Models.Reserva_Detalle_Articulos>();
 
 
-                string query = string.Format(@"SELECT T0.NO_ARTI,T1.Descripcion,T1.Tiempo_armado,T0.Cantidad,T0.CantidadDomicilio,T0.EntregaDomicilio,T2.Nombre_Cliente,T2.COD_CLIENTE,T2.Observaciones, T2.DIRECCION_ENTREGA,T2.DIRECCION_FISCAL,T3.Telefono,T1.CANTIDAD_ARMADORES
+                string query = string.Format(@"SELECT T0.NO_ARTI,T1.NOMBRE_LARGO AS Descripcion,T1.Tiempo_armado,T0.Cantidad,T0.CantidadDomicilio,T0.EntregaDomicilio,T2.Nombre_Cliente,T2.COD_CLIENTE,T2.Observaciones, T2.DIRECCION_ENTREGA,T2.DIRECCION_FISCAL,T3.Telefono,T1.CANTIDAD_ARMADORES
                                 FROM Naf47.Pvlineas_movimiento T0
                                 LEFT JOIN Naf47.Arinda T1 ON T0.NO_ARTI = T1.NO_ARTI
                                 LEFT JOIN Naf47.Pvencabezado_movimientos T2 ON T2.NO_TRANSA_MOV = T0.NO_TRANSA_MOV
                                 LEFT JOIN Naf47.pvclientes T3 ON T3.COD_CLIENTE = T2.COD_CLIENTE
                                 WHERE T0.NO_TRANSA_MOV = '{0}' AND T0.ENTREGADOMICILIO = 'D'
-                                GROUP BY T0.NO_ARTI,T1.Descripcion,T1.Tiempo_armado,T0.Cantidad,T0.CantidadDomicilio,T0.EntregaDomicilio,T2.Nombre_Cliente,T2.COD_CLIENTE,T2.Observaciones, T2.DIRECCION_ENTREGA,T2.DIRECCION_FISCAL,T3.Telefono,T1.CANTIDAD_ARMADORES;", id);
+                                GROUP BY T0.NO_ARTI,T1.NOMBRE_LARGO,T1.Tiempo_armado,T0.Cantidad,T0.CantidadDomicilio,T0.EntregaDomicilio,T2.Nombre_Cliente,T2.COD_CLIENTE,T2.Observaciones, T2.DIRECCION_ENTREGA,T2.DIRECCION_FISCAL,T3.Telefono,T1.CANTIDAD_ARMADORES;", id);
 
                 var resultado = dB.ConsultarDB(query, "T_EVENTOS");
 
@@ -1066,7 +1066,7 @@ namespace kalea2.Utilidades
                     FechaFin = FechaFin.AddMinutes(HolguraFinal);
 
                     string Color = "#00b050";
-                    if (!ListaTemporal[i].ColorTipoEvento.Equals("#376092"))
+                    if (!ListaTemporal[i].ColorTipoEvento.Equals("#ffff00"))
                     {
                         if (!ListaTemporal[i].FechaRestriccionInicio.Contains("12:00:00 AM"))
                         {
@@ -1167,7 +1167,7 @@ namespace kalea2.Utilidades
                     FechaInicio = FechaFin;
                 }
 
-                ListaTemporal = ListadoReservas.Where(x => x.ColorTipoEvento.Equals("#376092")).OrderBy(x => x.NumeroEntregaDia).ToList();
+                ListaTemporal = ListadoReservas.Where(x => x.ColorTipoEvento.Equals("#ffff00")).OrderBy(x => x.NumeroEntregaDia).ToList();
 
                 for (int i = 0; i < ListaTemporal.Count(); i++)
                 {
@@ -1203,7 +1203,7 @@ namespace kalea2.Utilidades
                             commandInsertar.Parameters.AddWithValue("@FechaArmado", SqlDbType.Date).Value = FechaArmado;
                             commandInsertar.Parameters.AddWithValue("@FechaFin", SqlDbType.Date).Value = FechaFin;
                             commandInsertar.Parameters.AddWithValue("@TiempoRuta", SqlDbType.Int).Value = 0;
-                            commandInsertar.Parameters.AddWithValue("@TipoEvento", SqlDbType.VarChar).Value = "#376092";
+                            commandInsertar.Parameters.AddWithValue("@TipoEvento", SqlDbType.VarChar).Value = "#ffff00";
                             commandInsertar.CommandText = Query;
                             commandInsertar.ExecuteNonQuery();
                         }
@@ -1239,11 +1239,11 @@ namespace kalea2.Utilidades
             {
                 List<Models.Reserva_Detalle_Articulos> Eventos_Articulos = new List<Models.Reserva_Detalle_Articulos>();
 
-                string query = string.Format(@"SELECT T0.Id,T0.IDEntrega,T0.CodigoEvento,T0.CodigoArticulo,T0.Cantidad,T0.Remisionado,T0.EstadoArticulo,T0.UsrCreacion,T1.Descripcion, T1.Tiempo_Armado 
+                string query = string.Format(@"SELECT T0.Id,T0.IDEntrega,T0.CodigoEvento,T0.CodigoArticulo,T0.Cantidad,T0.Remisionado,T0.EstadoArticulo,T0.UsrCreacion,T1.NOMBRE_LARGO AS Descripcion, T1.Tiempo_Armado 
                                                 FROM T_DET_ENTREGAS T0 LEFT JOIN Naf47.Arinda T1 ON T0.CodigoArticulo = T1.NO_ARTI
                                                 WHERE IdEntrega = '{0}'
                                                 group by T0.Id,T0.IDEntrega,T0.CodigoEvento,T0.CodigoArticulo,T0.Cantidad,T0.Remisionado,T0.EstadoArticulo,T0.UsrCreacion,
-                                                T1.Descripcion, T1.Tiempo_Armado", IdEntrega);
+                                                T1.NOMBRE_LARGO, T1.Tiempo_Armado", IdEntrega);
 
                 var resultado = dB.ConsultarDB(query, "T_EVENTOS");
 
@@ -1507,9 +1507,9 @@ namespace kalea2.Utilidades
                     }
 
 
-                    if (listaTemp.ColorTipoEvento.SequenceEqual("#376092"))
+                    if (listaTemp.ColorTipoEvento.SequenceEqual("#ffff00"))
                     {
-                        Color = "#376092";
+                        Color = "#ffff00";
                     }
 
                     using (OdbcConnection myConnection = new OdbcConnection(strgConexion()))
@@ -1722,7 +1722,7 @@ namespace kalea2.Utilidades
                         commandInsertar.Parameters.AddWithValue("@FechaCreacion", SqlDbType.Date).Value = DateTime.Now;
                         commandInsertar.Parameters.AddWithValue("@NumeroEntregaDia", SqlDbType.Int).Value = 0;
                         commandInsertar.Parameters.AddWithValue("@Vehiculo", SqlDbType.Int).Value = Convert.ToInt32(reserva.Vehiculo);
-                        commandInsertar.Parameters.AddWithValue("@TipoEvento", SqlDbType.VarChar).Value = "#376092";
+                        commandInsertar.Parameters.AddWithValue("@TipoEvento", SqlDbType.VarChar).Value = "#ffff00";
                         commandInsertar.Parameters.AddWithValue("@Referencia_Reserva", SqlDbType.VarChar).Value = reserva.Referencia;
                         commandInsertar.CommandText = Query;
                         commandInsertar.ExecuteNonQuery();
@@ -1737,7 +1737,7 @@ namespace kalea2.Utilidades
                         reserva2.FechaRestriccionInicio = reserva.FechaRestriccionInicio;
                         reserva2.FechaRestriccionFin = reserva.FechaRestriccionFin;
                         reserva2.Vehiculo = reserva.Vehiculo;
-                        reserva2.ColorTipoEvento = "#376092";
+                        reserva2.ColorTipoEvento = "#ffff00";
 
                         string resultado = ReOrdenarEntregas(FechaInicio, reserva.Vehiculo, reserva2);
 
@@ -1848,7 +1848,7 @@ namespace kalea2.Utilidades
                     Tiempo = Convert.ToInt32(item["VALOR"].ToString());
                 }
 
-                temp = dB.ConsultarDB("SELECT ID,FECHACREACION,FECHAINICIO,VEHICULO FROM T_ENC_ENTREGAS WHERE TIPOEVENTO = '#376092' AND ESTADO<>'AN';", "NUM_ENTREGA");
+                temp = dB.ConsultarDB("SELECT ID,FECHACREACION,FECHAINICIO,VEHICULO FROM T_ENC_ENTREGAS WHERE TIPOEVENTO = '#ffff00' AND ESTADO<>'AN';", "NUM_ENTREGA");
                 DateTime dt = new DateTime();
 
                 foreach (DataRow item in temp.Tables[0].Rows)

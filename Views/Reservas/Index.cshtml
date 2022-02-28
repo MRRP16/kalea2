@@ -101,7 +101,7 @@ else if (ViewBag.Exitoso != null)
                             @foreach (var item in Model.HorasAmostrar)
                             {
                                 <li class="event horario">
-                                    <span>@item</span>
+                                    <span style="font-weight: bold;">@item</span>
                                 </li>
                             }
 
@@ -395,7 +395,7 @@ else if (ViewBag.Exitoso != null)
                                         </div>
                                     </div>
                                     break;
-                                case "#376092":
+                                case "#ffff00":
                                     <div class="board-card label-2 tarjetaReserva ov-hidden"
                                          style="--colorTarjeta: @Html.DisplayFor(modelItem => item.ColorTipoEvento); --AltoTarjeta:120px;"
                                          id="card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)">

@@ -18,9 +18,9 @@ namespace kalea2.Controllers
         {
             List<Bodegas> listadoBodegas = new List<Bodegas>();
             listadoBodegas.Add(new Bodegas { Nombre = "Todos", Codigo = "0000" });
-            listadoBodegas.Add(new Bodegas { Nombre = "Bodega Z10", Codigo = "1020" });
-            listadoBodegas.Add(new Bodegas { Nombre = "Bodega Z11", Codigo = "1120" });
-            listadoBodegas.Add(new Bodegas { Nombre = "Bodega DecoCity", Codigo = "DC20" });
+            listadoBodegas.Add(new Bodegas { Nombre = "B.Z10", Codigo = "1020" });
+            listadoBodegas.Add(new Bodegas { Nombre = "B.Z11", Codigo = "1120" });
+            listadoBodegas.Add(new Bodegas { Nombre = "B. DecoCity", Codigo = "DC20" });
             listadoBodegas.Add(new Bodegas { Nombre = "Alsersa Z17", Codigo = "1220" });
 
             return listadoBodegas;
@@ -77,15 +77,15 @@ namespace kalea2.Controllers
                             excel.Workbook.Worksheets.Add(nombreHoja);
 
                             var headerRow = new List<string[]>() { new string[] {
-                   "Pendientes: " + nombreBodega ,
+                    "Pend: " + nombreBodega ,
+                    null,
+                     "Emisión: " + DateTime.Now.ToString("dd/MM/yy HH:MM:ss"),
+                      null,
+                        null,
+                    "Entrega: " + date.ToString("dd/MM/yy"),
+                     null,
                     null,
                     null,
-                    null,
-                     "Emisión: " + DateTime.Now.ToString("dd/MM/yyyy HH:MM:ss"),
-                    null,
-                    null,
-                    null,
-                    "Entrega: " + date.ToString("dd/MM/yyyy"),
                     null,
                 } };
 
@@ -189,7 +189,8 @@ namespace kalea2.Controllers
                        
                     NumberFormatInfo nfi = new CultureInfo("es-GT", false).NumberFormat;
 
-                    string NombreReporte = "Pendietes_"+ nombreBodega +"_"+ date.ToString("ddMMyyyy");
+                    string NombreReporte = "Pendientes_" + nombreBodega + "_" + date.Day.ToString().PadLeft(2,'0')+"_"+date.Month.ToString().PadLeft(2, '0') + "_"+date.ToString("yy").PadLeft(2, '0');
+
 
                     using (MemoryStream stream = new MemoryStream())
                     {
@@ -209,13 +210,13 @@ namespace kalea2.Controllers
                     var headerRow = new List<string[]>() { new string[] {
                     "Pendientes: " + nombreBodega ,
                     null,
+                     "Emisión: " + DateTime.Now.ToString("dd/MM/yy HH:MM:ss"),
+                      null,
+                        null,
+                    "Entrega: " + date.ToString("dd/MM/yy"),
+                     null,
                     null,
                     null,
-                     "Emisión: " + DateTime.Now.ToString("dd/MM/yyyy HH:MM:ss"),
-                    null,
-                    null,
-                    null,
-                    "Entrega: " + date.ToString("dd/MM/yyyy"),
                     null,
                 } };
 
@@ -315,7 +316,7 @@ namespace kalea2.Controllers
                         }
                     }
                     NumberFormatInfo nfi = new CultureInfo("es-GT", false).NumberFormat;
-                    string NombreReporte = "Pendientes_" + nombreBodega + "_" + date.ToString("ddMMyyyy");
+                    string NombreReporte = "Pendientes_" + nombreBodega + "_" + date.Day.ToString().PadLeft(2, '0') + "_" + date.Month.ToString().PadLeft(2, '0') + "_" + date.ToString("yy").PadLeft(2, '0');
                     using (MemoryStream stream = new MemoryStream())
                     {
                         excel.SaveAs(stream);

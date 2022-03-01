@@ -483,20 +483,20 @@ else if (ViewBag.Exitoso != null)
                                     <div class="col-sm d-inline-flex justify-content-between">
                                         <p class="black mb-2">#@Html.DisplayFor(modelItem => item.Id) - Regreso a bodega</p>
 
-                                        @if (item.TamanioTarjeta < 180)
+                                        @*@if (item.TamanioTarjeta < 180)
                                         {
                                             <p id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir"
                                                onclick="expandir('@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
                                                estadoExpandir="true">
                                                 <i class="arrow_carrot-down"></i>
                                             </p>
-                                        }
+                                        }*@
                                     </div>
                                 </div>
 
-                                <div id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir">
+                                @*<div id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir">
 
-                                </div>
+                                </div>*@
 
                                 <div class="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 210 ? "d-flex flex-column justify-content-between" : "d-flex flex-row")">
                                     <div class="d-flex flex-row">

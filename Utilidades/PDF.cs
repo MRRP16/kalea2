@@ -229,13 +229,20 @@ namespace kalea2.Utilidades
                 Document doc = new Document(PageSize.A4, -50, -55, 25, 0);
                 iTextSharp.text.pdf.PdfWriter writer = iTextSharp.text.pdf.PdfWriter.GetInstance(doc, ms);
                 doc.Open();
+                int numeroDePagina = 0;
+                bool numeroDePaginaEncabezado = false;
 
                 foreach (var vehiculo in listadoVehiculos)
                 {
+                    numeroDePagina++;
                     Reportes reportes = new Reportes();
                     List<ReportesGuias> listado = reportes.GetEventosCasosParaGuiasDeTransporte(vehiculoId: vehiculo.Codigo.ToString(), fecha: fechaDeEntrega);
 
                     PdfPTable table = new PdfPTable(10);
+                    table.AddCell(GetCell(Texto: "Pagina" + numeroDePagina, Rowspan: 1, Colspan: 10, HorizontalAlignment: 3, Size: 10));
+                    table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, Border: 2));
+                    numeroDePaginaEncabezado = true;
+
                     table.AddCell(GetCell(Texto: "Vehiculo: " + vehiculo.Descripcion, Rowspan: 1, Colspan: 10, HorizontalAlignment: 1, Size: 10));
 
                     table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, Border: 2));
@@ -249,6 +256,13 @@ namespace kalea2.Utilidades
 
                     foreach (var item in listado)
                     {
+                        if (!numeroDePaginaEncabezado)
+                        {
+                            table.AddCell(GetCell(Texto: "Pagina" + numeroDePagina, Rowspan: 1, Colspan: 10, HorizontalAlignment: 3, Size: 10));
+                            table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, Border: 2));
+                        }
+
+
                         table.AddCell(GetCell(Texto: "Evento: " + item.EventoCaso, Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
                         table.AddCell(GetCell(Texto: "Armadores: ", Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
 
@@ -301,10 +315,14 @@ namespace kalea2.Utilidades
                             table.AddCell(GetCell(Texto: "TOTAL:", Rowspan: 1, Colspan: 9, HorizontalAlignment: 2, Border: 2, PaddingBottom: 10));
                             table.AddCell(GetCell(Texto: total.ToString(), Rowspan: 1, Colspan: 1, HorizontalAlignment: 1, Border: 2, PaddingBottom: 10));
                         }
-                    }
 
-                    doc.Add(table);
-                    doc.NewPage();
+                        doc.Add(table);
+                        table.DeleteBodyRows();
+                        doc.NewPage();
+                        numeroDePagina++;
+                        numeroDePaginaEncabezado = false;
+                    }
+                    
                 }
 
                 

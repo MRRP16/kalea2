@@ -316,38 +316,13 @@ namespace kalea2.Utilidades
 
                 var resultado = dB.ConsultarDB(query, "T_EVENTOS");
 
-
-                foreach (DataRow item in resultado.Tables[0].Rows)
+                int contador = resultado.Tables[0].Rows.Count;
+                while (contador > 0)
                 {
-                    string qr = string.Format("NO_TRANSA_MOV = '{0}' AND NO_ARTI = '{1}'",item["NO_TRANSA_MOV"].ToString(),item["NO_ARTI"].ToString());
-                    int Inmediatas = 0;
-                    DataRow[] results = resultado.Tables[0].Select(qr);
-                    foreach (var item2 in results)
-                    {
-                        Inmediatas += Convert.ToInt32(item2["INMEDIATAS"].ToString());
-                    }
-
-                    item.BeginEdit();
-                    item["INMEDIATAS"] = Inmediatas.ToString();
-                    item.EndEdit();
-
-                    if (listadoDeEventos.Count == 0)
-                    {
-                        AgregarEventoNuevoEntregas(item, listadoDeEventos);
-                    }
-                    else
-                    {
-                        var posicion = ValidarSiExisteEventoEnListadoEntregas(item, listadoDeEventos);
-                        if (posicion != null)
-                        {
-                            AgregarProductoAEventoExistenteEntregas(item, posicion, listadoDeEventos);
-                        }
-                        else
-                        {
-                            AgregarEventoNuevoEntregas(item, listadoDeEventos);
-                        }
-                    }
+                    resultado = AgregarEventosRecursivo(resultado, ref listadoDeEventos);
+                    contador = resultado.Tables[0].Rows.Count;
                 }
+               
                 return listadoDeEventos;
             }
             catch (Exception ex)
@@ -355,6 +330,50 @@ namespace kalea2.Utilidades
                 var error = ex.Message;
                 return null;
             }
+        }
+
+        private DataSet AgregarEventosRecursivo(DataSet resultado, ref List<ReportesEventosEntregas> listadoDeEventos)
+        {
+            foreach (DataRow item in resultado.Tables[0].Rows)
+            {
+                string qr = string.Format("NO_TRANSA_MOV = '{0}' AND NO_ARTI = '{1}'", item["NO_TRANSA_MOV"].ToString(), item["NO_ARTI"].ToString());
+                int Inmediatas = 0;
+                DataRow[] results = resultado.Tables[0].Select(qr);
+
+                foreach (var item2 in results)
+                {
+                    Inmediatas += Convert.ToInt32(item2["INMEDIATAS"].ToString());
+                }
+
+                item.BeginEdit();
+                item["INMEDIATAS"] = Inmediatas.ToString();
+                item.EndEdit();
+
+                if (listadoDeEventos.Count == 0)
+                {
+                    AgregarEventoNuevoEntregas(item, listadoDeEventos);
+
+                }
+                else
+                {
+                    var posicion = ValidarSiExisteEventoEnListadoEntregas(item, listadoDeEventos);
+                    if (posicion != null)
+                    {
+                        AgregarProductoAEventoExistenteEntregas(item, posicion, listadoDeEventos);
+                    }
+                    else
+                    {
+                        AgregarEventoNuevoEntregas(item, listadoDeEventos);
+                    }
+                }
+                foreach (var item2 in results)
+                {
+                    resultado.Tables[0].Rows.Remove(item2);
+                }
+                break;
+            }
+            return resultado;
+
         }
 
         private void AgregarEventoNuevoEntregas(DataRow item, List<ReportesEventosEntregas> listado)

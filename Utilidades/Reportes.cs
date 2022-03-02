@@ -246,16 +246,14 @@ namespace kalea2.Utilidades
                     case "0000":
                         Controllers.ReporteDeBodegaController n = new Controllers.ReporteDeBodegaController();
                         string bodegas = string.Empty;
+                       
                         foreach (var item in n.ListadoBodegas())
                         {
                             if (!item.Codigo.Equals("0000"))
                             {
-                                bodegas += "'" + item.Codigo + "',";
-                            }
-                           
-                        }
-                        bodegas = bodegas.TrimEnd(',');
-                        query = string.Format(@"SELECT T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.NOMBRE_LARGO AS DESCRIPCION,T5.COMENTARIOSVENTAS ,T8.DESCRIPCION AS VEHICULO,
+                                //bodegas += "'" + item.Codigo + "',";
+
+                                query = string.Format(@"SELECT T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.NOMBRE_LARGO AS DESCRIPCION,T5.COMENTARIOSVENTAS ,T8.DESCRIPCION AS VEHICULO,
                                                 ( NVL(SAL_ANT_UN,0) + NVL(COMP_UN,0) + NVL(OTRS_UN,0) - NVL(CONS_UN,0) -
                                                 NVL(VENT_UN, 0) - NVL(MANIFIESTOPEND,0) - NVL(PEDIDOS_PEND,0) - NVL(SAL_PEND_UN,0) + NVL(ENT_PEND_UN, 0) ) INMEDIATAS
                                                 FROM naf47.ARINMA A, naf47.ARINDA B, naf47.ARINBO BO ,Naf47.Pvlineas_movimiento T0
@@ -268,19 +266,58 @@ namespace kalea2.Utilidades
                                                 WHERE T2.FechaInicio >= to_timestamp('{0} 00:00:00', 'dd/MM/yy hh24:mi:ss') 
                                                 AND T2.FechaInicio <= to_timestamp('{0} 23:59:59', 'dd/MM/yy hh24:mi:ss')
                                                 GROUP BY T1.CODIGOEVENTO)
-                                                AND T0.BODEGA IN({1})
+                                                AND T0.BODEGA = '{1}'
                                                 AND B.NO_CIA = A.NO_CIA
                                                 AND B.NO_ARTI = A.NO_ARTI
                                                 AND B.NO_ARTI = T3.NO_ARTI
                                                 AND B.NO_CIA = '01'
                                                 AND A.NO_CIA = BO.NO_CIA
-                                                AND A.BODEGA IN({1})
+                                                AND A.BODEGA = '{1}'
                                                 AND NVL(BO.ES_TIENDA,'N')='S'
                                                 AND NVL(B.TIPO_PRODUCTO,'TG')='TG'
                                                 AND BO.CODIGO!='VN10'
                                                 GROUP BY T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.NOMBRE_LARGO,T5.COMENTARIOSVENTAS,T8.DESCRIPCION,( NVL(SAL_ANT_UN,0) + NVL(COMP_UN,0) + NVL(OTRS_UN,0) - NVL(CONS_UN,0) -
                                                 NVL(VENT_UN, 0) - NVL(MANIFIESTOPEND,0) - NVL(PEDIDOS_PEND,0) - NVL(SAL_PEND_UN,0) + NVL(ENT_PEND_UN, 0) )
-                                                order by t0.NO_TRANSA_MOV ASC;", fecha, bodegas);
+                                                order by t0.NO_TRANSA_MOV ASC;", fecha, item.Codigo);
+
+                                var resultado2 = dB.ConsultarDB(query, "T_EVENTOS");
+
+                                int contador2 = resultado2.Tables[0].Rows.Count;
+                                while (contador2 > 0)
+                                {
+                                    resultado2 = AgregarEventosRecursivo(resultado2, ref listadoDeEventos);
+                                    contador2 = resultado2.Tables[0].Rows.Count;
+                                }
+                            }
+                           
+                        }
+                        //bodegas = bodegas.TrimEnd(',');
+                        //query = string.Format(@"SELECT T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.NOMBRE_LARGO AS DESCRIPCION,T5.COMENTARIOSVENTAS ,T8.DESCRIPCION AS VEHICULO,
+                        //                        ( NVL(SAL_ANT_UN,0) + NVL(COMP_UN,0) + NVL(OTRS_UN,0) - NVL(CONS_UN,0) -
+                        //                        NVL(VENT_UN, 0) - NVL(MANIFIESTOPEND,0) - NVL(PEDIDOS_PEND,0) - NVL(SAL_PEND_UN,0) + NVL(ENT_PEND_UN, 0) ) INMEDIATAS
+                        //                        FROM naf47.ARINMA A, naf47.ARINDA B, naf47.ARINBO BO ,Naf47.Pvlineas_movimiento T0
+                        //                        INNER JOIN naf47.arinda T3 ON T0.NO_ARTI = T3.NO_ARTI
+                        //                        LEFT JOIN T_DET_ENTREGAS T4 ON T4.CODIGOEVENTO = T0.NO_TRANSA_MOV
+                        //                        INNER JOIN T_ENC_ENTREGAS T5 ON T5.ID = T4.IDENTREGA
+                        //                        LEFT JOIN T_VEHICULOS T8 ON T8.ID = T5.VEHICULO
+                        //                        WHERE T0.NO_TRANSA_MOV IN (
+                        //                        SELECT  T1.CODIGOEVENTO  FROM t_det_entregas T1 INNER JOIN t_enc_entregas T2 ON T1.identrega = T2.ID 
+                        //                        WHERE T2.FechaInicio >= to_timestamp('{0} 00:00:00', 'dd/MM/yy hh24:mi:ss') 
+                        //                        AND T2.FechaInicio <= to_timestamp('{0} 23:59:59', 'dd/MM/yy hh24:mi:ss')
+                        //                        GROUP BY T1.CODIGOEVENTO)
+                        //                        AND T0.BODEGA IN({1})
+                        //                        AND B.NO_CIA = A.NO_CIA
+                        //                        AND B.NO_ARTI = A.NO_ARTI
+                        //                        AND B.NO_ARTI = T3.NO_ARTI
+                        //                        AND B.NO_CIA = '01'
+                        //                        AND A.NO_CIA = BO.NO_CIA
+                        //                        AND A.BODEGA IN({1})
+                        //                        AND NVL(BO.ES_TIENDA,'N')='S'
+                        //                        AND NVL(B.TIPO_PRODUCTO,'TG')='TG'
+                        //                        AND BO.CODIGO!='VN10'
+                        //                        GROUP BY T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.NOMBRE_LARGO,T5.COMENTARIOSVENTAS,T8.DESCRIPCION,( NVL(SAL_ANT_UN,0) + NVL(COMP_UN,0) + NVL(OTRS_UN,0) - NVL(CONS_UN,0) -
+                        //                        NVL(VENT_UN, 0) - NVL(MANIFIESTOPEND,0) - NVL(PEDIDOS_PEND,0) - NVL(SAL_PEND_UN,0) + NVL(ENT_PEND_UN, 0) )
+                        //                        order by t0.NO_TRANSA_MOV ASC;", fecha, bodegas);
                         break;
                     default:
                         query = string.Format(@"SELECT T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.NOMBRE_LARGO AS DESCRIPCION,T5.COMENTARIOSVENTAS ,T8.DESCRIPCION AS VEHICULO,
@@ -309,20 +346,17 @@ namespace kalea2.Utilidades
                                                 GROUP BY T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.NOMBRE_LARGO,T5.COMENTARIOSVENTAS,T8.DESCRIPCION,( NVL(SAL_ANT_UN,0) + NVL(COMP_UN,0) + NVL(OTRS_UN,0) - NVL(CONS_UN,0) -
                                                 NVL(VENT_UN, 0) - NVL(MANIFIESTOPEND,0) - NVL(PEDIDOS_PEND,0) - NVL(SAL_PEND_UN,0) + NVL(ENT_PEND_UN, 0) )
                                                 order by t0.NO_TRANSA_MOV ASC;", fecha, bodegaId);
+
+                        var resultado = dB.ConsultarDB(query, "T_EVENTOS");
+
+                        int contador = resultado.Tables[0].Rows.Count;
+                        while (contador > 0)
+                        {
+                            resultado = AgregarEventosRecursivo(resultado, ref listadoDeEventos);
+                            contador = resultado.Tables[0].Rows.Count;
+                        }
                         break;
                 }
-
-               
-
-                var resultado = dB.ConsultarDB(query, "T_EVENTOS");
-
-                int contador = resultado.Tables[0].Rows.Count;
-                while (contador > 0)
-                {
-                    resultado = AgregarEventosRecursivo(resultado, ref listadoDeEventos);
-                    contador = resultado.Tables[0].Rows.Count;
-                }
-               
                 return listadoDeEventos;
             }
             catch (Exception ex)

@@ -239,7 +239,7 @@ namespace kalea2.Utilidades
                     List<ReportesGuias> listado = reportes.GetEventosCasosParaGuiasDeTransporte(vehiculoId: vehiculo.Codigo.ToString(), fecha: fechaDeEntrega);
 
                     PdfPTable table = new PdfPTable(10);
-                    table.AddCell(GetCell(Texto: "Pagina" + numeroDePagina, Rowspan: 1, Colspan: 10, HorizontalAlignment: 3, Size: 10));
+                    table.AddCell(GetCell(Texto: "Pagina " + numeroDePagina, Rowspan: 1, Colspan: 10, HorizontalAlignment: 3, Size: 10));
                     table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, Border: 2));
                     numeroDePaginaEncabezado = true;
 
@@ -258,7 +258,8 @@ namespace kalea2.Utilidades
                     {
                         if (!numeroDePaginaEncabezado)
                         {
-                            table.AddCell(GetCell(Texto: "Pagina" + numeroDePagina, Rowspan: 1, Colspan: 10, HorizontalAlignment: 3, Size: 10));
+                            numeroDePagina++;
+                            table.AddCell(GetCell(Texto: "Pagina " + numeroDePagina, Rowspan: 1, Colspan: 10, HorizontalAlignment: 3, Size: 10));
                             table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, Border: 2));
                         }
 
@@ -319,7 +320,7 @@ namespace kalea2.Utilidades
                         doc.Add(table);
                         table.DeleteBodyRows();
                         doc.NewPage();
-                        numeroDePagina++;
+                       
                         numeroDePaginaEncabezado = false;
                     }
                     

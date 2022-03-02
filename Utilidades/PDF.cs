@@ -19,8 +19,13 @@ namespace kalea2.Utilidades
                 Document doc = new Document(PageSize.A4, -50, -55, 25, 0);
                 iTextSharp.text.pdf.PdfWriter writer = iTextSharp.text.pdf.PdfWriter.GetInstance(doc, ms);
                 doc.Open();
+                int numeroDePagina = 1;
+                bool numeroDePaginaEncabezado = true;
 
                 PdfPTable table = new PdfPTable(10);
+                table.AddCell(GetCell(Texto: "Pagina" + numeroDePagina, Rowspan: 1, Colspan: 10, HorizontalAlignment: 3, Size: 10));
+                table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, Border: 2));
+
                 //**************************************************************** HEADER
                 table.AddCell(GetCell(Texto: "Guias de transporte Impresión: ",     Rowspan: 1, Colspan: 3, HorizontalAlignment: 1, Border: 0, PaddingBottom: 5));
                 table.AddCell(GetCell(Texto: "Para el: " + fechaDeEntrega,          Rowspan: 1, Colspan: 4, HorizontalAlignment: 1, Border: 0, PaddingBottom: 5));
@@ -32,6 +37,12 @@ namespace kalea2.Utilidades
 
                 foreach (var item in listado)
                 {
+                    if (!numeroDePaginaEncabezado)
+                    {
+                        numeroDePagina++;
+                        table.AddCell(GetCell(Texto: "Pagina" + numeroDePagina, Rowspan: 1, Colspan: 10, HorizontalAlignment: 3, Size: 10));
+                        table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, Border: 2));
+                    }
                     table.AddCell(GetCell(Texto: "Evento: " + item.EventoCaso,              Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
                     table.AddCell(GetCell(Texto: "Armadores: ",                             Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
 
@@ -84,6 +95,8 @@ namespace kalea2.Utilidades
                         table.AddCell(GetCell(Texto: "TOTAL:",          Rowspan: 1, Colspan: 9, HorizontalAlignment: 2, Border: 2, PaddingBottom: 10));
                         table.AddCell(GetCell(Texto: total.ToString(),  Rowspan: 1, Colspan: 1, HorizontalAlignment: 1, Border: 2, PaddingBottom: 10));
                     }
+
+                    numeroDePaginaEncabezado = false;
                 }
 
                 //**************************************************************** END FICHA
@@ -239,7 +252,7 @@ namespace kalea2.Utilidades
                     List<ReportesGuias> listado = reportes.GetEventosCasosParaGuiasDeTransporte(vehiculoId: vehiculo.Codigo.ToString(), fecha: fechaDeEntrega);
 
                     PdfPTable table = new PdfPTable(10);
-                    table.AddCell(GetCell(Texto: "Pagina " + numeroDePagina, Rowspan: 1, Colspan: 10, HorizontalAlignment: 3, Size: 10));
+                    table.AddCell(GetCell(Texto: "Pagina " + numeroDePagina, Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, Size: 10));
                     table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, Border: 2));
                     numeroDePaginaEncabezado = true;
 
@@ -259,7 +272,7 @@ namespace kalea2.Utilidades
                         if (!numeroDePaginaEncabezado)
                         {
                             numeroDePagina++;
-                            table.AddCell(GetCell(Texto: "Pagina " + numeroDePagina, Rowspan: 1, Colspan: 10, HorizontalAlignment: 3, Size: 10));
+                            table.AddCell(GetCell(Texto: "Pagina " + numeroDePagina, Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, Size: 10));
                             table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, Border: 2));
                         }
 
@@ -320,7 +333,6 @@ namespace kalea2.Utilidades
                         doc.Add(table);
                         table.DeleteBodyRows();
                         doc.NewPage();
-                       
                         numeroDePaginaEncabezado = false;
                     }
                     

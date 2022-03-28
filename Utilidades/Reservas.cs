@@ -366,13 +366,19 @@ namespace kalea2.Utilidades
                 //                LEFT JOIN Naf47.pvclientes T3 ON T3.COD_CLIENTE = T2.COD_CLIENTE
                 //                WHERE T0.NO_TRANSA_MOV = T5.EVENTO AND T0.ENTREGADOMICILIO = 'D') >=1;";
 
-                string query = @"SELECT * FROM Naf47.V_EVENTOS_PENDIENTES T5 WHERE FECHA >= TO_DATE('01-NOV-2021')
-                                AND (SELECT count(*)
-                                FROM Naf47.Pvlineas_movimiento T0
-                                LEFT JOIN Naf47.Arinda T1 ON T0.NO_ARTI = T1.NO_ARTI
-                                LEFT JOIN Naf47.Pvencabezado_movimientos T2 ON T2.NO_TRANSA_MOV = T0.NO_TRANSA_MOV
-                                LEFT JOIN Naf47.pvclientes T3 ON T3.COD_CLIENTE = T2.COD_CLIENTE
-                                WHERE T0.NO_TRANSA_MOV = T5.EVENTO AND T0.ENTREGADOMICILIO = 'D') >=1;";
+                //string query = @"SELECT * FROM Naf47.V_EVENTOS_PENDIENTES T5 WHERE FECHA >= TO_DATE('01-NOV-2021')
+                //                AND (SELECT count(*)
+                //                FROM Naf47.Pvlineas_movimiento T0
+                //                LEFT JOIN Naf47.Arinda T1 ON T0.NO_ARTI = T1.NO_ARTI
+                //                LEFT JOIN Naf47.Pvencabezado_movimientos T2 ON T2.NO_TRANSA_MOV = T0.NO_TRANSA_MOV
+                //                LEFT JOIN Naf47.pvclientes T3 ON T3.COD_CLIENTE = T2.COD_CLIENTE
+                //                WHERE T0.NO_TRANSA_MOV = T5.EVENTO AND T0.ENTREGADOMICILIO = 'D') >=1;";
+
+                string query = @"SELECT T5.Evento FROM Naf47.V_EVENTOS_PENDIENTES T5 
+                                INNER JOIN Naf47.Pvlineas_movimiento T0 ON T0.NO_TRANSA_MOV = T5.EVENTO
+                                WHERE T5.FECHA >= TO_DATE('01-MAR-2022')
+                                AND T0.ENTREGADOMICILIO = 'D'
+                                GROUP BY T5.Evento;";
 
                 var resultado = dB.ConsultarDB(query, "T_EVENTOS");
 
@@ -705,11 +711,11 @@ namespace kalea2.Utilidades
                         commandInsertar.Parameters.AddWithValue("@Zona", SqlDbType.VarChar).Value = "3";
                         commandInsertar.Parameters.AddWithValue("@Coordenadas", SqlDbType.VarChar).Value = reserva.Geolocalizacion;
                         commandInsertar.Parameters.AddWithValue("@NombreCliente", SqlDbType.VarChar).Value = reserva.NombreCliente;
-                        commandInsertar.Parameters.AddWithValue("@NitCliente", SqlDbType.VarChar).Value = "95853820";
+                        commandInsertar.Parameters.AddWithValue("@NitCliente", SqlDbType.VarChar).Value = "0000000";
                         commandInsertar.Parameters.AddWithValue("@Telefono", SqlDbType.VarChar).Value = reserva.Telefono;
                         commandInsertar.Parameters.AddWithValue("@Celular", SqlDbType.VarChar).Value = reserva.Celular;
                         commandInsertar.Parameters.AddWithValue("@PersonaRecepcion", SqlDbType.VarChar).Value = "Cliente que recibe";
-                        commandInsertar.Parameters.AddWithValue("@ComentariosVentas", SqlDbType.VarChar).Value = reserva.ComentariosVenta;
+                        commandInsertar.Parameters.AddWithValue("@ComentariosVentas", SqlDbType.VarChar).Value = string.IsNullOrEmpty(reserva.ComentariosVenta) ? "" : reserva.ComentariosVenta;
                         commandInsertar.Parameters.AddWithValue("@ComentariosTorre", SqlDbType.VarChar).Value = string.IsNullOrEmpty(reserva.ComentariosTorre) ? "" : reserva.ComentariosTorre;
                         commandInsertar.Parameters.AddWithValue("@Estado", SqlDbType.VarChar).Value = "A";
                         commandInsertar.Parameters.AddWithValue("@UsrCreacion", SqlDbType.VarChar).Value = "1";
@@ -890,11 +896,11 @@ namespace kalea2.Utilidades
                         commandInsertar.Parameters.AddWithValue("@Zona", SqlDbType.VarChar).Value = "3";
                         commandInsertar.Parameters.AddWithValue("@Coordenadas", SqlDbType.VarChar).Value = "14.640428851152517, -90.52079554577591";
                         commandInsertar.Parameters.AddWithValue("@NombreCliente", SqlDbType.VarChar).Value = reserva.NombreCliente;
-                        commandInsertar.Parameters.AddWithValue("@NitCliente", SqlDbType.VarChar).Value = "95853820";
+                        commandInsertar.Parameters.AddWithValue("@NitCliente", SqlDbType.VarChar).Value = "00000000";
                         commandInsertar.Parameters.AddWithValue("@Telefono", SqlDbType.VarChar).Value = reserva.Telefono;
                         commandInsertar.Parameters.AddWithValue("@Celular", SqlDbType.VarChar).Value = reserva.Celular;
                         commandInsertar.Parameters.AddWithValue("@PersonaRecepcion", SqlDbType.VarChar).Value = "Cliente que recibe";
-                        commandInsertar.Parameters.AddWithValue("@ComentariosVentas", SqlDbType.VarChar).Value = reserva.ComentariosVenta;
+                        commandInsertar.Parameters.AddWithValue("@ComentariosVentas", SqlDbType.VarChar).Value = string.IsNullOrEmpty(reserva.ComentariosVenta) ? "" : reserva.ComentariosVenta;
                         commandInsertar.Parameters.AddWithValue("@ComentariosTorre", SqlDbType.VarChar).Value = string.IsNullOrEmpty(reserva.ComentariosTorre) ? "" : reserva.ComentariosTorre;
                         commandInsertar.Parameters.AddWithValue("@Estado", SqlDbType.VarChar).Value = "A";
                         commandInsertar.Parameters.AddWithValue("@UsrCreacion", SqlDbType.VarChar).Value = "1";

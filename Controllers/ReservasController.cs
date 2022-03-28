@@ -95,6 +95,9 @@ namespace kalea2.Controllers
             datos.Reserva_Casos = new List<Models.Reserva_Detalle_Casos>();
             datos.Eventos_Articulos = reservas.ObtenerEventos();
             datos.Casos_Pendientes = reservas.ObtenerCasos();
+            //datos.Eventos_Articulos = new List<SelectListItem>();
+            //datos.Casos_Pendientes = new List<SelectListItem>();
+
             //datos.Vehiculo = Id;
             return View("Modal", datos);
         }
@@ -365,6 +368,8 @@ namespace kalea2.Controllers
             return Json(articulos);
         }
 
+
+
         //public ActionResult GetListadoArticulos(string id)
         //{
         //    Reservas reservas = new Reservas();
@@ -373,6 +378,17 @@ namespace kalea2.Controllers
         //    r.Reserva_Articulos = articulos;
         //    return View("GetListadoArticulos", r);
         //}
+
+        public JsonResult ObtenerCasosEventosLoad()
+        {
+            dynamic Listado = new System.Dynamic.ExpandoObject();
+            Reservas reservas = new Reservas();
+            //datos.Casos_Pendientes = 
+            Listado.Casos = reservas.ObtenerCasos();
+            Listado.Eventos = reservas.ObtenerEventos();
+
+            return Json(Listado);
+        }
 
         public JsonResult ObtenerComentarios(string id)
         {
@@ -455,20 +471,25 @@ namespace kalea2.Controllers
 
             for (int i = 0; i < sp.Length; i++)
             {
-                string[] spGeneral = sp[i].TrimEnd(',').Split(',');
+                string[] spGeneral = sp[i].TrimEnd(',').Split('\\');
                 for (int j = 0; j < spGeneral.Length; j++)
                 {
                     switch (i)
                     {
                         case 0:
-
-                            Models.ListadoCasos articulo = new Models.ListadoCasos();
-                            articulo.Caso = spGeneral[j].ToString();
-                            CasosDet.Add(articulo);
-
+                            if (spGeneral[j].ToString()!="")
+                            {
+                                Models.ListadoCasos articulo = new Models.ListadoCasos();
+                                articulo.Caso = spGeneral[j].ToString();
+                                CasosDet.Add(articulo);
+                            }
                             break;
                         case 1:
-                            CasosDet[j].Acciones = spGeneral[j].ToString();
+                            if (spGeneral[j].ToString() != "")
+                            {
+                                CasosDet[j].Acciones = spGeneral[j].ToString();
+                            }
+                                
                             break;
                     }
                 }

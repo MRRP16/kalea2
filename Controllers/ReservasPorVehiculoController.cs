@@ -74,7 +74,7 @@ namespace kalea2.Controllers
                 string[] split = id.Split(separadores);
                 CultureInfo enUS = new CultureInfo("en-US");
                 
-                DateTime dtI = Convert.ToDateTime(split[0]);
+                DateTime dtI = DateTime.ParseExact(split[0], "dd/MM/yyyy", null);
                 DateTime.TryParseExact(split[0], "dd/MM/yyyy", enUS,
                               DateTimeStyles.None, out dtI);
                 DateTime dtF = DateTime.Today;
@@ -85,7 +85,11 @@ namespace kalea2.Controllers
                     if (split[i].Contains("card"))
                     {
                         PanelId = split[i].Split('-')[3];
-                        Temporal.Add(split[i].Split('-')[1].ToString());
+                        if (!split[i].Split('-')[1].Equals("0"))
+                        {
+                            Temporal.Add(split[i].Split('-')[1].ToString());
+                        }
+                           
                     }
                     else if (DateTime.TryParseExact(split[i].ToString(), "dd/MM/yyyy", enUS,
                               DateTimeStyles.None, out dtF))
@@ -106,7 +110,7 @@ namespace kalea2.Controllers
                 }
                 return Json("true");
             }
-            catch
+            catch (Exception e)
             {
                 return Json("false");
             }

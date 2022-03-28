@@ -16,464 +16,496 @@
 <head>
     <link rel="stylesheet" href="~/Content/assets/css/maps.css">
 </head>
+<body onload="myFunction()">
+    <div class="main-content d-flex flex-column flex-md-row">
+        <div class="container-fluid">
+            <div class="row">
+                @using (Html.BeginForm())
+                {
+                    <div class="col-12">
 
-<div class="main-content d-flex flex-column flex-md-row">
-    <div class="container-fluid">
-        <div class="row">
-            @using (Html.BeginForm())
-            {
-                <div class="col-12">
+                        <!-- Invoice Header -->
+                        <div class="invoice-details-header bg-white d-flex align-items-sm-center flex-column flex-sm-row mb-30 justify-content-sm-between">
+                            <div class="d-flex align-items-center">
+                                <a href="#" class="mr-2"><img src="~/Content/assets/img/svg/angle-left.svg" alt="" class="svg"></a>
+                                <h2 class="regular mr-3 font-30">Reserva de espacio definitivo</h2>
+                            </div>
 
-                    <!-- Invoice Header -->
-                    <div class="invoice-details-header bg-white d-flex align-items-sm-center flex-column flex-sm-row mb-30 justify-content-sm-between">
-                        <div class="d-flex align-items-center">
-                            <a href="#" class="mr-2"><img src="~/Content/assets/img/svg/angle-left.svg" alt="" class="svg"></a>
-                            <h2 class="regular mr-3 font-30">Reserva de espacio definitivo</h2>
+                            <div class="invoice-header-right d-flex align-items-center justify-content-around justify-content-sm-end mt-3 mt-sm-0">
+
+                            </div>
                         </div>
-
-                        <div class="invoice-header-right d-flex align-items-center justify-content-around justify-content-sm-end mt-3 mt-sm-0">
-
-                        </div>
-                    </div>
-                    <!-- End Invoice Header -->
-                    <!-- Invoice Top -->
-                    <div class="invoice-pd c2-bg" data-bg-img="~/../../Content/assets/img/media/invoice-pattern.png">
-                        <div class="row">
-                            <div class="col-md-8">
-
-                                <!-- Invoice Right -->
-                                <div class="invoice-right mt-5 mt-md-0">
-                                    <h3 class="white font-20 mb-3">Entrega</h3>
-                                    <ul class="status-list">
-                                        <li>
-                                            <span class="key font-14">Entrega No:</span>
-                                            <span class="white bold font-17"></span>
-                                            <div class="col-md-12">
-                                                @Html.EditorFor(modelItem => Model.Id, new { htmlAttributes = new { @class = "theme-input-style style--four", @readonly = "true" } })
-                                            </div>
-                                        </li>
-                                        <li>
-                                            @Html.LabelFor(model => model.FechaEntrega2, htmlAttributes: new { @class = "key font-14" })
-                                            <div class="col-md-12">
-                                                @Html.EditorFor(model => model.FechaEntrega2, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                        <!-- End Invoice Header -->
+                        <!-- Invoice Top -->
+                        <div class="invoice-pd c2-bg" data-bg-img="~/../../Content/assets/img/media/invoice-pattern.png">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <!-- Invoice Right -->
+                                    <div class="invoice-right mt-5 mt-md-0">
+                                        <h3 class="white font-20 mb-3">Entrega</h3>
+                                        <ul class="status-list">
+                                            <li>
+                                                <span class="key font-14">Entrega No:</span>
+                                                <span class="white bold font-17"></span>
                                                 <div class="col-md-12">
-                                                    @Html.ValidationMessageFor(model => model.FechaEntrega2, "", new { @class = "text-danger" })
+                                                    @Html.EditorFor(modelItem => Model.Id, new { htmlAttributes = new { @class = "theme-input-style style--four", @readonly = "true" } })
                                                 </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            @Html.LabelFor(model => model.FechaRestriccionInicio, htmlAttributes: new { @class = "key font-14" })
-                                            <div class="col-md-12">
-                                                @Html.EditorFor(model => model.FechaRestriccionInicio, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                            </li>
+                                            <li>
+                                                @Html.LabelFor(model => model.FechaEntrega2, htmlAttributes: new { @class = "key font-14" })
                                                 <div class="col-md-12">
-                                                    @Html.ValidationMessageFor(model => model.FechaRestriccionInicio, "", new { @class = "text-danger" })
+                                                    @Html.EditorFor(model => model.FechaEntrega2, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                                    <div class="col-md-12">
+                                                        @Html.ValidationMessageFor(model => model.FechaEntrega2, "", new { @class = "text-danger" })
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </li>
+                                            <li>
+                                                @Html.LabelFor(model => model.FechaRestriccionInicio, htmlAttributes: new { @class = "key font-14" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.FechaRestriccionInicio, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                                    <div class="col-md-12">
+                                                        @Html.ValidationMessageFor(model => model.FechaRestriccionInicio, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
 
-                                            @*<input type="text" id="default-date" placeholder="28 October 2019" />*@
-                                        </li>
-                                        <li>
-                                            @*<span class="key font-14">Fecha:</span>*@
+                                                @*<input type="text" id="default-date" placeholder="28 October 2019" />*@
+                                            </li>
+                                            <li>
+                                                @*<span class="key font-14">Fecha:</span>*@
 
-                                            @Html.LabelFor(model => model.FechaRestriccionFin, htmlAttributes: new { @class = "key font-14" })
-                                            <div class="col-md-12">
-                                                @Html.EditorFor(model => model.FechaRestriccionFin, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
-                                                @Html.ValidationMessageFor(model => model.FechaRestriccionFin, "", new { @class = "text-danger" })
-                                            </div>
-                                            @*<input type="text" id="default-date" placeholder="28 October 2019" />*@
-                                        </li>
+                                                @Html.LabelFor(model => model.FechaRestriccionFin, htmlAttributes: new { @class = "key font-14" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.FechaRestriccionFin, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                                    @Html.ValidationMessageFor(model => model.FechaRestriccionFin, "", new { @class = "text-danger" })
+                                                </div>
+                                                @*<input type="text" id="default-date" placeholder="28 October 2019" />*@
+                                            </li>
 
-                                    </ul>
+                                        </ul>
+                                    </div>
+                                    <!-- End Invoice Right -->
                                 </div>
-                                <!-- End Invoice Right -->
-                            </div>
-                            <div class="col-md-4">
-                                <!-- Invoice Right -->
-                                <div class="invoice-right mt-5 mt-md-0">
-                                    <h3 class="white font-20 mb-3">Horarios</h3>
+                                <div class="col-md-3">
+                                    <!-- Invoice Right -->
+                                    <div class="invoice-right mt-5 mt-md-0">
+                                        <h3 class="white font-20 mb-3">Horarios</h3>
 
-                                    <ul class="status-list">
+                                        <ul class="status-list">
+                                            <li>
+                                                @Html.LabelFor(model => model.FechaInicio, htmlAttributes: new { @class = "key font-14" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.FechaInicio, new { htmlAttributes = new { @class = "theme-input-style style--four", @readonly = "true" } })
+                                                    @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
+                                                </div>
+                                            </li>
+                                            <li>
+                                                @Html.LabelFor(model => model.FechaFin, htmlAttributes: new { @class = "key font-14" })
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(model => model.FechaFin, new { htmlAttributes = new { @class = "theme-input-style style--four", @readonly = "true" } })
+                                                    @Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })
+                                                </div>
+                                                @*<input type="text" id="default-date" placeholder="28 October 2019" />*@
+                                            </li>
+                                            <li>
+                                                <span class="key font-14">Tiempo armado(min):</span>
+                                                <span class="white bold font-17"></span>
+                                                <div class="col-md-12">
+                                                    @Html.EditorFor(modelItem => Model.TiempoArmado, new { htmlAttributes = new { @class = "theme-input-style style--four", @readonly = "true" } })
+                                                </div>
+                                            </li>
 
-                                        <li>
-                                            @Html.LabelFor(model => model.FechaInicio, htmlAttributes: new { @class = "key font-14" })
-                                            <div class="col-md-12">
-                                                @Html.EditorFor(model => model.FechaInicio, new { htmlAttributes = new { @class = "theme-input-style style--four", @readonly = "true" } })
-                                                @Html.ValidationMessageFor(model => model.FechaInicio, "", new { @class = "text-danger" })
-                                            </div>
-                                        </li>
-                                        <li>
-                                            @Html.LabelFor(model => model.FechaFin, htmlAttributes: new { @class = "key font-14" })
-                                            <div class="col-md-12">
-                                                @Html.EditorFor(model => model.FechaFin, new { htmlAttributes = new { @class = "theme-input-style style--four", @readonly = "true" } })
-                                                @Html.ValidationMessageFor(model => model.FechaFin, "", new { @class = "text-danger" })
-                                            </div>
-                                            @*<input type="text" id="default-date" placeholder="28 October 2019" />*@
-                                        </li>
-                                        <li>
-                                            <span class="key font-14">Tiempo armado(min):</span>
-                                            <span class="white bold font-17"></span>
-                                            <div class="col-md-12">
-                                                @Html.EditorFor(modelItem => Model.TiempoArmado, new { htmlAttributes = new { @class = "theme-input-style style--four", @readonly = "true" } })
-                                            </div>
-                                        </li>
-
-                                    </ul>
+                                        </ul>
+                                    </div>
+                                    <!-- End Invoice Right -->
                                 </div>
-                                <!-- End Invoice Right -->
+                                <div class="col-md-3">
+                                    <div class="invoice-right mt-5 mt-md-0">
+                                        <h3 class="white font-20 mb-3">Datos de cliente:</h3>
+                                        <ul class="status-list">
+                                            <li>
+                                                <span class="key">Nombre</span>
+                                                @Html.EditorFor(model => model.NombreCliente, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                                @Html.ValidationMessageFor(model => model.NombreCliente, "", new { @class = "text-danger" })
+                                            </li>
+                                            <li>
+                                                <span class="key">Telefono</span>
+                                                @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                                @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                                            </li>
+                                            <li>
+                                                <span class="key">Celular</span>
+                                                @Html.EditorFor(model => model.Celular, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                                @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="invoice-right mt-5 mt-md-0">
+                                        <h3 class="white font-20 mb-3">Direcciones:</h3>
+                                        <ul class="status-list">
+                                            <li>
+                                                <span class="key">Entrega</span>
+                                                @Html.EditorFor(model => model.DireccionEntrega, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                                @Html.ValidationMessageFor(model => model.DireccionEntrega, "", new { @class = "text-danger" })
+                                            </li>
+                                            <li>
+                                                <span class="key">Fiscal</span>
+                                                @Html.EditorFor(model => model.DireccionFiscal, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                                @Html.ValidationMessageFor(model => model.DireccionFiscal, "", new { @class = "text-danger" })
+                                            </li>
+                                            <li>
+                                                <span class="key">Localización</span>
+                                                @Html.EditorFor(model => model.Geolocalizacion, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                                @Html.ValidationMessageFor(model => model.Geolocalizacion, "", new { @class = "text-danger" })
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+
+
                             </div>
                         </div>
-                    </div>
-                    <!-- End Invoice Top -->
-                    <!-- Invois Wrapper -->
-                    <div class="bg-white invoice-pd">
-                        <div class="row">
+                        <!-- End Invoice Top -->
+                        <!-- Invois Wrapper -->
+                        <div class="bg-white invoice-pd">
+                            <div class="row">
 
-                            <div class="col-xl-4 col-md-6">
-                                <!-- Invoice Payment Details -->
-                                <div class="invoice edit payment-details mt-5 mt-xl-0">
-                                    <div class="invoice-title c4 bold font-14 mb-3">Datos de cliente:</div>
+                                <div class="col-xl-4 col-md-6">
+                                    <!-- Invoice Payment Details -->
+                                    <div class="invoice edit payment-details mt-5 mt-xl-0">
+                                        <div class="invoice-title c4 bold font-14 mb-3">Observaciones:</div>
 
-                                    <ul class="status-list">
-                                        <li>
-                                            <span class="key">Nombre</span>
-                                            @Html.EditorFor(model => model.NombreCliente, new { htmlAttributes = new { @class = "theme-input-style style--three" } })
-                                            @Html.ValidationMessageFor(model => model.NombreCliente, "", new { @class = "text-danger" })
-                                        </li>
-                                        <li>
-                                            <span class="key">Telefono</span>
-                                            @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "theme-input-style style--three" } })
-                                            @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
-                                        </li>
-                                        <li>
-                                            <span class="key">Celular</span>
-                                            @Html.EditorFor(model => model.Celular, new { htmlAttributes = new { @class = "theme-input-style style--three" } })
-                                            @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })
-                                        </li>
+                                        <ul class="status-list">
+                                            <li>
+                                                @Html.EditorFor(model => model.ComentariosVenta, new { htmlAttributes = new { @class = "theme-input-style", cols = 35, @rows = 3 } })
+                                            </li>
 
-                                    </ul>
+                                        </ul>
+
+                                    </div>
+
+                                    <!-- End Invoice Payment Details -->
                                 </div>
-                                <!-- End Invoice Payment Details -->
-                            </div>
 
-                            <div class="col-xl-4 col-md-6">
-                                <!-- Invoice Payment Details -->
-                                <div class="invoice edit payment-details mt-5 mt-xl-0">
-                                    <div class="invoice-title c4 bold font-14 mb-3">Direcciones:</div>
+                                <div class="col-xl-4 col-md-6 mt-10">
+                                    <!-- Invoice Payment Details -->
+                                    <div class="invoice edit payment-details mt-5 mt-xl-0">
+                                        <div class="invoice-title c4 bold font-14 mb-3">Observaciones torre:</div>
 
-                                    <ul class="status-list">
-                                        <li>
-                                            <span class="key">Entrega</span>
-                                            @Html.EditorFor(model => model.DireccionEntrega, new { htmlAttributes = new { @class = "theme-input-style style--three" } })
-                                            @Html.ValidationMessageFor(model => model.DireccionEntrega, "", new { @class = "text-danger" })
-                                        </li>
-                                        <li>
-                                            <span class="key">Fiscal</span>
-                                            @Html.EditorFor(model => model.DireccionFiscal, new { htmlAttributes = new { @class = "theme-input-style style--three" } })
-                                            @Html.ValidationMessageFor(model => model.DireccionFiscal, "", new { @class = "text-danger" })
-                                        </li>
-                                        <li>
-                                            <span class="key">Localización</span>
-                                            @Html.EditorFor(model => model.Geolocalizacion, new { htmlAttributes = new { @class = "theme-input-style style--three" } })
-                                            @Html.ValidationMessageFor(model => model.Geolocalizacion, "", new { @class = "text-danger" })
-                                        </li>
+                                        <ul class="status-list">
+                                            <li>
+                                                @Html.EditorFor(model => model.ComentariosTorre, new { htmlAttributes = new { @class = "theme-input-style", cols = 35, @rows = 3 } })
+                                                @Html.HiddenFor(model => model.Vehiculo)
+                                            </li>
 
-                                    </ul>
-                                </div>
-                                <!-- End Invoice Payment Details -->
-                            </div>
-
-
-
-
-                            <div class="col-xl-4 col-md-6">
-                                <!-- Invoice Payment Details -->
-                                <div class="invoice edit payment-details mt-5 mt-xl-0">
-                                    <div class="invoice-title c4 bold font-14 mb-3">Observaciones:</div>
-
-                                    <ul class="status-list">
-                                        <li>
-                                            @Html.EditorFor(model => model.ComentariosVenta, new { htmlAttributes = new { @class = "theme-input-style" } })
-                                        </li>
-
-                                    </ul>
+                                        </ul>
+                                    </div>
 
                                 </div>
 
-                                <!-- End Invoice Payment Details -->
-                            </div>
+                                <div class="col-xl-4 col-md-6 mt-10">
+                                    <!-- Invoice Payment Details -->
+                                    <div class="invoice edit payment-details mt-5 mt-xl-0">
+                                        <div class="invoice-title c4 bold font-14 mb-3">Observaciones torre:</div>
 
-                            <div class="col-xl-4 col-md-6 mt-10">
-                                <!-- Invoice Payment Details -->
-                                <div class="invoice edit payment-details mt-5 mt-xl-0">
-                                    <div class="invoice-title c4 bold font-14 mb-3">Observaciones torre:</div>
+                                        <ul class="status-list">
+                                            <li>
+                                                <input id="pac-input" class="controls" type="text" placeholder="Buscador de direcciones" />
+                                                <div class="mt-2" style="width:100%;height:500px" id="map"></div>
+                                            </li>
 
-                                    <ul class="status-list">
-                                        <li>
-                                            @Html.EditorFor(model => model.ComentariosTorre, new { htmlAttributes = new { @class = "theme-input-style", cols = 35, @rows = 3 } })
-                                            @Html.HiddenFor(model => model.Vehiculo)
-                                        </li>
+                                        </ul>
+                                    </div>
 
-                                    </ul>
                                 </div>
+                            </div>
+                        </div>
 
+                        <div class="bg-white invoice-pd">
+                            <div class="row">
+                                <div class="col-xl-4 col-md-12">
+                                    <!-- Invoice Payment Details -->
+                                    <div class="invoice edit payment-details mt-5 mt-xl-0">
+                                        <div class="invoice-title c4 bold font-14 mb-3">Seleccione un evento:</div>
+                                        <ul class="status-list">
+                                            <li>
+                                                <div class="col-md-6">
+                                                    <div id="divEventos" style="width:100%;" class="divEventos">
+                                                        @* @Html.DropDownListFor(model => model.NumEvento, Model.Eventos_Articulos, "-- Select Status --", new { htmlAttributes = new { @class = "mi-selector", id = "evento", name = "evento", style = "width:100%;" } })*@
+                                                        <select class='mi-selector' id="evento" name='evento' style="width:100%;">
+                                                            <option value="">  -- Seleccione -- </option>
+
+                                                            @foreach (var item in @Model.Eventos_Articulos)
+                                                            {
+                                                                <option value="@item.Value"> @item.Value </option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    @*@Html.DropDownListFor(modelItem => modelItem.NumEvento, Model.Eventos_Articulos, " -- Eventos pendientes de programar --", new { @class = "theme-input-style" })*@
+                                                    @Html.HiddenFor(modelItem => modelItem.Eventos_Articulos)
+
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <a id="AgregarLinea" class="btn long" style="color:white">Agregar</a>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="button-group pt-2">
+                                                </div>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                    <!-- End Invoice Payment Details -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Invois Wrapper -->
+                        <!-- Invoice Details List Wrapper -->
+                        <div class="bg-white details-list-wrap">
+                            <div class="table-responsive position-relative repeater-default pb-4">
+                                <!-- Invoice List Table -->
+                                <table id="invoice-edit-list-table" class="invoice-list-table style-two text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Evento</th>
+                                            <th>Articulo</th>
+                                            <th><span>Descripcion</span></th>
+                                            <th><span>Cantidad</span></th>
+                                            @*<th><span>Tiempo Armado</span></th>
+                                                <th><span>Remisionado</span></th>
+                                                <th><span>Estado</span></th>*@
+                                            <th><span>Accion</span></th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody data-repeater-list="group-a" class="bg-white" id="tbodyArticulos">
+
+                                        @for (int i = 0; i < Model.Reserva_Articulos.Count; i++)
+                                        {
+                                            <tr data-repeater-item>
+                                                <td class="bold">
+                                                    @Html.DisplayFor(m => Model.Reserva_Articulos[i].Id)
+                                                    @Html.HiddenFor(m => Model.Reserva_Articulos[i].Id)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => Model.Reserva_Articulos[i].NumEvento)
+                                                    @Html.HiddenFor(m => Model.Reserva_Articulos[i].NumEvento)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => Model.Reserva_Articulos[i].CodigoArticulo)
+                                                    @Html.HiddenFor(m => Model.Reserva_Articulos[i].CodigoArticulo)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => Model.Reserva_Articulos[i].Descripcion)
+                                                    @Html.HiddenFor(m => Model.Reserva_Articulos[i].Descripcion)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => Model.Reserva_Articulos[i].Cantidad)
+                                                    @Html.HiddenFor(m => Model.Reserva_Articulos[i].Cantidad)
+                                                    @Html.HiddenFor(m => Model.Reserva_Articulos[i].TiempoArmado)
+                                                    @Html.HiddenFor(m => Model.Reserva_Articulos[i].EstadoArticulo)
+                                                    @Html.HiddenFor(m => Model.Reserva_Articulos[i].NumEvento)
+                                                </td>
+                                                <td style="display:none;">
+                                                    @Html.DisplayFor(m => Model.Reserva_Articulos[i].TiempoArmado)
+                                                    @Html.HiddenFor(m => Model.Reserva_Articulos[i].TiempoArmado)
+                                                </td>
+                                                <td style="display:none;">
+                                                    @Html.DisplayFor(m => Model.Reserva_Articulos[i].Remisionado)
+                                                    @Html.HiddenFor(m => Model.Reserva_Articulos[i].Remisionado)
+                                                </td>
+                                                <td style="display:none;">
+                                                    @Html.DisplayFor(m => Model.Reserva_Articulos[i].EstadoArticulo)
+                                                    @Html.HiddenFor(m => Model.Reserva_Articulos[i].EstadoArticulo)
+                                                    @Html.HiddenFor(m => Model.Reserva_Articulos[i].NumEvento)
+                                                </td>
+                                                <td class="text-right">
+                                                    <div class="">
+                                                        <span data-repeater-delete class="tr-close">
+                                                            <img src="~/Content/assets/img/svg/table-colse.svg" alt="" class="svg">
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                                <!-- End Invoice List Table -->
                             </div>
 
-                            <div class="col-xl-8 col-md-6 mt-10">
-                                <!-- Invoice Payment Details -->
-                                <div class="invoice edit payment-details mt-5 mt-xl-0">
-                                    <div class="invoice-title c4 bold font-14 mb-3">
-                                        Mapa:
-                                        <input id="pac-input" class="controls" type="text" placeholder="Buscador de direcciones" />
-                                        <div class="mt-2" style="width:100%;height:500px" id="map"></div>
+                            <!-- Cart Collaterals -->
+                            <div class="cart-collaterals style--two pt-4 pt-xl-0">
+                                <div class="cart_totals calculated_shipping">
+                                </div>
+                            </div>
+                            <!-- End Cart Collaterals -->
+                        </div>
+
+
+                        <div class="bg-white invoice-pd">
+                            <div class="row">
+
+                                <div class="col-xl-4 col-md-12">
+                                    <!-- Invoice Payment Details -->
+                                    <div class="invoice edit payment-details mt-5 mt-xl-0">
+                                        <div class="invoice-title c4 bold font-14 mb-3">Seleccione un caso:</div>
+
+                                        <ul class="status-list">
+                                            <li>
+                                                <div class="col-md-6">
+                                                    <div id="divCasos" style="width:100%;">
+                                                        <select class='mi-selector' id="caso" name='evento' style="width:100%;">
+                                                            <option value="">  -- Seleccione -- </option>
+
+                                                            @foreach (var item in @Model.Casos_Pendientes)
+                                                            {
+                                                                <option value="@item.Value"> @item.Value </option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                    @*@Html.DropDownListFor(modelItem => modelItem.Casos_Pendientes, Model.Casos_Pendientes, " -- Casos pendientes de programar --", new { @class = "theme-input-style" })*@
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <a id="AgregarLinea2" class="btn long" style="color:white">Agregar</a>
+                                                </div>
+
+                                            </li>
+                                            <li>
+                                                <div class="button-group pt-2">
+
+
+                                                </div>
+                                            </li>
+
+                                        </ul>
+
+                                    </div>
+
+                                    <!-- End Invoice Payment Details -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white details-list-wrap">
+                            <div class="table-responsive position-relative repeater-default pb-4">
+                                <!-- Invoice List Table -->
+                                <table id="invoice-edit-list-table2" class="invoice-list-table style-two text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th style="text-align:left">Caso</th>
+                                            @*<th style="text-align:left"><span style="text-align:left">Observaciones</span></th>*@
+                                            <th style="text-align:left"><span style="text-align:left">Acciones</span></th>
+                                            <th style="text-align:left"><span style="text-align:left">Accion</span></th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody data-repeater-list="group-a" class="bg-white" id="TablaCasos">
+
+                                        @for (int i = 0; i < Model.Reserva_Casos.Count; i++)
+                                        {
+                                            <tr data-repeater-item>
+                                                <td class="bold">
+                                                    @Html.DisplayFor(m => Model.Reserva_Casos[i].Id)
+                                                    @Html.HiddenFor(m => Model.Reserva_Casos[i].Id)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(m => Model.Reserva_Casos[i].NumCaso)
+                                                    @Html.HiddenFor(m => Model.Reserva_Casos[i].NumCaso)
+                                                </td>
+                                                @*<td>
+                                                        @Html.DisplayFor(m => Model.Reserva_Casos[i].Observaciones)
+                                                        @Html.HiddenFor(m => Model.Reserva_Casos[i].Observaciones)
+                                                    </td>*@
+                                                <td>
+                                                    @Html.TextAreaFor(m => Model.Reserva_Casos[i].Acciones, new { @class = "theme-input-style style--three" })
+                                                    @Html.HiddenFor(m => Model.Reserva_Casos[i].Acciones)
+                                                </td>
+
+                                                <td class="text-right">
+                                                    <div class="">
+                                                        <span data-repeater-delete class="tr-close">
+                                                            <img src="~/Content/assets/img/svg/table-colse.svg" alt="" class="svg">
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                                <!-- End Invoice List Table -->
+                            </div>
+
+                            <!-- Cart Collaterals -->
+                            <div class="cart-collaterals style--two pt-4 pt-xl-0">
+                                <div class="cart_totals calculated_shipping">
+
+
+                                    <div class="proceed-to-checkout invoice-edit d-flex align-items-center justify-content-end mr-20 mt-4">
+                                        <a href="@Url.Action("Index","Reservas")" class="btn preview">Regresar</a>
+                                        <button type="submit" class="btn">Guardar</button>
                                     </div>
                                 </div>
                             </div>
+                            <!-- End Cart Collaterals -->
                         </div>
+                        <!-- End Invoice Details List Wrapper -->
+
                     </div>
-
-                    <div class="bg-white invoice-pd">
-                        <div class="row">
-                            <div class="col-xl-4 col-md-12">
-                                <!-- Invoice Payment Details -->
-                                <div class="invoice edit payment-details mt-5 mt-xl-0">
-                                    <div class="invoice-title c4 bold font-14 mb-3">Seleccione un evento:</div>
-                                    <ul class="status-list">
-                                        <li>
-                                            <div class="col-md-6">
-                                                <div id="divEventos" style="width:100%;">
-                                                    <select class='mi-selector' id="evento" name='evento' style="width:100%;">
-                                                        <option value="">  -- Seleccione -- </option>
-
-                                                        @foreach (var item in @Model.Eventos_Articulos)
-                                                        {
-                                                            <option value="@item.Value"> @item.Value </option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                                @*@Html.DropDownListFor(modelItem => modelItem.NumEvento, Model.Eventos_Articulos, " -- Eventos pendientes de programar --", new { @class = "theme-input-style" })*@
-                                                @Html.HiddenFor(modelItem => modelItem.Eventos_Articulos)
-
-
-                                            </div>
-                                            <div class="col-md-6">
-                                                <a id="AgregarLinea" class="btn long" style="color:white">Agregar</a>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="button-group pt-2">
-                                            </div>
-                                        </li>
-                                    </ul>
-
-                                </div>
-                                <!-- End Invoice Payment Details -->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Invois Wrapper -->
-                    <!-- Invoice Details List Wrapper -->
-                    <div class="bg-white details-list-wrap">
-                        <div class="table-responsive position-relative repeater-default pb-4">
-                            <!-- Invoice List Table -->
-                            <table id="invoice-edit-list-table" class="invoice-list-table style-two text-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Evento</th>
-                                        <th>Articulo</th>
-                                        <th><span>Descripcion</span></th>
-                                        <th><span>Cantidad</span></th>
-                                        @*<th><span>Tiempo Armado</span></th>
-                                            <th><span>Remisionado</span></th>
-                                            <th><span>Estado</span></th>*@
-                                        <th><span>Accion</span></th>
-                                    </tr>
-                                </thead>
-
-                                <tbody data-repeater-list="group-a" class="bg-white" id="tbodyArticulos">
-
-                                    @for (int i = 0; i < Model.Reserva_Articulos.Count; i++)
-                                    {
-                                        <tr data-repeater-item>
-                                            <td class="bold">
-                                                @Html.DisplayFor(m => Model.Reserva_Articulos[i].Id)
-                                                @Html.HiddenFor(m => Model.Reserva_Articulos[i].Id)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(m => Model.Reserva_Articulos[i].NumEvento)
-                                                @Html.HiddenFor(m => Model.Reserva_Articulos[i].NumEvento)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(m => Model.Reserva_Articulos[i].CodigoArticulo)
-                                                @Html.HiddenFor(m => Model.Reserva_Articulos[i].CodigoArticulo)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(m => Model.Reserva_Articulos[i].Descripcion)
-                                                @Html.HiddenFor(m => Model.Reserva_Articulos[i].Descripcion)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(m => Model.Reserva_Articulos[i].Cantidad)
-                                                @Html.HiddenFor(m => Model.Reserva_Articulos[i].Cantidad)
-                                                @Html.HiddenFor(m => Model.Reserva_Articulos[i].TiempoArmado)
-                                                @Html.HiddenFor(m => Model.Reserva_Articulos[i].EstadoArticulo)
-                                                @Html.HiddenFor(m => Model.Reserva_Articulos[i].NumEvento)
-                                            </td>
-                                            <td style="display:none;">
-                                                @Html.DisplayFor(m => Model.Reserva_Articulos[i].TiempoArmado)
-                                                @Html.HiddenFor(m => Model.Reserva_Articulos[i].TiempoArmado)
-                                            </td>
-                                            <td style="display:none;">
-                                                @Html.DisplayFor(m => Model.Reserva_Articulos[i].Remisionado)
-                                                @Html.HiddenFor(m => Model.Reserva_Articulos[i].Remisionado)
-                                            </td>
-                                            <td style="display:none;">
-                                                @Html.DisplayFor(m => Model.Reserva_Articulos[i].EstadoArticulo)
-                                                @Html.HiddenFor(m => Model.Reserva_Articulos[i].EstadoArticulo)
-                                                @Html.HiddenFor(m => Model.Reserva_Articulos[i].NumEvento)
-                                            </td>
-                                            <td class="text-right">
-                                                <div class="">
-                                                    <span data-repeater-delete class="tr-close">
-                                                        <img src="~/Content/assets/img/svg/table-colse.svg" alt="" class="svg">
-                                                    </span>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    }
-
-                                </tbody>
-                            </table>
-                            <!-- End Invoice List Table -->
-                        </div>
-
-                        <!-- Cart Collaterals -->
-                        <div class="cart-collaterals style--two pt-4 pt-xl-0">
-                            <div class="cart_totals calculated_shipping">
-                            </div>
-                        </div>
-                        <!-- End Cart Collaterals -->
-                    </div>
-
-
-                    <div class="bg-white invoice-pd">
-                        <div class="row">
-
-                            <div class="col-xl-4 col-md-12">
-                                <!-- Invoice Payment Details -->
-                                <div class="invoice edit payment-details mt-5 mt-xl-0">
-                                    <div class="invoice-title c4 bold font-14 mb-3">Seleccione un caso:</div>
-
-                                    <ul class="status-list">
-                                        <li>
-                                            <div class="col-md-6">
-                                                <div id="divCasos" style="width:100%;">
-                                                    <select class='mi-selector' id="caso" name='evento' style="width:100%;">
-                                                        <option value="">  -- Seleccione -- </option>
-
-                                                        @foreach (var item in @Model.Casos_Pendientes)
-                                                        {
-                                                            <option value="@item.Value"> @item.Value </option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                                @*@Html.DropDownListFor(modelItem => modelItem.Casos_Pendientes, Model.Casos_Pendientes, " -- Casos pendientes de programar --", new { @class = "theme-input-style" })*@
-                                            </div>
-                                            <div class="col-md-6">
-                                                <a id="AgregarLinea2" class="btn long" style="color:white">Agregar</a>
-                                            </div>
-
-                                        </li>
-                                        <li>
-                                            <div class="button-group pt-2">
-
-
-                                            </div>
-                                        </li>
-
-                                    </ul>
-
-                                </div>
-
-                                <!-- End Invoice Payment Details -->
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white details-list-wrap">
-                        <div class="table-responsive position-relative repeater-default pb-4">
-                            <!-- Invoice List Table -->
-                            <table id="invoice-edit-list-table2" class="invoice-list-table style-two text-nowrap">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th style="text-align:left">Caso</th>
-                                        @*<th style="text-align:left"><span style="text-align:left">Observaciones</span></th>*@
-                                        <th style="text-align:left"><span style="text-align:left">Acciones</span></th>
-                                        <th style="text-align:left"><span style="text-align:left">Accion</span></th>
-                                    </tr>
-                                </thead>
-
-                                <tbody data-repeater-list="group-a" class="bg-white" id="TablaCasos">
-
-                                    @for (int i = 0; i < Model.Reserva_Casos.Count; i++)
-                                    {
-                                        <tr data-repeater-item>
-                                            <td class="bold">
-                                                @Html.DisplayFor(m => Model.Reserva_Casos[i].Id)
-                                                @Html.HiddenFor(m => Model.Reserva_Casos[i].Id)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(m => Model.Reserva_Casos[i].NumCaso)
-                                                @Html.HiddenFor(m => Model.Reserva_Casos[i].NumCaso)
-                                            </td>
-                                            @*<td>
-                                                    @Html.DisplayFor(m => Model.Reserva_Casos[i].Observaciones)
-                                                    @Html.HiddenFor(m => Model.Reserva_Casos[i].Observaciones)
-                                                </td>*@
-                                            <td>
-                                                @Html.TextAreaFor(m => Model.Reserva_Casos[i].Acciones, new { @class = "theme-input-style style--three" })
-                                                @Html.HiddenFor(m => Model.Reserva_Casos[i].Acciones)
-                                            </td>
-
-                                            <td class="text-right">
-                                                <div class="">
-                                                    <span data-repeater-delete class="tr-close">
-                                                        <img src="~/Content/assets/img/svg/table-colse.svg" alt="" class="svg">
-                                                    </span>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    }
-
-                                </tbody>
-                            </table>
-                            <!-- End Invoice List Table -->
-                        </div>
-
-                        <!-- Cart Collaterals -->
-                        <div class="cart-collaterals style--two pt-4 pt-xl-0">
-                            <div class="cart_totals calculated_shipping">
-
-
-                                <div class="proceed-to-checkout invoice-edit d-flex align-items-center justify-content-end mr-20 mt-4">
-                                    <a href="@Url.Action("Index","Reservas")" class="btn preview">Regresar</a>
-                                    <button type="submit" class="btn">Guardar</button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Cart Collaterals -->
-                    </div>
-                    <!-- End Invoice Details List Wrapper -->
-
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
-</div>
+
+</body>
+
 
 @section Scripts {
 
+    <script type="text/javascript">
+        function myFunction() {
+            alert("Page is loaded");
 
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("ObtenerCasosEventosLoad", "Reservas")', // we are calling json method
+                dataType: 'json',
+               // here we are get value of selected country and passing same value
+                  //as inputto json method GetStates.
+                success: function (states) {
+                    // states contains the JSON formatted list
+                    // of states passed from the controller
+
+                    console.log(states);
+                    $.each(states.Eventos, function (i, evento) {
+                        $(".divEventos select").append('<option value="' + evento.Text + '">' + evento.Value + '</option>');
+                     });
+                    },
+                    //$.each(states, function (i, state) {
+
+                    //    console.log(state.Eventos);
+                    //    //$.each(states, function (i, state.Eventos) {
+
+                    //    //}
+                    //}
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+
+
+        }
+    </script>
     <script type="text/javascript">
         //jQuery(document).ready(function ($) {
         //    $(document).ready(function () {
@@ -823,12 +855,12 @@
 
             var value = "";
             $(".Casos .Numcaso").each(function () {
-                value += $(this).text() + ",";
+                value += $(this).text() + "\\";
 
             });
             value += "|";
             $(".Casos .Acciones").each(function () {
-                value +=  $(this).text() + ",";
+                value += $(this).text() + "\\";
 
             });
 

@@ -23,6 +23,7 @@ namespace kalea2.Utilidades
                 myConnection.Open();
 
                 OdbcDataAdapter adapter = new OdbcDataAdapter(Query, myConnection);
+                adapter.SelectCommand.CommandTimeout = 180;
                 adapter.Fill(ds, Tabla);
                 myConnection.Close();
                 myConnection.Dispose();

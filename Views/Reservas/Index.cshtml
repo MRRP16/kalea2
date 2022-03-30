@@ -237,14 +237,23 @@ else if (ViewBag.Exitoso != null)
                                                 <div class="col-sm d-inline-flex justify-content-between">
                                                     <p class="black mb-2">#@Html.DisplayFor(modelItem => item.Id) - @Html.DisplayFor(modelItem => item.NombreCliente)</p>
 
-                                                    @if (item.TamanioTarjeta < 180)
-                                                    {
-                                                        <p id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir"
-                                                           onclick="expandir('@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
-                                                           estadoExpandir="true">
-                                                            <i class="arrow_carrot-down"></i>
+                                                    <div>
+                                                        <p id="" onclick="">
+                                                            <i class="icon_plus_alt2"></i>
                                                         </p>
-                                                    }
+
+
+
+                                                        @if (item.TamanioTarjeta < 180)
+                                                        {
+                                                            <p id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir"
+                                                               onclick="expandir('@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
+                                                               estadoExpandir="true">
+                                                                <i class="arrow_carrot-down"></i>
+                                                            </p>
+                                                        }
+                                                    </div>
+
                                                 </div>
                                             </div>
 
@@ -297,14 +306,22 @@ else if (ViewBag.Exitoso != null)
                                             <div class="row">
                                                 <div class="col-sm d-inline-flex justify-content-between">
                                                     <p class="black mb-2">Entrega #@Html.DisplayFor(modelItem => item.Id)</p>
-                                                    @if (item.TamanioTarjeta < 180)
-                                                    {
-                                                        <p id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir"
-                                                           onclick="expandir('@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
-                                                           estadoExpandir="true">
-                                                            <i class="arrow_carrot-down"></i>
+
+                                                    <div>
+                                                        <p id="" onclick="">
+                                                            <i class="icon_plus_alt2"></i>
                                                         </p>
-                                                    }
+
+                                                        @if (item.TamanioTarjeta < 180)
+                                                        {
+                                                            <p id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir"
+                                                               onclick="expandir('@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
+                                                               estadoExpandir="true">
+                                                                <i class="arrow_carrot-down"></i>
+                                                            </p>
+                                                        }
+                                                    </div>
+
                                                 </div>
                                             </div>
 

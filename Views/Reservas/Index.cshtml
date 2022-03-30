@@ -237,12 +237,10 @@ else if (ViewBag.Exitoso != null)
                                                 <div class="col-sm d-inline-flex justify-content-between">
                                                     <p class="black mb-2">#@Html.DisplayFor(modelItem => item.Id) - @Html.DisplayFor(modelItem => item.NombreCliente)</p>
 
-                                                    <div>
-                                                        <p id="" onclick="">
+                                                    <div style="display:flex; flex-direction: row;">
+                                                        <p id="" onclick="" style="margin-right: 10px;">
                                                             <i class="icon_plus_alt2"></i>
                                                         </p>
-
-
 
                                                         @if (item.TamanioTarjeta < 180)
                                                         {
@@ -307,8 +305,8 @@ else if (ViewBag.Exitoso != null)
                                                 <div class="col-sm d-inline-flex justify-content-between">
                                                     <p class="black mb-2">Entrega #@Html.DisplayFor(modelItem => item.Id)</p>
 
-                                                    <div>
-                                                        <p id="" onclick="">
+                                                    <div style="display:flex; flex-direction: row;">
+                                                        <p id="" onclick="" style="margin-right: 10px;">
                                                             <i class="icon_plus_alt2"></i>
                                                         </p>
 
@@ -366,7 +364,7 @@ else if (ViewBag.Exitoso != null)
                                             </div>
                                         </div>
                                         break;
-                                    case "#ffff00":
+                                    case "#ffff00"://AMARILLO
                                         <div class="board-card label-2 tarjetaReserva ov-hidden"
                                              style="--colorTarjeta: @Html.DisplayFor(modelItem => item.ColorTipoEvento); --AltoTarjeta:120px;"
                                              id="card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)">
@@ -375,14 +373,21 @@ else if (ViewBag.Exitoso != null)
                                                 <div class="col-sm d-inline-flex justify-content-between">
                                                     <p class="black mb-1">#@Html.DisplayFor(modelItem => item.Id) - Reserva</p>
                                                 </div>
-                                                @if (item.TamanioTarjeta < 180)
-                                                {
-                                                    <p id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir"
-                                                       onclick="expandir('@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
-                                                       estadoExpandir="true">
-                                                        <i class="arrow_carrot-down"></i>
+
+                                                <div style="display:flex; flex-direction: row;">
+                                                    <p id="" onclick="" style="margin-right: 10px;">
+                                                        <i class="icon_plus_alt2"></i>
                                                     </p>
-                                                }
+
+                                                    @if (item.TamanioTarjeta < 180)
+                                                    {
+                                                        <p id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir"
+                                                           onclick="expandir('@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
+                                                           estadoExpandir="true">
+                                                            <i class="arrow_carrot-down"></i>
+                                                        </p>
+                                                    }
+                                                </div>
                                             </div>
                                             <div id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir">
                                                 <p class="black mb-1">Referencia: @Html.DisplayFor(modelItem => item.ReferenciaReserva) </p>
@@ -418,7 +423,7 @@ else if (ViewBag.Exitoso != null)
                                             </div>
                                         </div>
                                         break;
-                                    case "#FF5733":
+                                    case "#FF5733"://TRASLADO
                                         <div class="board-card label-2 tarjetaReserva" style="--colorTarjeta: @Html.DisplayFor(modelItem => item.ColorTipoEvento); --AltoTarjeta:1000px;" id="card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)">
                                             <div class="row">
                                                 <div class="col-sm">

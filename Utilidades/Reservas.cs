@@ -100,16 +100,17 @@ namespace kalea2.Utilidades
                         reserva.Geolocalizacion = item["GeoloCalizacion"].ToString();
                         reserva.DireccionFiscal = item["DireccionFiscal"].ToString();
                         int NumMinutos = (Convert.ToDateTime(item["FechaInicio"].ToString()) - Convert.ToDateTime(item["FechaFin"].ToString())).Minutes + (Convert.ToDateTime(item["FechaInicio"].ToString()) - Convert.ToDateTime(item["FechaFin"].ToString())).Hours * 60;
-                        int SumEspacios = (NumMinutos / 60) * 40 * -1;
-                        if (SumEspacios == 0)
-                        {
-                            SumEspacios = 40;
-                        }
+                        //int SumEspacios = (NumMinutos / 60) * 5 * -1;
+                        //if (SumEspacios == 0)
+                        //{
+                        //    SumEspacios = 40;
+                        //}
 
-                        reserva.TamanioTarjeta = (NumMinutos * 4 * -1) + SumEspacios;
+                        //reserva.TamanioTarjeta = (NumMinutos * 4 * -1) + SumEspacios;
+                        reserva.TamanioTarjeta = (NumMinutos * 2 * -1);
                         reserva.TiempoRuta = string.IsNullOrEmpty(item["TiempoRuta"].ToString()) ? 0 : (Convert.ToInt32(item["TiempoRuta"].ToString()) + HolguraInicio);
-                        reserva.TamanioTarjeta = (NumMinutos * 4 * -1) + SumEspacios;
-                        reserva.TiempoRuta = string.IsNullOrEmpty(item["TiempoRuta"].ToString()) ? 0 : (Convert.ToInt32(item["TiempoRuta"].ToString()) + HolguraInicio);
+                        //reserva.TamanioTarjeta = (NumMinutos * 4 * -1) + SumEspacios;
+                        //reserva.TiempoRuta = string.IsNullOrEmpty(item["TiempoRuta"].ToString()) ? 0 : (Convert.ToInt32(item["TiempoRuta"].ToString()) + HolguraInicio);
                         DataRow[] drow = resultado.Tables[0].Select("ID = '" + reserva.Id + "'");
                         foreach (DataRow item2 in drow)
                         {
@@ -194,9 +195,10 @@ namespace kalea2.Utilidades
 
                        
                         int NumMinutos = (dtmInicial.Minute - dtInit.Minute) + (dtmInicial - dtInit).Hours * 60;
-                      
-                        int SumEspacios = (NumMinutos / 60) * 40 * 1;
-                        reserva.TamanioTarjetaTranspareante = (NumMinutos * 4 * 1) + SumEspacios;
+
+                        //int SumEspacios = (NumMinutos / 60) * 5 * 1;
+                        //reserva.TamanioTarjetaTranspareante = (NumMinutos * 4 * 1) + SumEspacios;
+                        reserva.TamanioTarjetaTranspareante = (NumMinutos * 2 * 1);
                         if (reserva.TamanioTarjetaTranspareante < 0)
                         {
                             reserva.TamanioTarjetaTranspareante = reserva.TamanioTarjetaTranspareante * -1;
@@ -206,12 +208,13 @@ namespace kalea2.Utilidades
                         dtInit = Convert.ToDateTime(dt["FechaInicio"].ToString());
                         dtInit = dtInit.AddHours(-1);
                         NumMinutos = (Convert.ToDateTime(dt["FechaInicio"].ToString()).Minute - dtInit.Minute) + (Convert.ToDateTime(dt["FechaInicio"].ToString()) - dtInit).Hours * 60;
-                        SumEspacios = (NumMinutos / 60) * 40 * 1;
-                        if (SumEspacios == 0)
-                        {
-                            SumEspacios = 40;
-                        }
-                        reserva.TamanioTarjeta = (NumMinutos * 4 * 1) + SumEspacios;
+                        //SumEspacios = (NumMinutos / 60) * 5 * 1;
+                        //if (SumEspacios == 0)
+                        //{
+                        //    SumEspacios = 40;
+                        //}
+                        //reserva.TamanioTarjeta = (NumMinutos * 4 * 1) + SumEspacios;
+                        reserva.TamanioTarjeta = (NumMinutos * 2 * 1);
                         if (reserva.TamanioTarjeta < 0)
                         {
                             reserva.TamanioTarjeta = reserva.TamanioTarjeta * -1;
@@ -263,13 +266,14 @@ namespace kalea2.Utilidades
                             }
 
                             int NumMinutos = (FechaFin.Minute - Fechainicio.Minute) + (FechaFin.Hour  - Fechainicio.Hour) * 60;
-                            int SumEspacios = (NumMinutos / 60) * 40 * 1;
-                            if (SumEspacios == 0)
-                            {
-                                SumEspacios = 40;
-                            }
+                            //int SumEspacios = (NumMinutos / 60) * 5 * 1;
+                            //if (SumEspacios == 0)
+                            //{
+                            //    SumEspacios = 40;
+                            //}
 
-                            reserva.TamanioTarjeta = (NumMinutos * 4 * 1) + SumEspacios;
+                            //reserva.TamanioTarjeta = (NumMinutos * 4 * 1) + SumEspacios;
+                            reserva.TamanioTarjeta = (NumMinutos * 2 * 1);
                             if (reserva.TamanioTarjeta < 0)
                             {
                                 reserva.TamanioTarjeta = reserva.TamanioTarjeta * -1;

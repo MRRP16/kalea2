@@ -666,6 +666,16 @@ else if (ViewBag.Exitoso != null)
 </script>
 <script>
 
+
+    function AbrirEvento(id)
+    {
+
+        var url = "http://192.1.1.123:5300/CasosEntregas/Edit/" + id;
+
+        window.open(
+            url, "_blank");
+    }
+
     function BloquearRuta(vehiculo,fecha) {
         Swal.fire({
             title: "Esta seguro?",

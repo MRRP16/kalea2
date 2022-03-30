@@ -238,7 +238,7 @@ else if (ViewBag.Exitoso != null)
                                                     <p class="black mb-2">#@Html.DisplayFor(modelItem => item.Id) - @Html.DisplayFor(modelItem => item.NombreCliente)</p>
 
                                                     <div>
-                                                        <p id="" onclick="">
+                                                        <p id="" onclick="AbrirEvento(@Html.DisplayFor(modelItem => item.Id))">
                                                             <i class="icon_plus_alt2"></i>
                                                         </p>
 
@@ -660,6 +660,16 @@ else if (ViewBag.Exitoso != null)
     }
 </script>
 <script>
+
+
+    function AbrirEvento(id)
+    {
+
+        var url = "http://192.1.1.123:5300/CasosEntregas/Edit/" + id;
+
+        window.open(
+            url, "_blank");
+    }
 
     function BloquearRuta(vehiculo,fecha) {
         Swal.fire({

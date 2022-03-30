@@ -8,7 +8,7 @@ using System.Web;
 
 namespace kalea2.Utilidades
 {
-    
+
     public class Reportes
     {
         conexionDB dB;
@@ -22,8 +22,46 @@ namespace kalea2.Utilidades
             {
                 try
                 {
+                    string query = string.Empty;
+                    switch (vehiculo)
+                    {
+                        case 0:
 
-                    string query = string.Format("SELECT T.id, T.codigoevento, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, " +
+                            List<Models.Vehiculos> vehiculos = getVehiculos();
+                            string numve = string.Empty;
+                            foreach (var item in vehiculos)
+                            {
+                                if (item.Codigo != 0)
+                                {
+                                    numve += "'"+item.Codigo +"',";
+                                }
+                            }
+                            numve = numve.Remove(numve.Length - 1, 1);
+
+                            query = string.Format("SELECT T.id, T.codigoevento, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, " +
+                        "T.telefono, T.celular, T.tiempoarmado, T.comentariostorre, T.VEHICULO, SUM(T.PESO) AS PESO, SUM(T.VOLUMEN)AS VOLUMEN, SUM(T.COSTO) AS COSTO, " +
+                        "1 AS RADIO, T.ETIQUETAS, T.PRIORIDAD, T.FechaRestriccionInicio, T.FECHARECTRICCIONFIN " +
+                        "FROM( SELECT t0.id, t1.codigoevento, t0.nombrecliente, t0.direccionentrega, t0.geolocalizacion, t0.fechainicio, t0.fechafin, t0.telefono, t0.celular, " +
+                        "t0.tiempoarmado, t0.comentariostorre, v.descripcion AS VEHICULO, (COALESCE(T1.CANTIDAD, 0) * COALESCE(T2.PESO, 0)) AS PESO, 0 AS VOLUMEN, " +
+                        "(COALESCE(T1.CANTIDAD, 0) * COALESCE(T2.PRECIOBASE, 0)) AS COSTO, 1 AS RADIO, 'NA' AS ETIQUETAS , t0.numeroentregadia AS PRIORIDAD, " +
+                        "T0.FechaRestriccionInicio, T0.FECHARECTRICCIONFIN " +
+                        "FROM T_ENC_ENTREGAS T0 " +
+                        "INNER JOIN T_DET_ENTREGAS T1 ON T0.ID = t1.identrega " +
+                        "INNER JOIN Naf47.Arinda T2 ON T1.CODIGOARTICULO = T2.NO_ARTI " +
+                        "INNER JOIN T_VEHICULOS v ON t0.vehiculo = v.id " +
+                        "WHERE FechaInicio >= to_timestamp('{0} 00:00:00', 'yyyy-MM-dd hh24:mi:ss') " +
+                        "and FechaInicio <= to_timestamp('{0} 23:59:59', 'yyyy-MM-dd hh24:mi:ss') " +
+                        "AND t0.vehiculo IN ({1}) " +
+                        "AND T0.ESTADO <> 'AN' " +
+                        "GROUP BY t0.nombrecliente, t0.direccionentrega, t0.fechainicio, t0.fechafin, t0.geolocalizacion, t0.id, t1.codigoevento, t0.nitcliente, " +
+                        "t0.telefono, t0.celular, t0.tiempoarmado, t0.comentariostorre, v.descripcion, t0.numeroentregadia, (COALESCE(T1.CANTIDAD, 0) * COALESCE(T2.PESO, 0)), " +
+                        "(COALESCE(T1.CANTIDAD, 0) * COALESCE(T2.PRECIOBASE, 0)), T1.CODIGOARTICULO, T0.FECHARECTRICCIONFIN, T0.FechaRestriccionInicio) T " +
+                        "GROUP BY T.id, T.codigoevento, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, T.telefono, T.celular, " +
+                        "T.tiempoarmado, T.comentariostorre, T.VEHICULO, T.RADIO, T.ETIQUETAS, T.PRIORIDAD, T.FECHARECTRICCIONFIN, T.FechaRestriccionInicio " +
+                        "ORDER BY T.PRIORIDAD ASC; ", fecha, numve.ToString());
+                            break;
+                        default:
+                            query = string.Format("SELECT T.id, T.codigoevento, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, " +
                         "T.telefono, T.celular, T.tiempoarmado, T.comentariostorre, T.VEHICULO, SUM(T.PESO) AS PESO, SUM(T.VOLUMEN)AS VOLUMEN, SUM(T.COSTO) AS COSTO, " +
                         "1 AS RADIO, T.ETIQUETAS, T.PRIORIDAD, T.FechaRestriccionInicio, T.FECHARECTRICCIONFIN " +
                         "FROM( SELECT t0.id, t1.codigoevento, t0.nombrecliente, t0.direccionentrega, t0.geolocalizacion, t0.fechainicio, t0.fechafin, t0.telefono, t0.celular, " +
@@ -43,7 +81,10 @@ namespace kalea2.Utilidades
                         "(COALESCE(T1.CANTIDAD, 0) * COALESCE(T2.PRECIOBASE, 0)), T1.CODIGOARTICULO, T0.FECHARECTRICCIONFIN, T0.FechaRestriccionInicio) T " +
                         "GROUP BY T.id, T.codigoevento, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, T.telefono, T.celular, " +
                         "T.tiempoarmado, T.comentariostorre, T.VEHICULO, T.RADIO, T.ETIQUETAS, T.PRIORIDAD, T.FECHARECTRICCIONFIN, T.FechaRestriccionInicio " +
-                        "ORDER BY T.PRIORIDAD ASC; ",fecha,vehiculo.ToString());
+                        "ORDER BY T.PRIORIDAD ASC; ", fecha, vehiculo.ToString());
+                            break;
+                    }
+
 
                     var resultado = dB.ConsultarDB(query, "T_ENC_ENTREGAS");
 
@@ -96,7 +137,7 @@ namespace kalea2.Utilidades
                 //respuesta.Vehiculos = getVehiculos();
                 return null;
             }
-            
+
         }
 
         public List<Models.Vehiculos> getVehiculos()
@@ -104,9 +145,39 @@ namespace kalea2.Utilidades
             dB = new conexionDB();
             List<Models.Vehiculos> listado = new List<Models.Vehiculos>();
             var resultado = dB.ConsultarDB("SELECT * FROM T_VEHICULOS", "T_VEHICULOS");
+            Models.Vehiculos vehiculo = new Models.Vehiculos();
+            //{
+            //    Codigo = 0,
+            //    Descripcion = "Todos"
+            //};
+            //listado.Add(vehiculo);
             foreach (DataRow item in resultado.Tables[0].Rows)
             {
-                Models.Vehiculos vehiculo = new Models.Vehiculos()
+                vehiculo = new Models.Vehiculos()
+                {
+                    Codigo = int.Parse(item["ID"].ToString()),
+                    Descripcion = item["DESCRIPCION"].ToString()
+                };
+                listado.Add(vehiculo);
+            }
+
+            return listado;
+        }
+
+        public List<Models.Vehiculos> getVehiculosTransporte()
+        {
+            dB = new conexionDB();
+            List<Models.Vehiculos> listado = new List<Models.Vehiculos>();
+            var resultado = dB.ConsultarDB("SELECT * FROM T_VEHICULOS", "T_VEHICULOS");
+            Models.Vehiculos vehiculo = new Models.Vehiculos()
+            {
+                Codigo = 0,
+                Descripcion = "Todos"
+            };
+            listado.Add(vehiculo);
+            foreach (DataRow item in resultado.Tables[0].Rows)
+            {
+                vehiculo = new Models.Vehiculos()
                 {
                     Codigo = int.Parse(item["ID"].ToString()),
                     Descripcion = item["DESCRIPCION"].ToString()
@@ -125,7 +196,7 @@ namespace kalea2.Utilidades
             try
             {
                 string query = string.Format(@"SELECT t1.descripcion as vehiculo, t2.codigoevento, t2.codigoarticulo, t3.NOMBRE_LARGO AS descripcion, t2.cantidad, t4.nombre_vendedor as vendedor, t0.nombrecliente, t0.telefono, t0.celular, t0.direccionentrega, 
-                    t0.comentariosventas as comentariostorre, t0.fechainicio, t0.fecharestriccioninicio as restriccioninicio, t0.fecharectriccionfin as restriccionfin, t5.numcaso, t5.observaciones, t5.acciones, t0.id as identrega,T6.BODEGA
+                    to_char(substr(t0.comentariosventas, 1, 500)) as comentariosventas,t0.COMENTARIOSTORRE, t0.fechainicio, t0.fecharestriccioninicio as restriccioninicio, t0.fecharectriccionfin as restriccionfin, t5.numcaso, t5.observaciones, t5.acciones, t0.id as identrega,T6.BODEGA
                     FROM t_enc_entregas T0 
                     LEFT JOIN t_vehiculos T1 ON t1.id = t0.vehiculo
                     LEFT JOIN t_det_entregas T2 ON t0.id = t2.identrega
@@ -135,7 +206,7 @@ namespace kalea2.Utilidades
                     LEFT JOIN Naf47.Pvlineas_movimiento T6 ON T6.NO_TRANSA_MOV = T2.CODIGOEVENTO AND t2.codigoarticulo = T6.NO_ARTI
                     WHERE FechaInicio >= to_timestamp('{0} 00:00:00', 'dd/MM/yy hh24:mi:ss') AND FechaInicio <= to_timestamp('{0} 23:59:59', 'dd/MM/yy hh24:mi:ss') AND t0.vehiculo = {1}
                     GROUP BY t1.descripcion, t2.codigoevento, t2.codigoarticulo, t3.NOMBRE_LARGO, t2.cantidad, t4.nombre_vendedor , t0.nombrecliente, t0.telefono, t0.celular, t0.direccionentrega, 
-                    t0.comentariosventas , t0.fechainicio, t0.fecharestriccioninicio , t0.fecharectriccionfin, t5.numcaso, t5.observaciones, t5.acciones, t0.id ,T6.BODEGA;", fecha, vehiculoId);
+                    to_char(substr(t0.comentariosventas, 1, 500)),t0.COMENTARIOSTORRE , t0.fechainicio, t0.fecharestriccioninicio , t0.fecharectriccionfin, t5.numcaso, t5.observaciones, t5.acciones, t0.id ,T6.BODEGA;", fecha, vehiculoId);
 
                 var resultado = dB.ConsultarDB(query, "T_EVENTOS");
 
@@ -148,7 +219,7 @@ namespace kalea2.Utilidades
                     else
                     {
                         var posicion = ValidarSiExisteEventoEnListado(item, listadoDeEventos);
-                        if ( posicion != null)
+                        if (posicion != null)
                         {
                             AgregarProductoAEventoExistente(item, posicion, listadoDeEventos);
                         }
@@ -190,10 +261,11 @@ namespace kalea2.Utilidades
             evento.ClienteTelefono = item["telefono"].ToString() + " - " + item["celular"].ToString();
             evento.ClienteDireccionEntrega = item["direccionentrega"].ToString();
             evento.ObservacionesTorre = item["comentariostorre"].ToString();
+            evento.ObservacionesEvento = item["comentariosventas"].ToString();
             evento.NumeroCaso = item["numcaso"].ToString();
             evento.ObservacionesCaso = item["observaciones"].ToString();
             evento.AccionesCaso = item["acciones"].ToString();
-     
+
             ReportesGuiasProductos producto = new ReportesGuiasProductos();
             List<ReportesGuiasProductos> listadoProductos = new List<ReportesGuiasProductos>();
             producto.Sku = item["codigoarticulo"].ToString();
@@ -246,7 +318,7 @@ namespace kalea2.Utilidades
                     case "0000":
                         Controllers.ReporteDeBodegaController n = new Controllers.ReporteDeBodegaController();
                         string bodegas = string.Empty;
-                       
+
                         foreach (var item in n.ListadoBodegas())
                         {
                             if (!item.Codigo.Equals("0000"))
@@ -289,7 +361,7 @@ namespace kalea2.Utilidades
                                     contador2 = resultado2.Tables[0].Rows.Count;
                                 }
                             }
-                           
+
                         }
                         //bodegas = bodegas.TrimEnd(',');
                         //query = string.Format(@"SELECT T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.NOMBRE_LARGO AS DESCRIPCION,T5.COMENTARIOSVENTAS ,T8.DESCRIPCION AS VEHICULO,
@@ -419,7 +491,7 @@ namespace kalea2.Utilidades
             string observaciones = item["COMENTARIOSVENTAS"].ToString().TrimEnd(EspaciosBlanco);
             reporte.Observaciones = observaciones;
             reporte.Bodega = item["BODEGA"].ToString();
-           
+
             reporte.Vendedor = null;
 
 

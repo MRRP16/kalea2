@@ -19,7 +19,7 @@ namespace kalea2.Controllers
         public ActionResult Index()
         {
             Utilidades.Reportes reportes = new Utilidades.Reportes();
-            List<Models.Vehiculos> vehiculos = reportes.getVehiculos();
+            List<Models.Vehiculos> vehiculos = reportes.getVehiculosTransporte();
             return View("Details", vehiculos);
         }
 
@@ -75,9 +75,19 @@ namespace kalea2.Controllers
                 worksheet.Cells[headerRange].Style.Font.Bold = true;
                 worksheet.Cells[headerRange].LoadFromArrays(headerRow);
                 string Panel = string.Empty;
+                
                 for (int i = 0; i < listado.Count(); i++)
                 {
-                    Panel = listado[i].TipoVehiculo;
+                    switch (vehiculo)
+                    {
+                        case "0":
+                            Panel = "Todos";
+                            break;
+                        default:
+                            Models.Vehiculos veh = vehiculos.Where(x => x.Codigo.Equals(Convert.ToInt32(vehiculo))).First();
+                            Panel = veh.Descripcion;
+                            break;
+                    }
                     var RowInformacion = new List<string[]>()
                     { new string[]{
                         listado[i].Evento,
@@ -112,7 +122,7 @@ namespace kalea2.Controllers
                 {
                     excel.SaveAs(stream);
                     var content = stream.ToArray();
-                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "ReporteGPS_"+ Panel + ".xlsx");
+                    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "RepProgramacion_"+ Panel+"_"+ date.ToString("dd/MM/yyyy") + ".xlsx");
 
                     //archivo.SaveAs(stream);
                     //return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Grid.xlsx");

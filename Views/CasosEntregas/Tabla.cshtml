@@ -2,151 +2,155 @@
 
 
 
-    <div class="panel" id="spy2" style="background-color:#ffffff">      
-        <div class="panel-body pn">
-            <div class="table-responsive">
-                <table class="table footable" data-filter="#fooFilter">
-                    <thead>
+<div class="panel" id="spy2" style="background-color:#ffffff">
+    <div class="panel-body pn">
+        <div class="table-responsive">
+            <table class="table footable" data-filter="#fooFilter" data-paging-limit="3">
+                <thead>
+                    <tr>
+                        <th># Entrega<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                        <th>Fecha<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                        <th>Nombre<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                        <th>Telefono<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                        <th>Celular<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                        <th>Vehiculo<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                        <th>Estado<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                        <th>Tipo<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
                         <tr>
-                            <th># Entrega<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
-                            <th>Fecha<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
-                            <th>Nombre<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
-                            <th>Telefono<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
-                            <th>Celular<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
-                            <th>Vehiculo<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
-                            <th>Estado<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
-                            <th>Tipo<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
-                            <th>Accion</th>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id)
+                                @Html.HiddenFor(modelItem => item.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FechaEntrega2)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NombreCliente)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Telefono)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Celular)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Vehiculo)
+                            </td>
+                            <td>
+                                @switch (item.Estado)
+                                {
+                                    case "A":
+                                        <a class="status-btn completed">
+                                            Activo
+                                        </a>
+                                        @Html.HiddenFor(modelItem => item.Estado)
+                                        break;
+                                    case "AN":
+                                        <a class="status-btn un_paid">
+                                            Anulado
+                                        </a>
+                                        @Html.HiddenFor(modelItem => item.Estado)
+                                        break;
+                                }
+                            </td>
+                            <td>
+                                @switch (item.ColorTipoEvento)
+                                {
+                                    case "#00b050":
+                                        <a>
+                                            Definitivo
+                                        </a>
+                                        break;
+                                    case "#FF0000":
+                                        <a>
+                                            Definitivo
+                                        </a>
+                                        break;
+                                    case "#ffff00":
+                                        <a>
+                                            Temporal
+                                        </a>
+                                        break;
+                                    case "#FF5733":
+                                        <a>
+                                            Traslado
+                                        </a>
+                                        break;
+                                }
+                            </td>
+
+                            <td>
+
+                                @switch (item.Estado)
+                                {
+                                    case "A":
+                                        <a class="details-btn" href="@Url.Action("Edit", new {id = item.Id})">
+                                            Editar
+                                            <img src="~/Content/assets/img/svg/plus_white.svg" alt="" class="svg">
+                                        </a>
+                                        <button class="details-btn" onclick="Eliminar('@item.Id')">
+                                            Anular
+                                            <img src="~/Content/assets/img/svg/plus_white.svg" alt="" class="svg">
+                                        </button>
+                                        @Html.HiddenFor(modelItem => item.Estado)
+                                        break;
+
+                                }
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Id)
-                                    @Html.HiddenFor(modelItem => item.Id)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.FechaEntrega2)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.NombreCliente)
-                                </td>
-
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Telefono)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Celular)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Vehiculo)
-                                </td>
-                                <td>
-                                    @switch (item.Estado)
-                                    {
-                                        case "A":
-                                            <a class="status-btn completed">
-                                                Activo
-                                            </a>
-                                            @Html.HiddenFor(modelItem => item.Estado)
-                                            break;
-                                        case "AN":
-                                            <a class="status-btn un_paid">
-                                                Anulado
-                                            </a>
-                                            @Html.HiddenFor(modelItem => item.Estado)
-                                            break;
-                                    }
-                                </td>
-                                <td>
-                                    @switch (item.ColorTipoEvento)
-                                    {
-                                        case "#00b050":
-                                            <a>
-                                                Definitivo
-                                            </a>
-                                            break;
-                                        case "#FF0000":
-                                            <a>
-                                                Definitivo
-                                            </a>
-                                            break;
-                                        case "#ffff00":
-                                            <a>
-                                                Temporal
-                                            </a>
-                                            break;
-                                        case "#FF5733":
-                                            <a>
-                                                Traslado
-                                            </a>
-                                            break;
-                                    }
-                                </td>
-
-                                <td>
-
-                                    @switch (item.Estado)
-                                    {
-                                        case "A":
-                                            <a class="details-btn" href="@Url.Action("Edit", new {id = item.Id})">
-                                                Editar
-                                                <img src="~/Content/assets/img/svg/plus_white.svg" alt="" class="svg">
-                                            </a>
-                                            <button class="details-btn" onclick="Eliminar('@item.Id')">
-                                                Anular
-                                                <img src="~/Content/assets/img/svg/plus_white.svg" alt="" class="svg">
-                                            </button>
-                                            @Html.HiddenFor(modelItem => item.Estado)
-                                            break;
-
-                                    }
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                    }
+                </tbody>
+                
+            </table>
         </div>
     </div>
-
- <script>
-        $(function () {
-
-            var PlaceHolderElement = $('#PlaceHolderHere')
-            $('button[data-toggle="ajax-modal"]').click(function (event) {
-
-                var url = $(this).data('url');
-                var decodeurl = decodeURIComponent(url);
-                $.get(decodeurl).done(function (data) {
-                    PlaceHolderElement.html(data);
-                    PlaceHolderElement.find('.modal').modal('show');
-                })
-            })
+</div>
 
 
-            PlaceHolderElement.on('click', '[data-save="modal"]', function (event) {
-                event.preventDefault();
-                var form = $(this).parents('.modal').find('form');
-                var actionUrl = form.attr('action');
+<script src="~/assets/footable/js/footable.all.min.js"></script>
+<script src="~/assets/footable/js/footable.filter.min.js"></script>
+<script>
+    $(function () {
 
-                var sendData = form.serialize();
+        var PlaceHolderElement = $('#PlaceHolderHere')
+        $('button[data-toggle="ajax-modal"]').click(function (event) {
 
-                console.log(actionUrl);
-                console.log(sendData);
-
-                $.post(actionUrl, sendData).done(function (data) {
-                    PlaceHolderElement.find('.modal').modal('hide');
-                    location.reload();
-                }).fail(function () {
-
-                    alter("error");
-                })
+            var url = $(this).data('url');
+            var decodeurl = decodeURIComponent(url);
+            $.get(decodeurl).done(function (data) {
+                PlaceHolderElement.html(data);
+                PlaceHolderElement.find('.modal').modal('show');
             })
         })
-    </script>
+
+
+        PlaceHolderElement.on('click', '[data-save="modal"]', function (event) {
+            event.preventDefault();
+            var form = $(this).parents('.modal').find('form');
+            var actionUrl = form.attr('action');
+
+            var sendData = form.serialize();
+
+            console.log(actionUrl);
+            console.log(sendData);
+
+            $.post(actionUrl, sendData).done(function (data) {
+                PlaceHolderElement.find('.modal').modal('hide');
+                location.reload();
+            }).fail(function () {
+
+                alter("error");
+            })
+        })
+    })
+</script>
 
 <script>
 
@@ -164,7 +168,7 @@
             buttonsStyling: !1,
         }).then(function (t) {
 
-          
+
             t.value
 
             if (t.value) {
@@ -201,7 +205,7 @@
 
         });
     };
-    </script>
+</script>
 
 <script type="text/javascript">
     jQuery(document).ready(function () {

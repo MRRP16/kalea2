@@ -85,6 +85,8 @@ namespace kalea2.Models
 
         public string ColorTipoEvento { get; set; }
         
+        public string ZonaDireccion { get; set; }
+
         public int TiempoRuta { get; set; }
         public string ReferenciaReserva { get; set; }
         [DataType(DataType.Text)]

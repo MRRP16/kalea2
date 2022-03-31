@@ -157,6 +157,11 @@
                                                 @Html.ValidationMessageFor(model => model.DireccionFiscal, "", new { @class = "text-danger" })
                                             </li>
                                             <li>
+                                                <span class="key">Zona</span>
+                                                @Html.EditorFor(model => model.ZonaDireccion, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                                @Html.ValidationMessageFor(model => model.ZonaDireccion, "", new { @class = "text-danger" })
+                                            </li>
+                                            <li>
                                                 <span class="key">Localización</span>
                                                 @Html.EditorFor(model => model.Geolocalizacion, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
                                                 @Html.ValidationMessageFor(model => model.Geolocalizacion, "", new { @class = "text-danger" })
@@ -527,7 +532,7 @@
                 var DiFiscal = "";
                 var Tel = "";
                 var Celular = "";
-
+                var Zona = "";
 
                 $.ajax({
                 type: 'POST',
@@ -576,7 +581,14 @@
                             state.TiempoArmado
                             +
                             '<input id="Reserva_Articulos_' + NumeroLinea + '__TiempoArmado" name="Reserva_Articulos[' + NumeroLinea + '].TiempoArmado" type="hidden" value="' + state.TiempoArmado + '">' +
-                            '</td>' +
+                            '</td>'
+                            +
+                            '<td class="TiempoArmado" style="display:none;">' +
+                            state.TiempoArmado
+                            +
+                            '<input id="Reserva_Articulos_' + NumeroLinea + '__TiempoArmado" name="Reserva_Articulos[' + NumeroLinea + '].TiempoArmado" type="hidden" value="' + state.ZonaDireccion + '">' +
+                            '</td>'
+                            +
                             '<td class="Remisionado" style="display:none;">' +
                             state.Remisionado
                             +
@@ -601,6 +613,7 @@
                         DiFiscal = state.DireccionFiscal;
                         Tel = state.Telefono;
                         Celular = state.Telefono;
+                        Zona = state.ZonaDireccion;
                         //$("#SerieSAP").append('<option value="' + state.numero + '">' +
                         //    state.serie + '</option>');
                     // here we are adding option for States
@@ -615,6 +628,7 @@
                         document.getElementById("DireccionFiscal").value = DiFiscal;
                         document.getElementById("Telefono").value = Tel;
                         document.getElementById("Celular").value = Celular;
+                        document.getElementById("ZonaDireccion").value = Zona;
                         if (Tel == null || Tel == "") {
                             document.getElementById("Telefono").value = Celular;
                         }

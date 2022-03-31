@@ -193,7 +193,7 @@
                                             <p class="black mb-2">Entrega #@Html.DisplayFor(modelItem => item.Id)</p>
 
                                             <div style="display:flex; flex-direction: row;">
-                                                <p id="" onclick="" style="margin-right: 10px;">
+                                                <p id="" onclick="AbrirEvento(@Html.DisplayFor(modelItem => item.Id))" style="margin-right: 10px;">
                                                     <i class="icon_plus_alt2"></i>
                                                 </p>
 
@@ -208,9 +208,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="black mb-1">Evento/Caso: @Html.DisplayFor(modelItem => item.ListadoEventosCasos)</p>
-                                    <p class="black mb-1">GPS: @Html.DisplayFor(modelItem => item.Geolocalizacion)</p>
-                                    <p class="black mb-1">Direccion: @Html.DisplayFor(modelItem => item.DireccionEntrega)</p>
+                                    <p class="black mb-1">Evento/Caso: @Html.DisplayFor(modelItem => item.ListadoEventosCasos) Direccion: @Html.DisplayFor(modelItem => item.Zona)</p>
+                                    @*<p class="black mb-1">GPS: @Html.DisplayFor(modelItem => item.Geolocalizacion)</p>
+                                    <p class="black mb-1">Direccion: @Html.DisplayFor(modelItem => item.DireccionEntrega)</p>*@
                                     <p class="black mb-1">Armado: @Html.DisplayFor(modelItem => item.TiempoArmado)</p>
                                     @if (!item.FechaRestriccionInicio.Contains("00:00"))
                                     {
@@ -443,6 +443,14 @@
                 barraDeProgreso()
             }
         }, 1000);
+    }
+
+    function AbrirEvento(id) {
+
+        var url = "http://192.1.1.123:5300/CasosEntregas/Edit/" + id;
+
+        window.open(
+            url, "_blank");
     }
 
 </script>

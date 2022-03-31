@@ -205,6 +205,7 @@ namespace kalea2.Utilidades
                     LEFT JOIN t_det_casos_entregas T5 ON t0.id = t5.identrega
                     LEFT JOIN Naf47.Pvlineas_movimiento T6 ON T6.NO_TRANSA_MOV = T2.CODIGOEVENTO AND t2.codigoarticulo = T6.NO_ARTI
                     WHERE FechaInicio >= to_timestamp('{0} 00:00:00', 'dd/MM/yy hh24:mi:ss') AND FechaInicio <= to_timestamp('{0} 23:59:59', 'dd/MM/yy hh24:mi:ss') AND t0.vehiculo = {1}
+                    AND T0.ESTADO='A'
                     GROUP BY t1.descripcion, t2.codigoevento, t2.codigoarticulo, t3.NOMBRE_LARGO, t2.cantidad, t4.nombre_vendedor , t0.nombrecliente, t0.telefono, t0.celular, t0.direccionentrega, 
                     to_char(substr(t0.comentariosventas, 1, 500)),t0.COMENTARIOSTORRE , t0.fechainicio, t0.fecharestriccioninicio , t0.fecharectriccionfin, t5.numcaso, t5.observaciones, t5.acciones, t0.id ,T6.BODEGA;", fecha, vehiculoId);
 
@@ -325,7 +326,7 @@ namespace kalea2.Utilidades
                             {
                                 //bodegas += "'" + item.Codigo + "',";
 
-                                query = string.Format(@"SELECT T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.NOMBRE_LARGO AS DESCRIPCION,T5.COMENTARIOSVENTAS ,T8.DESCRIPCION AS VEHICULO,
+                                query = string.Format(@"SELECT T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.NOMBRE_LARGO AS DESCRIPCION,TO_CHAR(T5.COMENTARIOSVENTAS) AS COMENTARIOSVENTAS ,T8.DESCRIPCION AS VEHICULO,
                                                 ( NVL(SAL_ANT_UN,0) + NVL(COMP_UN,0) + NVL(OTRS_UN,0) - NVL(CONS_UN,0) -
                                                 NVL(VENT_UN, 0) - NVL(MANIFIESTOPEND,0) - NVL(PEDIDOS_PEND,0) - NVL(SAL_PEND_UN,0) + NVL(ENT_PEND_UN, 0) ) INMEDIATAS
                                                 FROM naf47.ARINMA A, naf47.ARINDA B, naf47.ARINBO BO ,Naf47.Pvlineas_movimiento T0
@@ -348,7 +349,7 @@ namespace kalea2.Utilidades
                                                 AND NVL(BO.ES_TIENDA,'N')='S'
                                                 AND NVL(B.TIPO_PRODUCTO,'TG')='TG'
                                                 AND BO.CODIGO!='VN10'
-                                                GROUP BY T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.NOMBRE_LARGO,T5.COMENTARIOSVENTAS,T8.DESCRIPCION,( NVL(SAL_ANT_UN,0) + NVL(COMP_UN,0) + NVL(OTRS_UN,0) - NVL(CONS_UN,0) -
+                                                GROUP BY T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.NOMBRE_LARGO,TO_CHAR(T5.COMENTARIOSVENTAS),T8.DESCRIPCION,( NVL(SAL_ANT_UN,0) + NVL(COMP_UN,0) + NVL(OTRS_UN,0) - NVL(CONS_UN,0) -
                                                 NVL(VENT_UN, 0) - NVL(MANIFIESTOPEND,0) - NVL(PEDIDOS_PEND,0) - NVL(SAL_PEND_UN,0) + NVL(ENT_PEND_UN, 0) )
                                                 order by t0.NO_TRANSA_MOV ASC;", fecha, item.Codigo);
 
@@ -392,7 +393,7 @@ namespace kalea2.Utilidades
                         //                        order by t0.NO_TRANSA_MOV ASC;", fecha, bodegas);
                         break;
                     default:
-                        query = string.Format(@"SELECT T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.NOMBRE_LARGO AS DESCRIPCION,T5.COMENTARIOSVENTAS ,T8.DESCRIPCION AS VEHICULO,
+                        query = string.Format(@"SELECT T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.NOMBRE_LARGO AS DESCRIPCION,TO_CHAR(T5.COMENTARIOSVENTAS) AS COMENTARIOSVENTAS ,T8.DESCRIPCION AS VEHICULO,
                                                 ( NVL(SAL_ANT_UN,0) + NVL(COMP_UN,0) + NVL(OTRS_UN,0) - NVL(CONS_UN,0) -
                                                 NVL(VENT_UN, 0) - NVL(MANIFIESTOPEND,0) - NVL(PEDIDOS_PEND,0) - NVL(SAL_PEND_UN,0) + NVL(ENT_PEND_UN, 0) ) INMEDIATAS
                                                 FROM naf47.ARINMA A, naf47.ARINDA B, naf47.ARINBO BO ,Naf47.Pvlineas_movimiento T0
@@ -415,7 +416,7 @@ namespace kalea2.Utilidades
                                                 AND NVL(BO.ES_TIENDA,'N')='S'
                                                 AND NVL(B.TIPO_PRODUCTO,'TG')='TG'
                                                 AND BO.CODIGO!='VN10'
-                                                GROUP BY T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.NOMBRE_LARGO,T5.COMENTARIOSVENTAS,T8.DESCRIPCION,( NVL(SAL_ANT_UN,0) + NVL(COMP_UN,0) + NVL(OTRS_UN,0) - NVL(CONS_UN,0) -
+                                                GROUP BY T0.NO_TRANSA_MOV, T0.CANTIDAD,T0.BODEGA,T0.NO_ARTI,T3.NOMBRE_LARGO,TO_CHAR(T5.COMENTARIOSVENTAS),T8.DESCRIPCION,( NVL(SAL_ANT_UN,0) + NVL(COMP_UN,0) + NVL(OTRS_UN,0) - NVL(CONS_UN,0) -
                                                 NVL(VENT_UN, 0) - NVL(MANIFIESTOPEND,0) - NVL(PEDIDOS_PEND,0) - NVL(SAL_PEND_UN,0) + NVL(ENT_PEND_UN, 0) )
                                                 order by t0.NO_TRANSA_MOV ASC;", fecha, bodegaId);
 

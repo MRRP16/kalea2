@@ -20,6 +20,7 @@ namespace kalea2.Models
         public string Observaciones { get; set; }
         public string DireccionEntrega { get; set; }
         public string DireccionFiscal { get; set; }
+        public string ZonaDireccion { get; set; }
         public string NombreCliente { get; set; }
         public string CodigoCliente { get; set; }
         public string Telefono { get; set; }

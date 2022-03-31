@@ -19,6 +19,7 @@ namespace kalea2.Models
         public string Cliente { get; set; }
         public string Cel { get; set; }
         public string Tel { get; set; }
+        public string Zona { get; set; }
         
     }
 }

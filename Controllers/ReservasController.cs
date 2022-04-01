@@ -305,7 +305,7 @@ namespace kalea2.Controllers
 
                     collection.Eventos_Articulos = reservas.ObtenerEventos();
                     collection.Casos_Pendientes = reservas.ObtenerCasos();
-                    ViewBag.Mensaje = "Debe agregar eventos o casos a la entrega por progamar.";
+                    ViewBag.Mensaje = "Debe agregar eventos o casos a la entrega por programar.";
                     return View("Modal", collection);
                 }
 

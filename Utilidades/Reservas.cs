@@ -519,7 +519,7 @@ namespace kalea2.Utilidades
                 articulos = new List<Models.Reserva_Detalle_Casos>();
 
 
-                string query = string.Format(@"SELECT T0.CASO,T0.DIR_ENTREGA,T0.TELEFONO_CASA,T0.TELEFONO_CEL,NOMBRE_CLIENTE,T1.Observaciones, T1.Acciones,TO.Distrito FROM Naf47.rec_caso T0
+                string query = string.Format(@"SELECT T0.CASO,T0.DIR_ENTREGA,T0.TELEFONO_CASA,T0.TELEFONO_CEL,NOMBRE_CLIENTE,T1.Observaciones, T1.Acciones,T0.Distrito FROM Naf47.rec_caso T0
                                                 LEFT JOIN Naf47.rec_detalle_caso T1 ON T0.CASO = T1.CASO
                                                 WHERE T0.CASO = '{0}' AND T1.TORRE = 'S';", id);
 
@@ -899,7 +899,7 @@ namespace kalea2.Utilidades
                         commandInsertar.Parameters.AddWithValue("@Departamento", SqlDbType.VarChar).Value = "Guatemala";
                         commandInsertar.Parameters.AddWithValue("@Municipio", SqlDbType.VarChar).Value = "Ciudad de Guatemala";
                         commandInsertar.Parameters.AddWithValue("@Zona", SqlDbType.VarChar).Value = "3";
-                        commandInsertar.Parameters.AddWithValue("@Coordenadas", SqlDbType.VarChar).Value = "14.640428851152517, -90.52079554577591";
+                        commandInsertar.Parameters.AddWithValue("@Coordenadas", SqlDbType.VarChar).Value = reserva.Geolocalizacion;
                         commandInsertar.Parameters.AddWithValue("@NombreCliente", SqlDbType.VarChar).Value = reserva.NombreCliente;
                         commandInsertar.Parameters.AddWithValue("@NitCliente", SqlDbType.VarChar).Value = "00000000";
                         commandInsertar.Parameters.AddWithValue("@Telefono", SqlDbType.VarChar).Value = reserva.Telefono;

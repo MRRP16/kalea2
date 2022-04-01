@@ -89,7 +89,7 @@ namespace kalea2.Controllers
                 CasosEntregas = new Utilidades.CasosEntregas();
                 if (ModelState.IsValid)
                 {
-                    if (reserva.Reserva_Articulos!=null)
+                    if (reserva.Reserva_Articulos == null && reserva.Reserva_Casos == null)
                     {
                         if (reserva.Reserva_Articulos.Count == 0)
                         {
@@ -104,17 +104,17 @@ namespace kalea2.Controllers
                             return View("Modal", reserva);
                         }
                     }
-                    else
-                    {
-                        ViewBag.Alerta = "Debe seleccionar al menos 1 evento o 1 caso para la entrega";
-                        Models.Reserva reservatemp = CasosEntregas.GetEntrega(id.ToString());
-                        reserva.FechaEntrega = Convert.ToDateTime(reserva.FechaEntrega2);
-                        reserva.Casos_Pendientes = reservatemp.Casos_Pendientes;
-                        reserva.Eventos_Articulos = reservatemp.Eventos_Articulos;
-                        reserva.Reserva_Articulos = reservatemp.Reserva_Articulos;
-                        reserva.Reserva_Casos = reservatemp.Reserva_Casos;
-                        return View("Modal", reserva);
-                    }
+                    //else
+                    //{
+                    //    ViewBag.Alerta = "Debe seleccionar al menos 1 evento o 1 caso para la entrega";
+                    //    Models.Reserva reservatemp = CasosEntregas.GetEntrega(id.ToString());
+                    //    reserva.FechaEntrega = Convert.ToDateTime(reserva.FechaEntrega2);
+                    //    reserva.Casos_Pendientes = reservatemp.Casos_Pendientes;
+                    //    reserva.Eventos_Articulos = reservatemp.Eventos_Articulos;
+                    //    reserva.Reserva_Articulos = reservatemp.Reserva_Articulos;
+                    //    reserva.Reserva_Casos = reservatemp.Reserva_Casos;
+                    //    return View("Modal", reserva);
+                    //}
                     
                     Utilidades.Reservas reservas = new Utilidades.Reservas();
                     reserva.FechaEntrega = Convert.ToDateTime(reserva.FechaEntrega2);

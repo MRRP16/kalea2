@@ -46,6 +46,7 @@ namespace kalea2.Models
         public string DireccionFiscal { get; set; }
         public string Departamento { get; set; }
         public string Municipio { get; set; }
+        //[Required(ErrorMessage = "Ingrese una zona de entrega")]
         public string Zona { get; set; }
         public string Coordenadas { get; set; }
         [DataType(DataType.Text)]
@@ -84,7 +85,8 @@ namespace kalea2.Models
         public string ListadoEventosCasos { get; set; }
 
         public string ColorTipoEvento { get; set; }
-        
+
+        [Required(ErrorMessage = "Ingrese una zona de entrega")]
         public string ZonaDireccion { get; set; }
 
         public int TiempoRuta { get; set; }
@@ -93,6 +95,8 @@ namespace kalea2.Models
         [Required(ErrorMessage = "Debe ingresar una Geolocalización para la entrega")]
         public string Geolocalizacion { get; set; }
         public string FechaArmado { get; set; }
+        //[Required(ErrorMessage = "Seleccione un tipo de instalación")]
+        public string TipoDeInstalacion { get; set; }
         public int TamanioTarjeta { get; set; }
 
         public int TiempoRestante { get; set; }
@@ -105,6 +109,7 @@ namespace kalea2.Models
         public List<Models.Reserva_Detalle_Articulos> Reserva_Articulos { get; set; }
         public List<SelectListItem> Eventos_Articulos;
         public List<SelectListItem> Casos_Pendientes;
+        public List<SelectListItem> TiposDeInstalacion { get; set; }
         public int TamanioTarjetaTranspareante { get; set; }
     }
 }

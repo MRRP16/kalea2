@@ -23,6 +23,7 @@ namespace kalea2.Models
         public string NumeroCaso { get; set; } //ok
         public string ObservacionesCaso { get; set; } //ok
         public string AccionesCaso { get; set; } //ok
+        public string TipoInstalacion { get; set; }
         public List<ReportesGuiasProductos> Productos { get; set; }
     }
 

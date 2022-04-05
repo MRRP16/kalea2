@@ -80,8 +80,8 @@
                 </div>
             </div>
             @*FIN Horario*@
-            
-            <div  class="board-wrapper">
+
+            <div class="board-wrapper">
                 @for (int i = 0; i < Model.Listado.Count; i++)
                 {
                     var contiene = false;
@@ -108,7 +108,6 @@
                             <!-- End Dropdown Button -->
                         </div>
                         <!-- End Board Header -->
-
                         <!-- Boards Cards -->
                         <div class="board-cards">
                             @*@{ IEnumerable<Kalea.Models.Reserva> someVariable = Model.Reservaciones.Where(ve => ve.Vehiculo.Equals(Model.Vehiculos[i].Codigo.ToString())); }*@
@@ -210,15 +209,15 @@
                                     </div>
                                     <p class="black mb-1">Evento/Caso: @Html.DisplayFor(modelItem => item.ListadoEventosCasos) Direccion: @Html.DisplayFor(modelItem => item.Zona)</p>
                                     @*<p class="black mb-1">GPS: @Html.DisplayFor(modelItem => item.Geolocalizacion)</p>
-                                    <p class="black mb-1">Direccion: @Html.DisplayFor(modelItem => item.DireccionEntrega)</p>*@
-                                    <p class="black mb-1">Armado: @Html.DisplayFor(modelItem => item.TiempoArmado)</p>
+                                        <p class="black mb-1">Direccion: @Html.DisplayFor(modelItem => item.DireccionEntrega)</p>*@
+                                    @*<p class="black mb-1">Armado: @Html.DisplayFor(modelItem => item.TiempoArmado)</p>*@
                                     @if (!item.FechaRestriccionInicio.Contains("00:00"))
                                     {
-                                        <p class="black mb-1">Restriccion: @Html.DisplayFor(modelItem => item.FechaRestriccionInicio) - @Html.DisplayFor(modelItem => item.FechaRestriccionFin) </p>
+                                        <p class="black mb-1">Armado: @Html.DisplayFor(modelItem => item.TiempoArmado) &nbsp; &nbsp; &nbsp; &nbsp; Restriccion: @Html.DisplayFor(modelItem => item.FechaRestriccionInicio) - @Html.DisplayFor(modelItem => item.FechaRestriccionFin) </p>
                                     }
                                     else
                                     {
-                                        <p class="black mb-1">Restriccion: 08:00 - 16:00 </p>
+                                        <p class="black mb-1">Armado: @Html.DisplayFor(modelItem => item.TiempoArmado)&nbsp; &nbsp; &nbsp; &nbsp; Restriccion: 08:00 - 16:00 </p>
                                     }
                                     <div class="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 210 ? "d-flex flex-column justify-content-between" : "d-flex flex-row")">
                                         <div class="d-flex flex-row">

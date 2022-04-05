@@ -8509,16 +8509,16 @@ body.sidebar-folded .main-content {
 }
 
 .board-wrapper {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  padding-bottom: 20px;
-  padding-left: 1px;
-  position: relative;
-  min-height: 68vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 20px;
+    padding-left: 1px;
+    position: relative;
+    min-height: 68vh;
 }
 
 .board {
@@ -8537,6 +8537,7 @@ body.sidebar-folded .main-content {
     height: -moz-min-content;
     height: min-content;
     position: relative;
+
 }
 
 .board:not(:last-child) {

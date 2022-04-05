@@ -87,6 +87,10 @@ namespace kalea2.Controllers
             try
             {
                 CasosEntregas = new Utilidades.CasosEntregas();
+                if (reserva.TipoDeInstalacion == null)
+                {
+                    reserva.TipoDeInstalacion = "0";
+                }
                 if (ModelState.IsValid)
                 {
                     if (reserva.Reserva_Articulos == null && reserva.Reserva_Casos == null)
@@ -100,7 +104,7 @@ namespace kalea2.Controllers
                             reserva.Eventos_Articulos = reservatemp.Eventos_Articulos;
                             reserva.Reserva_Articulos = reservatemp.Reserva_Articulos;
                             reserva.Reserva_Casos = reservatemp.Reserva_Casos;
-
+                            reserva.TiposDeInstalacion = reservatemp.TiposDeInstalacion;
                             return View("Modal", reserva);
                         }
                     }
@@ -133,7 +137,9 @@ namespace kalea2.Controllers
                         reserva.FechaEntrega = Convert.ToDateTime(reserva.FechaEntrega2);
                         reserva.Casos_Pendientes = reservatemp.Casos_Pendientes;
                         reserva.Eventos_Articulos = reservatemp.Eventos_Articulos;
-                       
+                        reserva.Reserva_Articulos = reservatemp.Reserva_Articulos;
+                        reserva.Reserva_Casos = reservatemp.Reserva_Casos;
+                        reserva.TiposDeInstalacion = reservatemp.TiposDeInstalacion;
                         string Error = string.Empty;
                         foreach (var item in errors)
                         {

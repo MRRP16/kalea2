@@ -121,6 +121,88 @@ namespace kalea2.Utilidades
                         };
                         listado.Add(reporte);
                     }
+
+                    switch (vehiculo)
+                    {
+                        case 0:
+
+                            List<Models.Vehiculos> vehiculos = getVehiculos();
+                            string numve = string.Empty;
+                            foreach (var item in vehiculos)
+                            {
+                                if (item.Codigo != 0)
+                                {
+                                    numve += "'" + item.Codigo + "',";
+                                }
+                            }
+                            numve = numve.Remove(numve.Length - 1, 1);
+
+                            query = string.Format(@"SELECT T.id, T1.NUMCASO as codigoevento, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, T.telefono, T.celular, T.tiempoarmado, T.comentariostorre,
+                                                    v.descripcion AS VEHICULO, '0' AS PESO, '0' AS VOLUMEN, '0' AS COSTO, 1 AS RADIO, 'NA' AS ETIQUETAS, T.numeroentregadia AS PRIORIDAD, T.FechaRestriccionInicio, T.FECHARECTRICCIONFIN
+                                                    FROM T_ENC_ENTREGAS T
+                                                    INNER JOIN T_DET_CASOS_ENTREGAS T1 ON T.ID = t1.identrega
+                                                    INNER JOIN T_VEHICULOS v ON T.vehiculo = v.id
+                                                    WHERE FechaInicio >= to_timestamp('{0} 00:00:00', 'yyyy-MM-dd hh24:mi:ss')
+                                                    and FechaInicio <= to_timestamp('{0} 23:59:59', 'yyyy-MM-dd hh24:mi:ss')
+                                                    AND T.vehiculo IN({1})
+                                                    AND T.ESTADO <> 'AN'
+                                                    GROUP BY T.id, T1.NUMCASO, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, T.telefono, T.celular, T.tiempoarmado, T.comentariostorre,
+                                                    v.descripcion, '0', '0', '0', 1, 'NA', T.numeroentregadia, T.FechaRestriccionInicio, T.FECHARECTRICCIONFIN
+                                                    ORDER BY T.numeroentregadia ASC; ", fecha, numve.ToString());
+                            break;
+                        default:
+                            query = string.Format(@"SELECT T.id, T1.NUMCASO as codigoevento, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, T.telefono, T.celular, T.tiempoarmado, T.comentariostorre,
+                                                    v.descripcion AS VEHICULO, '0' AS PESO, '0' AS VOLUMEN, '0' AS COSTO, 1 AS RADIO, 'NA' AS ETIQUETAS, T.numeroentregadia AS PRIORIDAD, T.FechaRestriccionInicio, T.FECHARECTRICCIONFIN
+                                                    FROM T_ENC_ENTREGAS T
+                                                    INNER JOIN T_DET_CASOS_ENTREGAS T1 ON T.ID = t1.identrega
+                                                    INNER JOIN T_VEHICULOS v ON T.vehiculo = v.id
+                                                    WHERE FechaInicio >= to_timestamp('{0} 00:00:00', 'yyyy-MM-dd hh24:mi:ss')
+                                                    and FechaInicio <= to_timestamp('{0} 23:59:59', 'yyyy-MM-dd hh24:mi:ss')
+                                                    AND T.vehiculo = '{1}'
+                                                    AND T.ESTADO <> 'AN'
+                                                    GROUP BY T.id, T1.NUMCASO, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, T.telefono, T.celular, T.tiempoarmado, T.comentariostorre,
+                                                    v.descripcion, '0', '0', '0', 1, 'NA', T.numeroentregadia, T.FechaRestriccionInicio, T.FECHARECTRICCIONFIN
+                                                    ORDER BY T.numeroentregadia ASC; ", fecha, vehiculo.ToString());
+                            break;
+                    }
+
+
+                     resultado = dB.ConsultarDB(query, "T_ENC_ENTREGAS");
+
+                    foreach (DataRow item in resultado.Tables[0].Rows)
+                    {
+
+                        var geolocalizacion = item["GEOLOCALIZACION"].ToString();
+                        string[] arreglo = geolocalizacion.Split(',');
+                        string[] lat = arreglo[0].Split('(');
+                        string[] lon = arreglo[1].Split(')');
+                        var latitud = lat[1];
+                        var longitud = lon[0];
+
+                        ReporteDeProgramacion reporte = new ReporteDeProgramacion()
+                        {
+                            Evento = item["CODIGOEVENTO"].ToString(),
+                            Cliente = item["NOMBRECLIENTE"].ToString(),
+                            DireccionEntrega = item["DIRECCIONENTREGA"].ToString(),
+                            Latitud = latitud,
+                            Longitud = longitud,
+                            TiempoInicio = Convert.ToDateTime(item["FECHAINICIO"].ToString()).ToString("yyyy.MM.dd HH:mm"),
+                            TiempoFin = Convert.ToDateTime(item["FECHAFIN"].ToString()).ToString("yyyy.MM.dd HH:mm"),
+                            Telefono1 = item["TELEFONO"].ToString(),
+                            Telefono2 = item["CELULAR"].ToString(),
+                            Email = "NULL",
+                            TiempoArmado = item["TIEMPOARMADO"].ToString(),
+                            Peso = "NULL",
+                            Volumen = "NULL",
+                            Costo = "NULL",
+                            TipoVehiculo = item["VEHICULO"].ToString(),
+                            Radio = "1",
+                            Etiquetas = "NULL",
+                            Prioridad = item["PRIORIDAD"].ToString(),
+                        };
+                        listado.Add(reporte);
+                    }
+
                     //respuesta.ListadoReporteDeProgramacion = listado;
                     //respuesta.Vehiculos = getVehiculos();
 
@@ -196,7 +278,7 @@ namespace kalea2.Utilidades
             try
             {
                 string query = string.Format(@"SELECT t1.descripcion as vehiculo, t2.codigoevento, t2.codigoarticulo, t3.NOMBRE_LARGO AS descripcion, t2.cantidad, t4.nombre_vendedor as vendedor, t0.nombrecliente, t0.telefono, t0.celular, t0.direccionentrega, 
-                    to_char(substr(t0.comentariosventas, 1, 500)) as comentariosventas,t0.COMENTARIOSTORRE, t0.fechainicio, t0.fecharestriccioninicio as restriccioninicio, t0.fecharectriccionfin as restriccionfin, t5.numcaso, t5.observaciones, t5.acciones, t0.id as identrega,T6.BODEGA
+                    to_char(substr(t0.comentariosventas, 1, 500)) as comentariosventas,to_char(substr(t0.COMENTARIOSTORRE, 1, 500)) as COMENTARIOSTORRE, t0.fechainicio, t0.fecharestriccioninicio as restriccioninicio, t0.fecharectriccionfin as restriccionfin, t5.numcaso, t5.observaciones, t5.acciones, t0.id as identrega,T6.BODEGA,T7.DESCRIPCION AS TIPOINSTALACION
                     FROM t_enc_entregas T0 
                     LEFT JOIN t_vehiculos T1 ON t1.id = t0.vehiculo
                     LEFT JOIN t_det_entregas T2 ON t0.id = t2.identrega
@@ -204,10 +286,11 @@ namespace kalea2.Utilidades
                     LEFT JOIN naf47.v_eventos_pendientes T4 ON t4.evento = t2.codigoevento
                     LEFT JOIN t_det_casos_entregas T5 ON t0.id = t5.identrega
                     LEFT JOIN Naf47.Pvlineas_movimiento T6 ON T6.NO_TRANSA_MOV = T2.CODIGOEVENTO AND t2.codigoarticulo = T6.NO_ARTI
+                    LEFT JOIN T_TIPOS_CASO T7 ON T7.ID = T0.TIPOINSTALACION
                     WHERE FechaInicio >= to_timestamp('{0} 00:00:00', 'dd/MM/yy hh24:mi:ss') AND FechaInicio <= to_timestamp('{0} 23:59:59', 'dd/MM/yy hh24:mi:ss') AND t0.vehiculo = {1}
                     AND T0.ESTADO='A'
                     GROUP BY t1.descripcion, t2.codigoevento, t2.codigoarticulo, t3.NOMBRE_LARGO, t2.cantidad, t4.nombre_vendedor , t0.nombrecliente, t0.telefono, t0.celular, t0.direccionentrega, 
-                    to_char(substr(t0.comentariosventas, 1, 500)),t0.COMENTARIOSTORRE , t0.fechainicio, t0.fecharestriccioninicio , t0.fecharectriccionfin, t5.numcaso, t5.observaciones, t5.acciones, t0.id ,T6.BODEGA;", fecha, vehiculoId);
+                    to_char(substr(t0.comentariosventas, 1, 500)),to_char(substr(t0.COMENTARIOSTORRE, 1, 500)) , t0.fechainicio, t0.fecharestriccioninicio , t0.fecharectriccionfin, t5.numcaso, t5.observaciones, t5.acciones, t0.id ,T6.BODEGA,T7.DESCRIPCION;", fecha, vehiculoId);
 
                 var resultado = dB.ConsultarDB(query, "T_EVENTOS");
 
@@ -266,6 +349,7 @@ namespace kalea2.Utilidades
             evento.NumeroCaso = item["numcaso"].ToString();
             evento.ObservacionesCaso = item["observaciones"].ToString();
             evento.AccionesCaso = item["acciones"].ToString();
+            evento.TipoInstalacion = item["TIPOINSTALACION"].ToString();
 
             ReportesGuiasProductos producto = new ReportesGuiasProductos();
             List<ReportesGuiasProductos> listadoProductos = new List<ReportesGuiasProductos>();

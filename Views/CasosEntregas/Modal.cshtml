@@ -39,8 +39,7 @@
                     <!-- Invoice Top -->
                     <div class="invoice-pd c2-bg" data-bg-img="~/../../Content/assets/img/media/invoice-pattern.png">
                         <div class="row">
-                            <div class="col-md-8">
-
+                            <div class="col-md-3">
                                 <!-- Invoice Right -->
                                 <div class="invoice-right mt-5 mt-md-0">
                                     <h3 class="white font-20 mb-3">Entrega</h3>
@@ -87,13 +86,12 @@
                                 </div>
                                 <!-- End Invoice Right -->
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <!-- Invoice Right -->
                                 <div class="invoice-right mt-5 mt-md-0">
                                     <h3 class="white font-20 mb-3">Horarios</h3>
 
                                     <ul class="status-list">
-
                                         <li>
                                             @Html.LabelFor(model => model.FechaInicio, htmlAttributes: new { @class = "key font-14" })
                                             <div class="col-md-12">
@@ -116,10 +114,67 @@
                                                 @Html.EditorFor(modelItem => Model.TiempoArmado, new { htmlAttributes = new { @class = "theme-input-style style--four", @readonly = "true" } })
                                             </div>
                                         </li>
-
+                                        <li>
+                                            <span class="key">Requiere instalación?</span>
+                                            <div class="col-md-12">
+                                                @Html.DropDownListFor(modelItem => modelItem.TipoDeInstalacion, Model.TiposDeInstalacion, " -- Seleccione --", new { @class = "theme-input-style style--four" })
+                                                @Html.ValidationMessageFor(model => model.TipoDeInstalacion, "", new { @class = "text-danger" })
+                                            </div>
+                                        </li>
                                     </ul>
                                 </div>
                                 <!-- End Invoice Right -->
+                            </div>
+                            <div class="col-md-3">
+                                <div class="invoice-right mt-5 mt-md-0">
+                                    <h3 class="white font-20 mb-3">Datos de cliente:</h3>
+                                    <ul class="status-list">
+                                        <li>
+                                            <span class="key">Nombre</span>
+                                            @Html.EditorFor(model => model.NombreCliente, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                            @Html.ValidationMessageFor(model => model.NombreCliente, "", new { @class = "text-danger" })
+                                        </li>
+                                        <li>
+                                            <span class="key">Telefono</span>
+                                            @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                            @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
+                                        </li>
+                                        <li>
+                                            <span class="key">Celular</span>
+                                            @Html.EditorFor(model => model.Celular, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                            @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="invoice-right mt-5 mt-md-0">
+                                    <h3 class="white font-20 mb-3">Direcciones:</h3>
+                                    <ul class="status-list">
+                                        <li>
+                                            <span class="key">Entrega</span>
+                                            @Html.EditorFor(model => model.DireccionEntrega, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                            @Html.ValidationMessageFor(model => model.DireccionEntrega, "", new { @class = "text-danger" })
+                                        </li>
+                                        <li>
+                                            <span class="key">Fiscal</span>
+                                            @Html.EditorFor(model => model.DireccionFiscal, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                            @Html.ValidationMessageFor(model => model.DireccionFiscal, "", new { @class = "text-danger" })
+                                        </li>
+                                        <li>
+                                            <span class="key">Zona</span>
+                                            @Html.EditorFor(model => model.ZonaDireccion, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                            @Html.ValidationMessageFor(model => model.ZonaDireccion, "", new { @class = "text-danger" })
+                                        </li>
+                                        <li>
+                                            <span class="key">Localización</span>
+                                            @Html.EditorFor(model => model.Geolocalizacion, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                            @Html.ValidationMessageFor(model => model.Geolocalizacion, "", new { @class = "text-danger" })
+                                        </li>
+
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -128,9 +183,9 @@
                     <div class="bg-white invoice-pd">
                         <div class="row">
 
-                            <div class="col-xl-4 col-md-6">
+                            <!--<div class="col-xl-4 col-md-6">-->
                                 <!-- Invoice Payment Details -->
-                                <div class="invoice edit payment-details mt-5 mt-xl-0">
+                                <!--<div class="invoice edit payment-details mt-5 mt-xl-0">
                                     <div class="invoice-title c4 bold font-14 mb-3">Datos de cliente:</div>
 
                                     <ul class="status-list">
@@ -151,13 +206,13 @@
                                         </li>
 
                                     </ul>
-                                </div>
+                                </div>-->
                                 <!-- End Invoice Payment Details -->
-                            </div>
+                            <!--</div>
 
-                            <div class="col-xl-4 col-md-6">
+                            <div class="col-xl-4 col-md-6">-->
                                 <!-- Invoice Payment Details -->
-                                <div class="invoice edit payment-details mt-5 mt-xl-0">
+                                <!--<div class="invoice edit payment-details mt-5 mt-xl-0">
                                     <div class="invoice-title c4 bold font-14 mb-3">Direcciones:</div>
 
                                     <ul class="status-list">
@@ -178,9 +233,9 @@
                                         </li>
 
                                     </ul>
-                                </div>
+                                </div>-->
                                 <!-- End Invoice Payment Details -->
-                            </div>
+                            <!--</div>-->
 
 
 
@@ -219,7 +274,7 @@
 
                             </div>
 
-                            <div class="col-xl-8 col-md-6 mt-10">
+                            <div class="col-xl-4 col-md-4 mt-10">
                                 <!-- Invoice Payment Details -->
                                 <div class="invoice edit payment-details mt-5 mt-xl-0">
                                     <div class="invoice-title c4 bold font-14 mb-3">

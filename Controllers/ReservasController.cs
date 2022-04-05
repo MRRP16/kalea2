@@ -95,6 +95,7 @@ namespace kalea2.Controllers
             datos.Reserva_Casos = new List<Models.Reserva_Detalle_Casos>();
             datos.Eventos_Articulos = reservas.ObtenerEventos();
             datos.Casos_Pendientes = reservas.ObtenerCasos();
+            datos.TiposDeInstalacion = reservas.TiposDeInstalaciones();
             //datos.Eventos_Articulos = new List<SelectListItem>();
             //datos.Casos_Pendientes = new List<SelectListItem>();
 
@@ -221,6 +222,10 @@ namespace kalea2.Controllers
             try
             {
                 string respuesta = string.Empty;
+                if (collection.TipoDeInstalacion ==null)
+                {
+                    collection.TipoDeInstalacion = "0";
+                }
                 // TODO: Add insert logic here
                 if (string.IsNullOrEmpty(id))
                 {
@@ -238,7 +243,7 @@ namespace kalea2.Controllers
                     collection.FechaEntrega = Convert.ToDateTime(collection.FechaEntrega2);
                     collection.Eventos_Articulos = reservas.ObtenerEventos();
                     collection.Casos_Pendientes = reservas.ObtenerCasos();
-
+                    collection.TiposDeInstalacion = reservas.TiposDeInstalaciones();
                     return View("Modal", collection);
                 }
                 else
@@ -274,8 +279,8 @@ namespace kalea2.Controllers
 
                         collection.Eventos_Articulos = reservas.ObtenerEventos();
                         collection.Casos_Pendientes = reservas.ObtenerCasos();
+                        collection.TiposDeInstalacion = reservas.TiposDeInstalaciones();
 
-                        
                         var errors = ModelState
                         .Where(x => x.Value.Errors.Count > 0)
                         .Select(x => new { x.Value.Errors })
@@ -305,6 +310,7 @@ namespace kalea2.Controllers
 
                     collection.Eventos_Articulos = reservas.ObtenerEventos();
                     collection.Casos_Pendientes = reservas.ObtenerCasos();
+                    collection.TiposDeInstalacion = reservas.TiposDeInstalaciones();
                     ViewBag.Mensaje = "Debe agregar eventos o casos a la entrega por programar.";
                     return View("Modal", collection);
                 }

@@ -114,7 +114,13 @@
                                                     @Html.EditorFor(modelItem => Model.TiempoArmado, new { htmlAttributes = new { @class = "theme-input-style style--four", @readonly = "true" } })
                                                 </div>
                                             </li>
-
+                                            <li>
+                                                <span class="key">Requiere instalación?</span>
+                                                <div class="col-md-12">
+                                                    @Html.DropDownListFor(modelItem => modelItem.TipoDeInstalacion, Model.TiposDeInstalacion, " -- Seleccione --", new { @class = "theme-input-style style--four" })
+                                                    @Html.ValidationMessageFor(model => model.TipoDeInstalacion, "", new { @class = "text-danger" })
+                                                </div>
+                                            </li>
                                         </ul>
                                     </div>
                                     <!-- End Invoice Right -->
@@ -170,7 +176,7 @@
                                         </ul>
                                     </div>
                                 </div>
-
+                                
 
                             </div>
                         </div>

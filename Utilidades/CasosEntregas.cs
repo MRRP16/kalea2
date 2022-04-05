@@ -99,12 +99,13 @@ namespace kalea2.Utilidades
                     reserva.Geolocalizacion = item["Geolocalizacion"].ToString();
                     reserva.DireccionFiscal = item["DireccionFiscal"].ToString();
                     reserva.FechaEntrega2 = Convert.ToDateTime(item["FechaInicio"].ToString()).ToString("yyyy-MM-dd");
+                    reserva.TipoDeInstalacion = item["TIPOINSTALACION"].ToString();
                 }
                 reserva.Casos_Pendientes = reservas.ObtenerCasos();
                 reserva.Eventos_Articulos = reservas.ObtenerEventos();
                 reserva.Reserva_Articulos = reservas.ArticulosEntrega(Id);
                 reserva.Reserva_Casos = reservas.CasossEntrega(Id);
-
+                reserva.TiposDeInstalacion = reservas.TiposDeInstalaciones();
                 return reserva;
             }
             catch (Exception)

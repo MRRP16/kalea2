@@ -84,7 +84,7 @@ else if (ViewBag.Exitoso != null)
             <div class="" style="min-width: 65px; max-width: 65px; margin-right: 10px;">
                 <div style="padding: 15px 10px 25px 10px; background-color: #ECF3FD; margin-right: 10px;" class="fijoArribaHora">
                     <h4 class="c2">Hora</h4>
-                    
+
                 </div>
                 <div class="">
                     <!-- Timeline Wrap -->
@@ -110,6 +110,7 @@ else if (ViewBag.Exitoso != null)
                     var contiene = false;
                     <div class="board" id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Descripcion)" otro="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)">
                         <!-- Board Header -->
+
 
                         <div class="board-header d-flex justify-content-between align-items-center mb-10 fijoArriba">
 
@@ -167,7 +168,7 @@ else if (ViewBag.Exitoso != null)
 
                             @foreach (var item in someVariable2)
                             {
-                                <div class="board-card label-2 tarjetaReserva ov-hidden"
+                                <div class="board-card label-2 tarjetaReserva ov-hidden "
                                      style="--colorTarjeta: @Html.DisplayFor(modelItem => item.ColorTipoEvento); --AltoTarjeta: @Html.DisplayFor(modelItem => item.TamanioTarjeta)px;"
                                      id="card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)">
 
@@ -259,14 +260,14 @@ else if (ViewBag.Exitoso != null)
                                                 <p class="black mb-1">Evento/Caso: @Html.DisplayFor(modelItem => item.ListadoEventosCasos)  Direccion: Zona @Html.DisplayFor(modelItem => item.Zona)</p>
                                                 @*<p class="black mb-1">GPS: @Html.DisplayFor(modelItem => item.Geolocalizacion)</p>*@
                                                 @*<p class="black mb-1">Direccion: Zona @Html.DisplayFor(modelItem => item.Zona)</p>*@
-                                                <p class="black mb-1">Armado: @Html.DisplayFor(modelItem => item.TiempoArmado)</p>
+                                                @*<p class="black mb-1">Armado: @Html.DisplayFor(modelItem => item.TiempoArmado)</p>*@
                                                 @if (!item.FechaRestriccionInicio.Contains("00:00"))
                                                 {
-                                                    <p class="black mb-1">Restriccion: @Html.DisplayFor(modelItem => item.FechaRestriccionInicio) - @Html.DisplayFor(modelItem => item.FechaRestriccionFin) </p>
+                                                    <p class="black mb-1">Armado: @Html.DisplayFor(modelItem => item.TiempoArmado) &nbsp; &nbsp; &nbsp; &nbsp; Restriccion: @Html.DisplayFor(modelItem => item.FechaRestriccionInicio) - @Html.DisplayFor(modelItem => item.FechaRestriccionFin) </p>
                                                 }
                                                 else
                                                 {
-                                                    <p class="black mb-1">Restriccion: 08:00 - 16:00 </p>
+                                            <p class="black mb-1">Armado: @Html.DisplayFor(modelItem => item.TiempoArmado)&nbsp; &nbsp; &nbsp; &nbsp; Restriccion: 08:00 - 16:00 </p>
                                                 }
 
                                             </div>
@@ -326,7 +327,7 @@ else if (ViewBag.Exitoso != null)
                                             <div id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir">
                                                 <p class="black mb-1">Evento/Caso: @Html.DisplayFor(modelItem => item.ListadoEventosCasos) Direccion: Zona @Html.DisplayFor(modelItem => item.Zona)</p>
                                                 @*<p class="black mb-1">GPS: @Html.DisplayFor(modelItem => item.Geolocalizacion)</p>
-                                                <p class="black mb-1">Direccion: @Html.DisplayFor(modelItem => item.DireccionEntrega)</p>*@
+                                                    <p class="black mb-1">Direccion: @Html.DisplayFor(modelItem => item.DireccionEntrega)</p>*@
                                                 <p class="black mb-1">Armado: @Html.DisplayFor(modelItem => item.TiempoArmado)</p>
                                                 @if (!item.FechaRestriccionInicio.Contains("12:00:00 AM"))
                                                 {
@@ -460,19 +461,19 @@ else if (ViewBag.Exitoso != null)
                                             <p class="black mb-2">#@Html.DisplayFor(modelItem => item.Id) - Regreso a bodega</p>
 
                                             @*@if (item.TamanioTarjeta < 180)
-                                        {
-                                            <p id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir"
-                                               onclick="expandir('@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
-                                               estadoExpandir="true">
-                                                <i class="arrow_carrot-down"></i>
-                                            </p>
-                                        }*@
+                                                {
+                                                    <p id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir"
+                                                       onclick="expandir('@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir', 'card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)', @Html.DisplayFor(modelItem => item.TamanioTarjeta))"
+                                                       estadoExpandir="true">
+                                                        <i class="arrow_carrot-down"></i>
+                                                    </p>
+                                                }*@
                                         </div>
                                     </div>
 
                                     @*<div id="@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)-expandir">
 
-                                </div>*@
+                                        </div>*@
 
                                     <div class="@(int.Parse(Html.DisplayFor(modelItem => item.TamanioTarjeta).ToString()) > 210 ? "d-flex flex-column justify-content-between" : "d-flex flex-row")">
                                         <div class="d-flex flex-row">
@@ -513,14 +514,16 @@ else if (ViewBag.Exitoso != null)
                         </div>
 
                         <!-- End Boards Cards -->
+
                     </div>
                 }
                 <!-- End Board -->
 
             </div>
+
         </div>
 
-        
+
     </div>
 </div>
 <!-- End Main Content -->
@@ -546,7 +549,7 @@ else if (ViewBag.Exitoso != null)
 
     $(function () {
 
-        
+
 
         $(".board-card").mouseup(function () {
             var idTarjeta = $(this).attr("id");
@@ -665,7 +668,14 @@ else if (ViewBag.Exitoso != null)
     }
 </script>
 <script>
-
+    $(function () {
+        $(".fijoArriba").scroll(function () {
+            $(".fijoArriba").scrollLeft($(".fijoArriba").scrollLeft());
+        });
+        $(".fijoArriba").scroll(function () {
+            $(".fijoArriba").scrollLeft($(".fijoArriba").scrollLeft());
+        });
+    });
 
     function AbrirEvento(id)
     {

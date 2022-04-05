@@ -79,3 +79,8 @@
 #target {
     width: 345px;
 }
+
+.my_scroll_div {
+    overflow-y: auto;
+    max-height: 100px;
+}

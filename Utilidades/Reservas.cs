@@ -401,6 +401,31 @@ namespace kalea2.Utilidades
             }
 
         }
+
+        public List<SelectListItem> TiposDeInstalaciones()
+        {
+            dB = new conexionDB();
+            List<SelectListItem> Instalaciones;
+            try
+            {
+                var resultado = dB.ConsultarDB("SELECT * FROM T_TIPOS_CASO WHERE ESTADO = 'A';", "T_VEHICULOS");
+
+                Instalaciones = new List<SelectListItem>();
+                Instalaciones.Add(new SelectListItem { Text = "Ninguno", Value = "0" });
+                foreach (DataRow item in resultado.Tables[0].Rows)
+                {
+                    Instalaciones.Add(new SelectListItem { Text = item["Descripcion"].ToString(), Value = item["Id"].ToString() });
+                }
+
+                return Instalaciones;
+            }
+            catch (Exception)
+            {
+                return Instalaciones = new List<SelectListItem>();
+            }
+
+        }
+
         public List<Models.Reserva_Detalle_Articulos> Articulos(string id)
         {
             dB = new conexionDB();
@@ -701,7 +726,7 @@ namespace kalea2.Utilidades
 
                         string Query = @"INSERT INTO T_ENC_ENTREGAS(Id,FechaInicio,FechaArmado,FechaFin,TiempoArmado,FechaRestriccionInicio,FechaRectriccionFin,DireccionEntrega,
                                         Departamento,Municipio,Zona,Coordenadas,NombreCliente,NitCliente,Telefono,Celular,PersonaRecepcion,
-                                        ComentariosVentas,ComentariosTorre,Estado,UsrCreacion,FechaCreacion,NumeroEntregaDia,Vehiculo,TipoEvento,GeoLocalizacion,DireccionFiscal) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                                        ComentariosVentas,ComentariosTorre,Estado,UsrCreacion,FechaCreacion,NumeroEntregaDia,Vehiculo,TipoEvento,GeoLocalizacion,DireccionFiscal,TIPOINSTALACION) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                         commandInsertar.Parameters.AddWithValue("@Id", SqlDbType.Int).Value = Convert.ToInt32(NumEntrega);
                         commandInsertar.Parameters.AddWithValue("@FechaInicio", SqlDbType.Date).Value = FechaInicio;
@@ -730,6 +755,7 @@ namespace kalea2.Utilidades
                         commandInsertar.Parameters.AddWithValue("@TipoEvento", SqlDbType.VarChar).Value = "#00b050";
                         commandInsertar.Parameters.AddWithValue("@GeoLocalizacion", SqlDbType.VarChar).Value = reserva.Geolocalizacion;
                         commandInsertar.Parameters.AddWithValue("@DireccionFiscal", SqlDbType.VarChar).Value = reserva.DireccionFiscal;
+                        commandInsertar.Parameters.AddWithValue("@TIPOINSTALACION", SqlDbType.VarChar).Value = reserva.TipoDeInstalacion;
 
                         commandInsertar.CommandText = Query;
                         commandInsertar.ExecuteNonQuery();
@@ -819,12 +845,12 @@ namespace kalea2.Utilidades
                 var temp = dB.ConsultarDB(string.Format("DELETE FROM T_DET_ENTREGAS WHERE IDENTREGA = '{0}';", id), "NUM_ENTREGA");
                 temp = dB.ConsultarDB(string.Format("DELETE FROM T_DET_CASOS_ENTREGAS WHERE IDENTREGA = '{0}';", id), "NUM_ENTREGA");
 
-                int TiempoArmado = 0;
+                double TiempoArmado = 0;
                 if (reserva.Reserva_Articulos != null)
                 {
                     foreach (var item in reserva.Reserva_Articulos)
                     {
-                        TiempoArmado += TiempoArmado + Convert.ToInt32(item.TiempoArmado);
+                        TiempoArmado += Convert.ToDouble(item.TiempoArmado);
                     }
                 }
 
@@ -886,7 +912,7 @@ namespace kalea2.Utilidades
 
                         string Query = string.Format("UPDATE T_ENC_ENTREGAS SET FechaInicio = ? ,FechaArmado = ?,FechaFin = ? ,TiempoArmado = ?,FechaRestriccionInicio = ?,FechaRectriccionFin = ?,DireccionEntrega = ?," +
                                         "Departamento = ?,Municipio = ?,Zona = ?,Coordenadas = ?,NombreCliente = ?,NitCliente = ?,Telefono = ?,Celular = ?,PersonaRecepcion = ?," +
-                                        "ComentariosVentas = ?,ComentariosTorre = ?,Estado = ?,UsrCreacion = ?,NumeroEntregaDia = ?,Vehiculo = ?,GeoLocalizacion = ?,TipoEvento = ? WHERE Id = '{0}';", id);
+                                        "ComentariosVentas = ?,ComentariosTorre = ?,Estado = ?,UsrCreacion = ?,NumeroEntregaDia = ?,Vehiculo = ?,GeoLocalizacion = ?,TipoEvento = ?,TIPOINSTALACION = ? WHERE Id = '{0}';", id);
 
                         //commandInsertar.Parameters.AddWithValue("@Id", SqlDbType.Int).Value = Convert.ToInt32(id);
                         commandInsertar.Parameters.AddWithValue("@FechaInicio", SqlDbType.Date).Value = FechaInicio;
@@ -898,7 +924,7 @@ namespace kalea2.Utilidades
                         commandInsertar.Parameters.AddWithValue("@DireccionEntrega", SqlDbType.VarChar).Value = reserva.DireccionEntrega;
                         commandInsertar.Parameters.AddWithValue("@Departamento", SqlDbType.VarChar).Value = "Guatemala";
                         commandInsertar.Parameters.AddWithValue("@Municipio", SqlDbType.VarChar).Value = "Ciudad de Guatemala";
-                        commandInsertar.Parameters.AddWithValue("@Zona", SqlDbType.VarChar).Value = "3";
+                        commandInsertar.Parameters.AddWithValue("@Zona", SqlDbType.VarChar).Value = reserva.ZonaDireccion;
                         commandInsertar.Parameters.AddWithValue("@Coordenadas", SqlDbType.VarChar).Value = reserva.Geolocalizacion;
                         commandInsertar.Parameters.AddWithValue("@NombreCliente", SqlDbType.VarChar).Value = reserva.NombreCliente;
                         commandInsertar.Parameters.AddWithValue("@NitCliente", SqlDbType.VarChar).Value = "00000000";
@@ -913,6 +939,7 @@ namespace kalea2.Utilidades
                         commandInsertar.Parameters.AddWithValue("@Vehiculo", SqlDbType.Int).Value = Convert.ToInt32(reserva.NumVehiculo);
                         commandInsertar.Parameters.AddWithValue("@GeoLocalizacion", SqlDbType.VarChar).Value = reserva.Geolocalizacion;
                         commandInsertar.Parameters.AddWithValue("@TipoEvento", SqlDbType.VarChar).Value = "#00b050";
+                        commandInsertar.Parameters.AddWithValue("@Tipoinstalacion", SqlDbType.VarChar).Value = reserva.TipoDeInstalacion;
                         commandInsertar.CommandText = Query;
                         commandInsertar.ExecuteNonQuery();
 

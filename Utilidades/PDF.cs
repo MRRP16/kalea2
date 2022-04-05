@@ -64,6 +64,7 @@ namespace kalea2.Utilidades
                     table.AddCell(GetCell(Texto: "Contacto: " + item.ClienteNombre,             Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
                     table.AddCell(GetCell(Texto: "Tel: " + item.ClienteTelefono,                Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
                     table.AddCell(GetCell(Texto: "Dirección: " + item.ClienteDireccionEntrega,  Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
+                    table.AddCell(GetCell(Texto: "Tipo Inst.: " + item.TipoInstalacion, Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
 
                     table.AddCell(GetCell(Texto: "Obs. Evento: " + item.ObservacionesEvento,       Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
                     table.AddCell(GetCell(Texto: "Obs. Torre: " + item.ObservacionesTorre,      Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
@@ -302,6 +303,7 @@ namespace kalea2.Utilidades
                             table.AddCell(GetCell(Texto: "Contacto: " + item.ClienteNombre, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
                             table.AddCell(GetCell(Texto: "Tel: " + item.ClienteTelefono, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
                             table.AddCell(GetCell(Texto: "Dirección: " + item.ClienteDireccionEntrega, Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
+                            table.AddCell(GetCell(Texto: "Tipo Inst.: " + item.TipoInstalacion, Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
 
                             table.AddCell(GetCell(Texto: "Obs. Evento: " + item.ObservacionesEvento, Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
                             table.AddCell(GetCell(Texto: "Obs. Torre: " + item.ObservacionesTorre, Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));

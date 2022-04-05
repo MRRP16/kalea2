@@ -28,7 +28,7 @@ namespace kalea2.Controllers
         public ActionResult Details(string fecha, string vehiculo)
         {
             Utilidades.Reportes reportes = new Utilidades.Reportes();
-            List<Models.Vehiculos> vehiculos = reportes.getVehiculos();
+            List<Models.Vehiculos> vehiculos = reportes.getVehiculosTransporte();
 
             DateTime.TryParse(fecha, out DateTime date);
             var fecha2 = date.ToString("yyyy-MM-dd");

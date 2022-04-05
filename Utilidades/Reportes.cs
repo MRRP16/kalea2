@@ -42,7 +42,7 @@ namespace kalea2.Utilidades
                         "T.telefono, T.celular, T.tiempoarmado, T.comentariostorre, T.VEHICULO, SUM(T.PESO) AS PESO, SUM(T.VOLUMEN)AS VOLUMEN, SUM(T.COSTO) AS COSTO, " +
                         "1 AS RADIO, T.ETIQUETAS, T.PRIORIDAD, T.FechaRestriccionInicio, T.FECHARECTRICCIONFIN " +
                         "FROM( SELECT t0.id, t1.codigoevento, t0.nombrecliente, t0.direccionentrega, t0.geolocalizacion, t0.fechainicio, t0.fechafin, t0.telefono, t0.celular, " +
-                        "t0.tiempoarmado, t0.comentariostorre, v.descripcion AS VEHICULO, (COALESCE(T1.CANTIDAD, 0) * COALESCE(T2.PESO, 0)) AS PESO, 0 AS VOLUMEN, " +
+                        "t0.tiempoarmado, to_char(substr(t0.COMENTARIOSTORRE, 1, 500)) as COMENTARIOSTORRE, v.descripcion AS VEHICULO, (COALESCE(T1.CANTIDAD, 0) * COALESCE(T2.PESO, 0)) AS PESO, 0 AS VOLUMEN, " +
                         "(COALESCE(T1.CANTIDAD, 0) * COALESCE(T2.PRECIOBASE, 0)) AS COSTO, 1 AS RADIO, 'NA' AS ETIQUETAS , t0.numeroentregadia AS PRIORIDAD, " +
                         "T0.FechaRestriccionInicio, T0.FECHARECTRICCIONFIN " +
                         "FROM T_ENC_ENTREGAS T0 " +
@@ -54,7 +54,7 @@ namespace kalea2.Utilidades
                         "AND t0.vehiculo IN ({1}) " +
                         "AND T0.ESTADO <> 'AN' " +
                         "GROUP BY t0.nombrecliente, t0.direccionentrega, t0.fechainicio, t0.fechafin, t0.geolocalizacion, t0.id, t1.codigoevento, t0.nitcliente, " +
-                        "t0.telefono, t0.celular, t0.tiempoarmado, t0.comentariostorre, v.descripcion, t0.numeroentregadia, (COALESCE(T1.CANTIDAD, 0) * COALESCE(T2.PESO, 0)), " +
+                        "t0.telefono, t0.celular, t0.tiempoarmado, to_char(substr(t0.COMENTARIOSTORRE, 1, 500)), v.descripcion, t0.numeroentregadia, (COALESCE(T1.CANTIDAD, 0) * COALESCE(T2.PESO, 0)), " +
                         "(COALESCE(T1.CANTIDAD, 0) * COALESCE(T2.PRECIOBASE, 0)), T1.CODIGOARTICULO, T0.FECHARECTRICCIONFIN, T0.FechaRestriccionInicio) T " +
                         "GROUP BY T.id, T.codigoevento, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, T.telefono, T.celular, " +
                         "T.tiempoarmado, T.comentariostorre, T.VEHICULO, T.RADIO, T.ETIQUETAS, T.PRIORIDAD, T.FECHARECTRICCIONFIN, T.FechaRestriccionInicio " +
@@ -65,7 +65,7 @@ namespace kalea2.Utilidades
                         "T.telefono, T.celular, T.tiempoarmado, T.comentariostorre, T.VEHICULO, SUM(T.PESO) AS PESO, SUM(T.VOLUMEN)AS VOLUMEN, SUM(T.COSTO) AS COSTO, " +
                         "1 AS RADIO, T.ETIQUETAS, T.PRIORIDAD, T.FechaRestriccionInicio, T.FECHARECTRICCIONFIN " +
                         "FROM( SELECT t0.id, t1.codigoevento, t0.nombrecliente, t0.direccionentrega, t0.geolocalizacion, t0.fechainicio, t0.fechafin, t0.telefono, t0.celular, " +
-                        "t0.tiempoarmado, t0.comentariostorre, v.descripcion AS VEHICULO, (COALESCE(T1.CANTIDAD, 0) * COALESCE(T2.PESO, 0)) AS PESO, 0 AS VOLUMEN, " +
+                        "t0.tiempoarmado, to_char(substr(t0.COMENTARIOSTORRE, 1, 500)) as COMENTARIOSTORRE, v.descripcion AS VEHICULO, (COALESCE(T1.CANTIDAD, 0) * COALESCE(T2.PESO, 0)) AS PESO, 0 AS VOLUMEN, " +
                         "(COALESCE(T1.CANTIDAD, 0) * COALESCE(T2.PRECIOBASE, 0)) AS COSTO, 1 AS RADIO, 'NA' AS ETIQUETAS , t0.numeroentregadia AS PRIORIDAD, " +
                         "T0.FechaRestriccionInicio, T0.FECHARECTRICCIONFIN " +
                         "FROM T_ENC_ENTREGAS T0 " +
@@ -77,7 +77,7 @@ namespace kalea2.Utilidades
                         "AND t0.vehiculo = '{1}' " +
                         "AND T0.ESTADO <> 'AN' " +
                         "GROUP BY t0.nombrecliente, t0.direccionentrega, t0.fechainicio, t0.fechafin, t0.geolocalizacion, t0.id, t1.codigoevento, t0.nitcliente, " +
-                        "t0.telefono, t0.celular, t0.tiempoarmado, t0.comentariostorre, v.descripcion, t0.numeroentregadia, (COALESCE(T1.CANTIDAD, 0) * COALESCE(T2.PESO, 0)), " +
+                        "t0.telefono, t0.celular, t0.tiempoarmado, to_char(substr(t0.COMENTARIOSTORRE, 1, 500)), v.descripcion, t0.numeroentregadia, (COALESCE(T1.CANTIDAD, 0) * COALESCE(T2.PESO, 0)), " +
                         "(COALESCE(T1.CANTIDAD, 0) * COALESCE(T2.PRECIOBASE, 0)), T1.CODIGOARTICULO, T0.FECHARECTRICCIONFIN, T0.FechaRestriccionInicio) T " +
                         "GROUP BY T.id, T.codigoevento, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, T.telefono, T.celular, " +
                         "T.tiempoarmado, T.comentariostorre, T.VEHICULO, T.RADIO, T.ETIQUETAS, T.PRIORIDAD, T.FECHARECTRICCIONFIN, T.FechaRestriccionInicio " +
@@ -137,7 +137,7 @@ namespace kalea2.Utilidades
                             }
                             numve = numve.Remove(numve.Length - 1, 1);
 
-                            query = string.Format(@"SELECT T.id, T1.NUMCASO as codigoevento, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, T.telefono, T.celular, T.tiempoarmado, T.comentariostorre,
+                            query = string.Format(@"SELECT T.id, T1.NUMCASO as codigoevento, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, T.telefono, T.celular, T.tiempoarmado,to_char(substr(T.comentariostorre, 1, 500)) as comentariostorre ,
                                                     v.descripcion AS VEHICULO, '0' AS PESO, '0' AS VOLUMEN, '0' AS COSTO, 1 AS RADIO, 'NA' AS ETIQUETAS, T.numeroentregadia AS PRIORIDAD, T.FechaRestriccionInicio, T.FECHARECTRICCIONFIN
                                                     FROM T_ENC_ENTREGAS T
                                                     INNER JOIN T_DET_CASOS_ENTREGAS T1 ON T.ID = t1.identrega
@@ -146,12 +146,12 @@ namespace kalea2.Utilidades
                                                     and FechaInicio <= to_timestamp('{0} 23:59:59', 'yyyy-MM-dd hh24:mi:ss')
                                                     AND T.vehiculo IN({1})
                                                     AND T.ESTADO <> 'AN'
-                                                    GROUP BY T.id, T1.NUMCASO, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, T.telefono, T.celular, T.tiempoarmado, T.comentariostorre,
+                                                    GROUP BY T.id, T1.NUMCASO, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, T.telefono, T.celular, T.tiempoarmado,to_char(substr(T.comentariostorre, 1, 500)),
                                                     v.descripcion, '0', '0', '0', 1, 'NA', T.numeroentregadia, T.FechaRestriccionInicio, T.FECHARECTRICCIONFIN
                                                     ORDER BY T.numeroentregadia ASC; ", fecha, numve.ToString());
                             break;
                         default:
-                            query = string.Format(@"SELECT T.id, T1.NUMCASO as codigoevento, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, T.telefono, T.celular, T.tiempoarmado, T.comentariostorre,
+                            query = string.Format(@"SELECT T.id, T1.NUMCASO as codigoevento, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, T.telefono, T.celular, T.tiempoarmado,to_char(substr(T.comentariostorre, 1, 500)) as comentariostorre,
                                                     v.descripcion AS VEHICULO, '0' AS PESO, '0' AS VOLUMEN, '0' AS COSTO, 1 AS RADIO, 'NA' AS ETIQUETAS, T.numeroentregadia AS PRIORIDAD, T.FechaRestriccionInicio, T.FECHARECTRICCIONFIN
                                                     FROM T_ENC_ENTREGAS T
                                                     INNER JOIN T_DET_CASOS_ENTREGAS T1 ON T.ID = t1.identrega
@@ -160,7 +160,7 @@ namespace kalea2.Utilidades
                                                     and FechaInicio <= to_timestamp('{0} 23:59:59', 'yyyy-MM-dd hh24:mi:ss')
                                                     AND T.vehiculo = '{1}'
                                                     AND T.ESTADO <> 'AN'
-                                                    GROUP BY T.id, T1.NUMCASO, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, T.telefono, T.celular, T.tiempoarmado, T.comentariostorre,
+                                                    GROUP BY T.id, T1.NUMCASO, T.nombrecliente, T.direccionentrega, T.geolocalizacion, T.fechainicio, T.fechafin, T.telefono, T.celular, T.tiempoarmado, to_char(substr(T.comentariostorre, 1, 500)),
                                                     v.descripcion, '0', '0', '0', 1, 'NA', T.numeroentregadia, T.FechaRestriccionInicio, T.FECHARECTRICCIONFIN
                                                     ORDER BY T.numeroentregadia ASC; ", fecha, vehiculo.ToString());
                             break;

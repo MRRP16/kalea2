@@ -31,8 +31,8 @@ namespace kalea2.Models
         [DataType(DataType.Time)]
         [Display(Name = "Horario Fin")]
         public string FechaFin { get; set; }
-
-        public string TiempoArmado { get; set; }
+        [Range(0, double.MaxValue, ErrorMessage = "Ingrese un numero valido")]
+        public double TiempoArmado { get; set; }
         [DataType(DataType.Time)]
         [Display(Name = "Horario R. Inicio")]
         public string FechaRestriccionInicio { get; set; }

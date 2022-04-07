@@ -27,7 +27,15 @@ namespace kalea2.Utilidades
                     reserva.FechaEntrega = Convert.ToDateTime(item["FechaInicio"].ToString());
                     reserva.FechaInicio = item["FechaInicio"].ToString();
                     reserva.FechaFin = item["FechaFin"].ToString();
-                    reserva.TiempoArmado = item["TiempoArmado"].ToString();
+                    if (!string.IsNullOrEmpty(item["TiempoArmado"].ToString()))
+                    {
+                        reserva.TiempoArmado = Convert.ToDouble(item["TiempoArmado"].ToString());
+                    }
+                    else
+                    {
+                        reserva.TiempoArmado = 0;
+                    }
+                    
                     reserva.FechaRestriccionInicio = item["FechaRestriccionInicio"].ToString();
                     reserva.FechaRestriccionFin = item["FECHARECTRICCIONFIN"].ToString();
                     reserva.DireccionEntrega = item["DireccionEntrega"].ToString();
@@ -75,7 +83,7 @@ namespace kalea2.Utilidades
                     reserva.FechaEntrega = Convert.ToDateTime(item["FechaInicio"].ToString());
                     reserva.FechaInicio = Convert.ToDateTime(item["FechaInicio"].ToString()).ToString("HH:mm");
                     reserva.FechaFin = Convert.ToDateTime(item["FechaFin"].ToString()).ToString("HH:mm");
-                    reserva.TiempoArmado = item["TiempoArmado"].ToString();
+                    reserva.TiempoArmado = Convert.ToDouble(item["TiempoArmado"].ToString());
                     reserva.FechaRestriccionInicio = Convert.ToDateTime(item["FechaRestriccionInicio"].ToString()).ToString("HH:mm");
                     reserva.FechaRestriccionFin = Convert.ToDateTime(item["FECHARECTRICCIONFIN"].ToString()).ToString("HH:mm");
                     reserva.DireccionEntrega = item["DireccionEntrega"].ToString();

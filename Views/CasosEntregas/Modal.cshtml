@@ -111,7 +111,8 @@
                                             <span class="key font-14">Tiempo armado(min):</span>
                                             <span class="white bold font-17"></span>
                                             <div class="col-md-12">
-                                                @Html.EditorFor(modelItem => Model.TiempoArmado, new { htmlAttributes = new { @class = "theme-input-style style--four", @readonly = "true" } })
+                                                @Html.EditorFor(modelItem => Model.TiempoArmado, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                                @Html.ValidationMessageFor(model => model.TiempoArmado, "", new { @class = "text-danger" })
                                             </div>
                                         </li>
                                         <li>
@@ -548,7 +549,7 @@
                 var DiFiscal = "";
                 var Tel = "";
                 var Celular = "";
-
+                let tiempoArmado = 0;
 
                 $.ajax({
                 type: 'POST',
@@ -615,6 +616,7 @@
                             '</tr>';
                         $("#invoice-edit-list-table").find('tbody').append(newRowContent);
 
+                        tiempoArmado = tiempoArmado + parseFloat(state.TiempoArmado);
                         NumEvento = state.NumEvento;
                         Observaciones_Add = state.Observaciones;
                         Nombrecl = state.NombreCliente;
@@ -689,7 +691,7 @@
 
                         });
                     }
-
+                    document.getElementById("TiempoArmado").value = tiempoArmado;
 
                     if ($("#ComentariosVenta").val() === "") {
                         Observaciones_temp = "Evento " + NumEvento + ": " + Observaciones_Add;
@@ -961,6 +963,7 @@
         }
         function recorrer() {
 
+            let tiempoArmado = 0;
             var value = "";
             $(".Articulos .NumEvento").each(function () {
                 value +="'"+ $(this).text()+"'" + ",";
@@ -1068,9 +1071,11 @@
                         '</td>' +
                         '</tr>';
                     $("#invoice-edit-list-table").find('tbody').append(newRowContent);
+
+                    tiempoArmado = tiempoArmado + parseFloat(state.TiempoArmado);
                 });
 
-
+                document.getElementById("TiempoArmado").value = tiempoArmado;
 
                 document.getElementById("ComentariosVenta").value = states.Comentarios;
             },

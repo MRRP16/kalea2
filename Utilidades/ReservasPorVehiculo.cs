@@ -90,7 +90,7 @@ namespace kalea2.Utilidades
                                 reserva.FechaInicio = Convert.ToDateTime(item["FechaInicio"].ToString()).ToString("HH:mm");
                                 reserva.FechaFin = Convert.ToDateTime(item["FechaFin"].ToString()).ToString("HH:mm");
                                 reserva.FechaArmado = Convert.ToDateTime(item["FechaArmado"].ToString()).ToString("HH:mm");
-                                reserva.TiempoArmado = item["TiempoArmado"].ToString();
+                                reserva.TiempoArmado = Convert.ToDouble(item["TiempoArmado"].ToString());
                                 reserva.FechaRestriccionInicio = Convert.ToDateTime(item["FechaRestriccionInicio"]).ToString("HH:mm");
                                 reserva.FechaRestriccionFin = Convert.ToDateTime(item["FECHARECTRICCIONFIN"]).ToString("HH:mm");
                                 reserva.DireccionEntrega = item["DireccionEntrega"].ToString();
@@ -355,7 +355,7 @@ namespace kalea2.Utilidades
                     reserva.FechaArmadoT = Convert.ToDateTime(item["FechaInicio"].ToString());
                     reserva.FechaFin = Convert.ToDateTime(item["FechaFin"].ToString()).ToString("HH:mm");
                     reserva.FechaInicioOrdenar = Convert.ToDateTime(item["FechaFin"].ToString());
-                    reserva.TiempoArmado = item["TiempoArmado"].ToString();
+                    reserva.TiempoArmado = Convert.ToDouble(item["TiempoArmado"].ToString());
                     reserva.FechaRestriccionInicio = item["FechaRestriccionInicio"].ToString();
                     reserva.FechaRestriccionFin = item["FECHARECTRICCIONFIN"].ToString();
                     reserva.FechaRestriccionI = Convert.ToDateTime(item["FechaRestriccionInicio"].ToString());
@@ -436,9 +436,9 @@ namespace kalea2.Utilidades
 
                     FechaArmado = FechaArmado.AddMinutes(HolguraInicio);
                     FechaArmado = FechaArmado.AddMinutes(temp);
-                    if (string.IsNullOrEmpty(listaTemp.TiempoArmado))
+                    if (string.IsNullOrEmpty(listaTemp.TiempoArmado.ToString()))
                     {
-                        listaTemp.TiempoArmado = "0";
+                        listaTemp.TiempoArmado = 0;
                     }
 
                     TimeSpan Tamano = (FechaArmado - Convert.ToDateTime(listaTemp.FechaArmadoT));

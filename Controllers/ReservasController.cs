@@ -407,8 +407,6 @@ namespace kalea2.Controllers
             {
                 for (int i = 0; i < sp.Length; i++)
                 {
-
-
                     string[] spGeneral = sp[i].TrimEnd(',').Split(',');
                     for (int j = 0; j < spGeneral.Length; j++)
                     {

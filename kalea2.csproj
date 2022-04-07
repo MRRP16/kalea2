@@ -597,6 +597,7 @@
     <Content Include="Content\assets\js\custom.project.management.js" />
     <Content Include="Content\assets\js\footable.js" />
     <Content Include="Content\assets\js\footable.min.js" />
+    <Content Include="Content\assets\js\footable.paginate.js" />
     <Content Include="Content\assets\js\jquery.min.js" />
     <Content Include="Content\assets\js\MapaInput.js" />
     <Content Include="Content\assets\js\script.js" />

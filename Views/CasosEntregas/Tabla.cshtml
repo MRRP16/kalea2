@@ -5,7 +5,7 @@
 <div class="panel" id="spy2" style="background-color:#ffffff">
     <div class="panel-body pn">
         <div class="table-responsive">
-            <table class="table footable" data-filter="#fooFilter" data-paging-limit="3">
+            <table class="table footable" data-filter="#fooFilter" data-paging="true">
                 <thead>
                     <tr>
                         <th># Entrega<img src="~/Content/assets/img/svg/table-down-arrow.svg" alt="" class="svg"></th>
@@ -107,15 +107,18 @@
                         </tr>
                     }
                 </tbody>
-                
+                <tfoot class="hide-if-no-paging">
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            <ul class="pagination"></ul>
+                        </td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>
 </div>
 
-
-<script src="~/assets/footable/js/footable.all.min.js"></script>
-<script src="~/assets/footable/js/footable.filter.min.js"></script>
 <script>
     $(function () {
 
@@ -224,5 +227,6 @@
 
 
     });
+
 </script>
 

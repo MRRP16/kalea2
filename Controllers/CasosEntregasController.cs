@@ -57,6 +57,7 @@ namespace kalea2.Controllers
                 }
             }
             return View(CasosEntregas.Entregas());
+            //return View("View");
         }
 
         public ActionResult Create()

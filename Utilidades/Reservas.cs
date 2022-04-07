@@ -75,7 +75,7 @@ namespace kalea2.Utilidades
                         reserva.FechaFin = Convert.ToDateTime(item["FechaFin"].ToString()).ToString("HH:mm");
                         reserva.FechaArmado = Convert.ToDateTime(item["FechaArmado"].ToString()).ToString("HH:mm");
                         tArmado = string.IsNullOrEmpty(item["TiempoArmado"].ToString()) ? 0 : Convert.ToDouble(item["TiempoArmado"].ToString());
-                        reserva.TiempoArmado = (tArmado + HolguraFinal).ToString();
+                        reserva.TiempoArmado = Convert.ToDouble((tArmado + HolguraFinal).ToString());
                         reserva.FechaRestriccionInicio = Convert.ToDateTime(item["FechaRestriccionInicio"]).ToString("HH:mm");
                         reserva.FechaRestriccionFin = Convert.ToDateTime(item["FECHARECTRICCIONFIN"]).ToString("HH:mm");
                         reserva.DireccionEntrega = item["DireccionEntrega"].ToString();
@@ -114,20 +114,6 @@ namespace kalea2.Utilidades
                         DataRow[] drow = resultado.Tables[0].Select("ID = '" + reserva.Id + "'");
                         foreach (DataRow item2 in drow)
                         {
-                            if (!string.IsNullOrEmpty(item2[30].ToString()))
-                            {
-                                if (!string.IsNullOrEmpty(reserva.ListadoEventosCasos))
-                                {
-                                    if (!reserva.ListadoEventosCasos.Contains(item2[30].ToString()))
-                                    {
-                                        reserva.ListadoEventosCasos += item2[30].ToString() + ";";
-                                    }
-                                }
-                                else
-                                {
-                                    reserva.ListadoEventosCasos += item2[30].ToString() + ";";
-                                }
-                            }
                             if (!string.IsNullOrEmpty(item2[31].ToString()))
                             {
                                 if (!string.IsNullOrEmpty(reserva.ListadoEventosCasos))
@@ -140,6 +126,20 @@ namespace kalea2.Utilidades
                                 else
                                 {
                                     reserva.ListadoEventosCasos += item2[31].ToString() + ";";
+                                }
+                            }
+                            if (!string.IsNullOrEmpty(item2[32].ToString()))
+                            {
+                                if (!string.IsNullOrEmpty(reserva.ListadoEventosCasos))
+                                {
+                                    if (!reserva.ListadoEventosCasos.Contains(item2[32].ToString()))
+                                    {
+                                        reserva.ListadoEventosCasos += item2[32].ToString() + ";";
+                                    }
+                                }
+                                else
+                                {
+                                    reserva.ListadoEventosCasos += item2[32].ToString() + ";";
                                 }
 
                             }
@@ -688,13 +688,13 @@ namespace kalea2.Utilidades
                 }
 
                 double TiempoArmado = 0;
-                if (reserva.Reserva_Articulos != null)
-                {
-                    foreach (var item in reserva.Reserva_Articulos)
-                    {
-                        TiempoArmado += Convert.ToDouble(item.TiempoArmado);
-                    }
-                }
+                //if (reserva.Reserva_Articulos != null)
+                //{
+                //    foreach (var item in reserva.Reserva_Articulos)
+                //    {
+                //        TiempoArmado += Convert.ToDouble(item.TiempoArmado);
+                //    }
+                //}
                 DateTime FechaInicio = reserva.FechaEntrega;
                 DateTime FechaArmado = reserva.FechaEntrega;
                 DateTime FechaFin = reserva.FechaEntrega;
@@ -732,7 +732,7 @@ namespace kalea2.Utilidades
                         commandInsertar.Parameters.AddWithValue("@FechaInicio", SqlDbType.Date).Value = FechaInicio;
                         commandInsertar.Parameters.AddWithValue("@FechaArmado", SqlDbType.Date).Value = FechaArmado;
                         commandInsertar.Parameters.AddWithValue("@FechaFin", SqlDbType.Date).Value = FechaFin;
-                        commandInsertar.Parameters.AddWithValue("@TiempoArmado", SqlDbType.Int).Value = TiempoArmado;
+                        commandInsertar.Parameters.AddWithValue("@TiempoArmado", SqlDbType.Int).Value = reserva.TiempoArmado;
                         commandInsertar.Parameters.AddWithValue("@FechaRestriccionInicio ", SqlDbType.Date).Value = FechaRectriccionInicio;
                         commandInsertar.Parameters.AddWithValue("@FechaRectriccionFin ", SqlDbType.Date).Value = FechaRectriccionFin;
                         commandInsertar.Parameters.AddWithValue("@DireccionEntrega", SqlDbType.VarChar).Value = reserva.DireccionEntrega;
@@ -846,13 +846,13 @@ namespace kalea2.Utilidades
                 temp = dB.ConsultarDB(string.Format("DELETE FROM T_DET_CASOS_ENTREGAS WHERE IDENTREGA = '{0}';", id), "NUM_ENTREGA");
 
                 double TiempoArmado = 0;
-                if (reserva.Reserva_Articulos != null)
-                {
-                    foreach (var item in reserva.Reserva_Articulos)
-                    {
-                        TiempoArmado += Convert.ToDouble(item.TiempoArmado);
-                    }
-                }
+                //if (reserva.Reserva_Articulos != null)
+                //{
+                //    foreach (var item in reserva.Reserva_Articulos)
+                //    {
+                //        TiempoArmado += Convert.ToDouble(item.TiempoArmado);
+                //    }
+                //}
 
 
                 var resultado = dB.ConsultarDB(@"SELECT ID,Valor FROM T_PARAMETROS_GENERALES WHERE Id = '2' OR ID = '3';", "T_ENC_ENTREGAS");
@@ -918,7 +918,7 @@ namespace kalea2.Utilidades
                         commandInsertar.Parameters.AddWithValue("@FechaInicio", SqlDbType.Date).Value = FechaInicio;
                         commandInsertar.Parameters.AddWithValue("@FechaArmado", SqlDbType.Date).Value = FechaArmado;
                         commandInsertar.Parameters.AddWithValue("@FechaFin", SqlDbType.Date).Value = FechaFin;
-                        commandInsertar.Parameters.AddWithValue("@TiempoArmado", SqlDbType.Int).Value = TiempoArmado;
+                        commandInsertar.Parameters.AddWithValue("@TiempoArmado", SqlDbType.Int).Value = reserva.TiempoArmado;
                         commandInsertar.Parameters.AddWithValue("@FechaRestriccionInicio ", SqlDbType.Date).Value = FechaRectriccionInicio;
                         commandInsertar.Parameters.AddWithValue("@FechaRectriccionFin ", SqlDbType.Date).Value = FechaRectriccionFin;
                         commandInsertar.Parameters.AddWithValue("@DireccionEntrega", SqlDbType.VarChar).Value = reserva.DireccionEntrega;
@@ -1030,7 +1030,7 @@ namespace kalea2.Utilidades
                     reserva.FechaInicio = Convert.ToDateTime(item["FechaInicio"].ToString()).ToString("HH:mm");
                     reserva.FechaFin = Convert.ToDateTime(item["FechaFin"].ToString()).ToString("HH:mm");
                     reserva.FechaArmadoT = Convert.ToDateTime(item["FechaArmado"].ToString());
-                    reserva.TiempoArmado = item["TiempoArmado"].ToString();
+                    reserva.TiempoArmado = Convert.ToDouble(item["TiempoArmado"].ToString());
                     reserva.FechaRestriccionInicio = item["FechaRestriccionInicio"].ToString();
                     reserva.FechaRestriccionFin = item["FECHARECTRICCIONFIN"].ToString();
                     reserva.DireccionEntrega = item["DireccionEntrega"].ToString();
@@ -1422,7 +1422,7 @@ namespace kalea2.Utilidades
                     reserva.FechaArmadoT = Convert.ToDateTime(item["FechaInicio"].ToString());
                     reserva.FechaFin = Convert.ToDateTime(item["FechaFin"].ToString()).ToString("HH:mm");
                     reserva.FechaInicioOrdenar = Convert.ToDateTime(item["FechaFin"].ToString());
-                    reserva.TiempoArmado = item["TiempoArmado"].ToString();
+                    reserva.TiempoArmado = Convert.ToDouble(item["TiempoArmado"].ToString());
                     reserva.FechaRestriccionInicio = item["FechaRestriccionInicio"].ToString();
                     reserva.FechaRestriccionFin = item["FECHARECTRICCIONFIN"].ToString();
                     reserva.FechaRestriccionI = Convert.ToDateTime(item["FechaRestriccionInicio"].ToString());
@@ -1499,9 +1499,9 @@ namespace kalea2.Utilidades
 
                     FechaArmado = FechaArmado.AddMinutes(HolguraInicio);
                     FechaArmado = FechaArmado.AddMinutes(temp);
-                    if (string.IsNullOrEmpty(listaTemp.TiempoArmado))
+                    if (string.IsNullOrEmpty(listaTemp.TiempoArmado.ToString()))
                     {
-                        listaTemp.TiempoArmado = "0";
+                        listaTemp.TiempoArmado = 0;
                     }
 
                     TimeSpan Tamano = (FechaArmado - Convert.ToDateTime(listaTemp.FechaArmadoT));

@@ -380,7 +380,7 @@ namespace kalea2.Utilidades
 
                 string query = @"SELECT T5.Evento FROM Naf47.V_EVENTOS_PENDIENTES T5 
                                 INNER JOIN Naf47.Pvlineas_movimiento T0 ON T0.NO_TRANSA_MOV = T5.EVENTO
-                                WHERE T5.FECHA >= TO_DATE('01-MAR-2022')
+                                WHERE T5.FECHA >= TO_DATE('01-FEB-2022')
                                 AND T0.ENTREGADOMICILIO = 'D'
                                 GROUP BY T5.Evento;";
 

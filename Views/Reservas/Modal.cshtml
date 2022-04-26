@@ -485,41 +485,6 @@
 @section Scripts {
 
     <script type="text/javascript">
-        function myFunction() {
-            alert("Page is loaded");
-
-             $.ajax({
-                type: 'POST',
-                url: '@Url.Action("ObtenerCasosEventosLoad", "Reservas")', // we are calling json method
-                dataType: 'json',
-               // here we are get value of selected country and passing same value
-                  //as inputto json method GetStates.
-                success: function (states) {
-                    // states contains the JSON formatted list
-                    // of states passed from the controller
-
-                    console.log(states);
-                    $.each(states.Eventos, function (i, evento) {
-                        $(".divEventos select").append('<option value="' + evento.Text + '">' + evento.Value + '</option>');
-                     });
-                    },
-                    //$.each(states, function (i, state) {
-
-                    //    console.log(state.Eventos);
-                    //    //$.each(states, function (i, state.Eventos) {
-
-                    //    //}
-                    //}
-                },
-                error: function (ex) {
-                    alert('Failed to retrieve states.' + ex);
-                }
-            });
-
-
-        }
-    </script>
-    <script type="text/javascript">
         //jQuery(document).ready(function ($) {
         //    $(document).ready(function () {
         //        $('.mi-selector').select2();
@@ -527,7 +492,9 @@
         //});
         $(document).ready(function () {
             $(document).ready(function () {
-                $('.mi-selector').select2();
+                $('.mi-selector').select2({
+                    tags: true
+                    });
             });
             //Dropdownlist Selectedchange event
             $("#AgregarLinea").click(function () {

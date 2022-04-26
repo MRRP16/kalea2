@@ -44,7 +44,7 @@ namespace kalea2.Controllers
 
                 //List<ReportesGuias> listado = reportes.GetEventosCasosParaGuiasDeTransporte(vehiculoId: item.Codigo.ToString(), fecha: date.ToString("dd/MM/yyyy"));
                 //Models.Vehiculos respuestaVehiculo = vehiculos.ObtenerVehiculo(int.Parse(item.Codigo.ToString()));
-                byte[] respuesta = pdf.CrearTodosLosReportesDeTransporte(listadoVehiculos, date.ToString("MM/dd/yyyy"));
+                byte[] respuesta = pdf.CrearTodosLosReportesDeTransporte(listadoVehiculos, date.ToString("dd/MM/yyyy"));
                 string nombreArchivo = "TodosGuiasDeTransporte_" + date.ToString("dd/MM/yyyy") + ".pdf";
                 return File(respuesta, "application/pdf", nombreArchivo);
 

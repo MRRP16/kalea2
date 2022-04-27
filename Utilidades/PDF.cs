@@ -254,11 +254,14 @@ namespace kalea2.Utilidades
                 int numeroDePagina = 0;
                 bool numeroDePaginaEncabezado = false;
                 PdfPTable table = new PdfPTable(10);
+                List<ReportesGuias> listado = new List<ReportesGuias>();
+
                 foreach (var vehiculo in listadoVehiculos)
                 {
                     numeroDePagina++;
                     Reportes reportes = new Reportes();
-                    List<ReportesGuias> listado = reportes.GetEventosCasosParaGuiasDeTransporte(vehiculoId: vehiculo.Codigo.ToString(), fecha: fechaDeEntrega);
+                    listado = reportes.GetEventosCasosParaGuiasDeTransporte(vehiculoId: vehiculo.Codigo.ToString(), fecha: fechaDeEntrega);
+                    
                     if (listado.Count>0)
                     {
                         table = new PdfPTable(10);
@@ -279,18 +282,6 @@ namespace kalea2.Utilidades
 
                         foreach (var item in listado)
                         {
-                            //if (!numeroDePaginaEncabezado)
-                            //{
-                            //    numeroDePagina++;
-                            //    table.AddCell(GetCell(Texto: "Pagina " + numeroDePagina, Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, Size: 10));
-                            //    table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, Border: 2));
-                            //}
-                            //if (table.TotalWidth > 420)
-                            //{
-                            //    doc.Add(table);
-                            //    doc.NewPage();
-                            //}
-
                             table.AddCell(GetCell(Texto: "Evento: " + item.EventoCaso, Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
                             table.AddCell(GetCell(Texto: "Armadores: ", Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
 
@@ -345,15 +336,28 @@ namespace kalea2.Utilidades
                                 table.AddCell(GetCell(Texto: total.ToString(), Rowspan: 1, Colspan: 1, HorizontalAlignment: 1, Border: 2, PaddingBottom: 10));
                             }
                             numeroDePaginaEncabezado = false;
+                            doc.Add(table);
+                            doc.NewPage();
+                            table = new PdfPTable(10);
                         }
-                      
+                        doc.Add(table);
+                        doc.NewPage();
                     }
                 }
 
                 doc.Add(table);
-                doc.Close();
+                doc.NewPage();
                 byte[] result = ms.ToArray();
-                return AddPageNumber(result); ;
+                if (listado.Count > 0)
+                {
+                    doc.Close();
+                    return AddPageNumber(result);
+                }
+                else
+                {
+                    return null;
+                }
+
             }
         }
 

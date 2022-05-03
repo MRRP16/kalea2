@@ -254,14 +254,14 @@ namespace kalea2.Utilidades
                 int numeroDePagina = 0;
                 bool numeroDePaginaEncabezado = false;
                 PdfPTable table = new PdfPTable(10);
-<<<<<<< HEAD
+
                 List<ReportesGuias> listado = new List<ReportesGuias>();
                 
-=======
+
                 int contadorDeFilas = 0;
                 int filasEnLaHoja = 60;
 
->>>>>>> f6b0dd5d6cef381ad8fb12ae139cd8f2f24cec6e
+
                 foreach (var vehiculo in listadoVehiculos)
                 {
                     numeroDePagina++;
@@ -413,16 +413,19 @@ namespace kalea2.Utilidades
                 doc.NewPage();
                 doc.Close();
                 byte[] result = ms.ToArray();
+<<<<<<< HEAD
                 doc.Close();
                 return AddPageNumber(result);
                 //if (listado.Count > 0)
                 //{
                 //    doc.Close();
                 //    return AddPageNumber(result);
+=======
 
                 //if (listado.Count > 0)
                 //{
                 return AddPageNumber(result);
+>>>>>>> f6b0dd5d6cef381ad8fb12ae139cd8f2f24cec6e
                 //}
                 //else
                 //{

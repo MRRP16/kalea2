@@ -16,6 +16,7 @@ namespace kalea2.Models
         public string VendedorNombre { get; set; } //ok
         public string SolucionesNombre { get; set; } 
         public string ClienteNombre { get; set; } //ok
+        public string PersonaRecepcion { get; set; }
         public string ClienteTelefono { get; set; } //ok telefono y ceular
         public string ClienteDireccionEntrega { get; set; } // ok
         public string ObservacionesEvento { get; set; } //ok
@@ -24,6 +25,7 @@ namespace kalea2.Models
         public string ObservacionesCaso { get; set; } //ok
         public string AccionesCaso { get; set; } //ok
         public string TipoInstalacion { get; set; }
+
         public List<ReportesGuiasProductos> Productos { get; set; }
     }
 

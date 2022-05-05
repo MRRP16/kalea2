@@ -277,7 +277,7 @@ namespace kalea2.Utilidades
             List<ReportesGuias> listadoDeEventos = new List<ReportesGuias>();
             try
             {
-                string query = string.Format(@"SELECT t1.descripcion as vehiculo, t2.codigoevento, t2.codigoarticulo, t3.NOMBRE_LARGO AS descripcion, t2.cantidad, t4.nombre_vendedor as vendedor, t0.nombrecliente, t0.telefono, t0.celular, t0.direccionentrega, 
+                string query = string.Format(@"SELECT t1.descripcion as vehiculo, t2.codigoevento, t2.codigoarticulo, t3.NOMBRE_LARGO AS descripcion, t2.cantidad, t4.nombre_vendedor as vendedor, t0.nombrecliente,T0.personarecepcion, t0.telefono, t0.celular, t0.direccionentrega, 
                     to_char(substr(t0.comentariosventas, 1, 500)) as comentariosventas,to_char(substr(t0.COMENTARIOSTORRE, 1, 500)) as COMENTARIOSTORRE, t0.fechainicio, t0.fecharestriccioninicio as restriccioninicio, t0.fecharectriccionfin as restriccionfin, t5.numcaso, t5.observaciones, t5.acciones, t0.id as identrega,T6.BODEGA,T7.DESCRIPCION AS TIPOINSTALACION
                     FROM t_enc_entregas T0 
                     LEFT JOIN t_vehiculos T1 ON t1.id = t0.vehiculo
@@ -289,7 +289,7 @@ namespace kalea2.Utilidades
                     LEFT JOIN T_TIPOS_CASO T7 ON T7.ID = T0.TIPOINSTALACION
                     WHERE FechaInicio >= to_timestamp('{0} 00:00:00', 'dd/MM/yy hh24:mi:ss') AND FechaInicio <= to_timestamp('{0} 23:59:59', 'dd/MM/yy hh24:mi:ss') AND t0.vehiculo = {1}
                     AND T0.ESTADO='A'
-                    GROUP BY t1.descripcion, t2.codigoevento, t2.codigoarticulo, t3.NOMBRE_LARGO, t2.cantidad, t4.nombre_vendedor , t0.nombrecliente, t0.telefono, t0.celular, t0.direccionentrega, 
+                    GROUP BY t1.descripcion, t2.codigoevento, t2.codigoarticulo, t3.NOMBRE_LARGO, t2.cantidad, t4.nombre_vendedor , t0.nombrecliente,t0.personarecepcion, t0.telefono, t0.celular, t0.direccionentrega, 
                     to_char(substr(t0.comentariosventas, 1, 500)),to_char(substr(t0.COMENTARIOSTORRE, 1, 500)) , t0.fechainicio, t0.fecharestriccioninicio , t0.fecharectriccionfin, t5.numcaso, t5.observaciones, t5.acciones, t0.id ,T6.BODEGA,T7.DESCRIPCION;", fecha, vehiculoId);
 
                 var resultado = dB.ConsultarDB(query, "T_EVENTOS");
@@ -350,7 +350,7 @@ namespace kalea2.Utilidades
             evento.ObservacionesCaso = item["observaciones"].ToString();
             evento.AccionesCaso = item["acciones"].ToString();
             evento.TipoInstalacion = item["TIPOINSTALACION"].ToString();
-
+            evento.PersonaRecepcion = item["personarecepcion"].ToString();
             ReportesGuiasProductos producto = new ReportesGuiasProductos();
             List<ReportesGuiasProductos> listadoProductos = new List<ReportesGuiasProductos>();
             producto.Sku = item["codigoarticulo"].ToString();

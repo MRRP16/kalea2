@@ -71,6 +71,13 @@ namespace kalea2.Utilidades
                         DateTime dt = Convert.ToDateTime(item["FECHACREACION"].ToString());
                         reserva.TiempoRestante = (DateTime.Now - dt).Minutes + (DateTime.Now - dt).Hours * 60;
                         reserva.Id = Convert.ToInt32(item["Id"].ToString());
+
+                        if (reserva.Id == 1049)
+                        {
+                            bool entro = true;
+                        }
+
+
                         reserva.FechaInicio = Convert.ToDateTime(item["FechaInicio"].ToString()).ToString("HH:mm");
                         reserva.FechaFin = Convert.ToDateTime(item["FechaFin"].ToString()).ToString("HH:mm");
                         reserva.FechaArmado = Convert.ToDateTime(item["FechaArmado"].ToString()).ToString("HH:mm");
@@ -435,13 +442,13 @@ namespace kalea2.Utilidades
                 articulos = new List<Models.Reserva_Detalle_Articulos>();
 
 
-                string query = string.Format(@"SELECT T0.NO_ARTI,T1.NOMBRE_LARGO AS Descripcion,T1.Tiempo_armado,T0.Cantidad,T0.CantidadDomicilio,T0.EntregaDomicilio,T2.Nombre_Cliente,T2.COD_CLIENTE,T2.Observaciones, T2.DIRECCION_ENTREGA,T2.DIRECCION_FISCAL,T3.Telefono,T1.CANTIDAD_ARMADORES,T2.DISTRITO_ENTREGA
+                string query = string.Format(@"SELECT T0.NO_ARTI,T1.NOMBRE_LARGO AS Descripcion,T1.Tiempo_armado,T0.Cantidad,T0.CantidadDomicilio,T0.EntregaDomicilio,T3.CONTACTO,T2.Nombre_Cliente,T2.COD_CLIENTE,T2.Observaciones, T2.DIRECCION_ENTREGA,T2.DIRECCION_FISCAL,T3.Telefono,T1.CANTIDAD_ARMADORES,T2.DISTRITO_ENTREGA
                                 FROM Naf47.Pvlineas_movimiento T0
                                 LEFT JOIN Naf47.Arinda T1 ON T0.NO_ARTI = T1.NO_ARTI
                                 LEFT JOIN Naf47.Pvencabezado_movimientos T2 ON T2.NO_TRANSA_MOV = T0.NO_TRANSA_MOV
                                 LEFT JOIN Naf47.pvclientes T3 ON T3.COD_CLIENTE = T2.COD_CLIENTE
                                 WHERE T0.NO_TRANSA_MOV = '{0}' AND T0.ENTREGADOMICILIO = 'D'
-                                GROUP BY T0.NO_ARTI,T1.NOMBRE_LARGO,T1.Tiempo_armado,T0.Cantidad,T0.CantidadDomicilio,T0.EntregaDomicilio,T2.Nombre_Cliente,T2.COD_CLIENTE,T2.Observaciones, T2.DIRECCION_ENTREGA,T2.DIRECCION_FISCAL,T3.Telefono,T1.CANTIDAD_ARMADORES,T2.DISTRITO_ENTREGA;", id);
+                                GROUP BY T0.NO_ARTI,T1.NOMBRE_LARGO,T1.Tiempo_armado,T0.Cantidad,T0.CantidadDomicilio,T0.EntregaDomicilio,T3.CONTACTO,T2.Nombre_Cliente,T2.COD_CLIENTE,T2.Observaciones, T2.DIRECCION_ENTREGA,T2.DIRECCION_FISCAL,T3.Telefono,T1.CANTIDAD_ARMADORES,T2.DISTRITO_ENTREGA;", id);
 
                 var resultado = dB.ConsultarDB(query, "T_EVENTOS");
 
@@ -462,6 +469,7 @@ namespace kalea2.Utilidades
                     articulo.NombreCliente = item["Nombre_Cliente"].ToString();
                     articulo.Telefono = item["Telefono"].ToString();
                     articulo.ZonaDireccion = item["DISTRITO_ENTREGA"].ToString();
+                    articulo.PersonaRecibe = item["CONTACTO"].ToString();
                     double totalT = 0;
                     try
                     {
@@ -744,7 +752,7 @@ namespace kalea2.Utilidades
                         commandInsertar.Parameters.AddWithValue("@NitCliente", SqlDbType.VarChar).Value = "0000000";
                         commandInsertar.Parameters.AddWithValue("@Telefono", SqlDbType.VarChar).Value = reserva.Telefono;
                         commandInsertar.Parameters.AddWithValue("@Celular", SqlDbType.VarChar).Value = reserva.Celular;
-                        commandInsertar.Parameters.AddWithValue("@PersonaRecepcion", SqlDbType.VarChar).Value = "Cliente que recibe";
+                        commandInsertar.Parameters.AddWithValue("@PersonaRecepcion", SqlDbType.VarChar).Value = reserva.PersonaRecepcion;
                         commandInsertar.Parameters.AddWithValue("@ComentariosVentas", SqlDbType.VarChar).Value = string.IsNullOrEmpty(reserva.ComentariosVenta) ? "" : reserva.ComentariosVenta;
                         commandInsertar.Parameters.AddWithValue("@ComentariosTorre", SqlDbType.VarChar).Value = string.IsNullOrEmpty(reserva.ComentariosTorre) ? "" : reserva.ComentariosTorre;
                         commandInsertar.Parameters.AddWithValue("@Estado", SqlDbType.VarChar).Value = "A";
@@ -930,7 +938,7 @@ namespace kalea2.Utilidades
                         commandInsertar.Parameters.AddWithValue("@NitCliente", SqlDbType.VarChar).Value = "00000000";
                         commandInsertar.Parameters.AddWithValue("@Telefono", SqlDbType.VarChar).Value = reserva.Telefono;
                         commandInsertar.Parameters.AddWithValue("@Celular", SqlDbType.VarChar).Value = reserva.Celular;
-                        commandInsertar.Parameters.AddWithValue("@PersonaRecepcion", SqlDbType.VarChar).Value = "Cliente que recibe";
+                        commandInsertar.Parameters.AddWithValue("@PersonaRecepcion", SqlDbType.VarChar).Value = reserva.PersonaRecepcion;
                         commandInsertar.Parameters.AddWithValue("@ComentariosVentas", SqlDbType.VarChar).Value = string.IsNullOrEmpty(reserva.ComentariosVenta) ? "" : reserva.ComentariosVenta;
                         commandInsertar.Parameters.AddWithValue("@ComentariosTorre", SqlDbType.VarChar).Value = string.IsNullOrEmpty(reserva.ComentariosTorre) ? "" : reserva.ComentariosTorre;
                         commandInsertar.Parameters.AddWithValue("@Estado", SqlDbType.VarChar).Value = "A";
@@ -1153,6 +1161,7 @@ namespace kalea2.Utilidades
                     }
                     else
                     {
+                        FechaFin = FechaFin.AddMinutes(Convert.ToDouble(ListaTemporal[i].TiempoArmado));
                         Color = ListaTemporal[i].ColorTipoEvento;
                     }
 
@@ -1215,7 +1224,7 @@ namespace kalea2.Utilidades
                     FechaArmado = FechaArmado.AddMinutes(HolguraInicio);
                     FechaFin = FechaArmado;
                     FechaFin = FechaFin.AddMinutes(HolguraFinal);
-
+                    FechaFin = FechaFin.AddMinutes(Convert.ToDouble(ListaTemporal[i].TiempoArmado));
 
                     using (OdbcConnection myConnection = new OdbcConnection(strgConexion()))
                     {
@@ -1729,6 +1738,7 @@ namespace kalea2.Utilidades
 
                 DateTime FechaRectriccionFin = DateTime.ParseExact(Temp, "yyyy-MM-dd HH:mm", System.Globalization.CultureInfo.InvariantCulture);
 
+               
                 using (OdbcConnection myConnection = new OdbcConnection(strgConexion()))
                 {
 
@@ -1747,7 +1757,7 @@ namespace kalea2.Utilidades
                         //commandInsertar.Transaction = transaction;
 
                         string Query = @"INSERT INTO T_ENC_ENTREGAS(Id,FechaInicio,FechaArmado,FechaFin,FechaRestriccionInicio,FechaRectriccionFin,
-                                         Estado,UsrCreacion,FechaCreacion,NumeroEntregaDia,Vehiculo,TipoEvento,Referencia_Reserva) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                                         Estado,UsrCreacion,FechaCreacion,NumeroEntregaDia,Vehiculo,TipoEvento,Referencia_Reserva,TiempoArmado) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                         commandInsertar.Parameters.AddWithValue("@Id", SqlDbType.Int).Value = Convert.ToInt32(NumEntrega);
                         commandInsertar.Parameters.AddWithValue("@FechaInicio", SqlDbType.Date).Value = FechaInicio;
@@ -1762,6 +1772,7 @@ namespace kalea2.Utilidades
                         commandInsertar.Parameters.AddWithValue("@Vehiculo", SqlDbType.Int).Value = Convert.ToInt32(reserva.Vehiculo);
                         commandInsertar.Parameters.AddWithValue("@TipoEvento", SqlDbType.VarChar).Value = "#ffff00";
                         commandInsertar.Parameters.AddWithValue("@Referencia_Reserva", SqlDbType.VarChar).Value = reserva.Referencia;
+                        commandInsertar.Parameters.AddWithValue("@TiempoArmado", SqlDbType.Int).Value = reserva.TiempoArmado;
                         commandInsertar.CommandText = Query;
                         commandInsertar.ExecuteNonQuery();
 

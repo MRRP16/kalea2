@@ -28,11 +28,11 @@ namespace kalea2.Utilidades
                 table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, Border: 2));
 
                 //**************************************************************** HEADER
-                table.AddCell(GetCell(Texto: "Guias de transporte Impresión: ",     Rowspan: 1, Colspan: 3, HorizontalAlignment: 1, Border: 0, PaddingBottom: 5));
-                table.AddCell(GetCell(Texto: "Para el: " + fechaDeEntrega,          Rowspan: 1, Colspan: 4, HorizontalAlignment: 1, Border: 0, PaddingBottom: 5));
-                table.AddCell(GetCell(Texto: "Vehiculo: " + Vehiculo,               Rowspan: 1, Colspan: 3, HorizontalAlignment: 1, Border: 0, PaddingBottom: 5));
+                table.AddCell(GetCell(Texto: "Guias de transporte Impresión: ", Rowspan: 1, Colspan: 3, HorizontalAlignment: 1, Border: 0, PaddingBottom: 5));
+                table.AddCell(GetCell(Texto: "Para el: " + fechaDeEntrega, Rowspan: 1, Colspan: 4, HorizontalAlignment: 1, Border: 0, PaddingBottom: 5));
+                table.AddCell(GetCell(Texto: "Vehiculo: " + Vehiculo, Rowspan: 1, Colspan: 3, HorizontalAlignment: 1, Border: 0, PaddingBottom: 5));
 
-                table.AddCell(GetCell(Texto: "Fecha de impresión: "+fecha.ToString(),Rowspan: 1, Colspan: 10, HorizontalAlignment: 3, Border: 2, PaddingBottom: 10));
+                table.AddCell(GetCell(Texto: "Fecha de impresión: " + fecha.ToString(), Rowspan: 1, Colspan: 10, HorizontalAlignment: 3, Border: 2, PaddingBottom: 10));
 
                 //**************************************************************** FICHA
 
@@ -51,30 +51,30 @@ namespace kalea2.Utilidades
                     //    doc.NewPage();
                     //}
 
-                    table.AddCell(GetCell(Texto: "Evento: " + item.EventoCaso,              Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
-                    table.AddCell(GetCell(Texto: "Armadores: ",                             Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
+                    table.AddCell(GetCell(Texto: "Evento: " + item.EventoCaso, Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
+                    table.AddCell(GetCell(Texto: "Armadores: ", Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
 
                     table.AddCell(GetCell(Texto: "Restricción: " + item.HorarioRestriccion, Rowspan: 1, Colspan: 4, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
-                    table.AddCell(GetCell(Texto: "Vendedor: " + item.VendedorNombre,        Rowspan: 1, Colspan: 3, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
-                    table.AddCell(GetCell(Texto: "Soluciones: " ,                           Rowspan: 1, Colspan: 3, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
+                    table.AddCell(GetCell(Texto: "Vendedor: " + item.VendedorNombre, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
+                    table.AddCell(GetCell(Texto: "Soluciones: ", Rowspan: 1, Colspan: 3, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
 
-                    table.AddCell(GetCell(Texto: " ",                                       Rowspan: 1, Colspan: 10, HorizontalAlignment: 3));
+                    table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 3));
 
 
-                    table.AddCell(GetCell(Texto: "Contacto: " + item.ClienteNombre,             Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
-                    table.AddCell(GetCell(Texto: "Tel: " + item.ClienteTelefono,                Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
-                    table.AddCell(GetCell(Texto: "Dirección: " + item.ClienteDireccionEntrega,  Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
+                    table.AddCell(GetCell(Texto: "Contacto: " + item.ClienteNombre, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                    table.AddCell(GetCell(Texto: "Tel: " + item.ClienteTelefono, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                    table.AddCell(GetCell(Texto: "Dirección: " + item.ClienteDireccionEntrega, Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
                     table.AddCell(GetCell(Texto: "Tipo Inst.: " + item.TipoInstalacion, Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
 
-                    table.AddCell(GetCell(Texto: "Obs. Evento: " + item.ObservacionesEvento,       Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
-                    table.AddCell(GetCell(Texto: "Obs. Torre: " + item.ObservacionesTorre,      Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
+                    table.AddCell(GetCell(Texto: "Obs. Evento: " + item.ObservacionesEvento, Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
+                    table.AddCell(GetCell(Texto: "Obs. Torre: " + item.ObservacionesTorre, Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
 
-                    table.AddCell(GetCell(Texto: " ",               Rowspan: 1, Colspan: 10, HorizontalAlignment: 2));
+                    table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2));
 
-                    table.AddCell(GetCell(Texto: "CÓDIGO:",         Rowspan: 1, Colspan: 1, HorizontalAlignment: 0, PaddingBottom: 5));
-                    table.AddCell(GetCell(Texto: "DESCRIPCIÓN:",    Rowspan: 1, Colspan: 7, HorizontalAlignment: 0, PaddingBottom: 5));
-                    table.AddCell(GetCell(Texto: "BOD: ",           Rowspan: 1, Colspan: 1, HorizontalAlignment: 0, PaddingBottom: 5));
-                    table.AddCell(GetCell(Texto: "CANT: " ,         Rowspan: 1, Colspan: 1, HorizontalAlignment: 1, PaddingBottom: 5));
+                    table.AddCell(GetCell(Texto: "CÓDIGO:", Rowspan: 1, Colspan: 1, HorizontalAlignment: 0, PaddingBottom: 5));
+                    table.AddCell(GetCell(Texto: "DESCRIPCIÓN:", Rowspan: 1, Colspan: 7, HorizontalAlignment: 0, PaddingBottom: 5));
+                    table.AddCell(GetCell(Texto: "BOD: ", Rowspan: 1, Colspan: 1, HorizontalAlignment: 0, PaddingBottom: 5));
+                    table.AddCell(GetCell(Texto: "CANT: ", Rowspan: 1, Colspan: 1, HorizontalAlignment: 1, PaddingBottom: 5));
 
                     int total = 0;
                     foreach (var item2 in item.Productos)
@@ -89,22 +89,22 @@ namespace kalea2.Utilidades
                         }
                     }
 
-                    table.AddCell(GetCell(Texto: " ",               Rowspan: 1, Colspan: 10, HorizontalAlignment: 2));
+                    table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2));
 
                     if (item.NumeroCaso.ToString() != "")
                     {
-                        table.AddCell(GetCell(Texto: "TOTAL:",          Rowspan: 1, Colspan: 9, HorizontalAlignment: 2, PaddingBottom: 10));
-                        table.AddCell(GetCell(Texto: total.ToString(),  Rowspan: 1, Colspan: 1, HorizontalAlignment: 1, PaddingBottom: 10));
+                        table.AddCell(GetCell(Texto: "TOTAL:", Rowspan: 1, Colspan: 9, HorizontalAlignment: 2, PaddingBottom: 10));
+                        table.AddCell(GetCell(Texto: total.ToString(), Rowspan: 1, Colspan: 1, HorizontalAlignment: 1, PaddingBottom: 10));
 
-                        table.AddCell(GetCell(Texto: "Caso: " + item.NumeroCaso,        Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
-                        table.AddCell(GetCell(Texto: "Acciones: " + item.AccionesCaso,  Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5, Border: 2, PaddingBottom: 10));
+                        table.AddCell(GetCell(Texto: "Caso: " + item.NumeroCaso, Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
+                        table.AddCell(GetCell(Texto: "Acciones: " + item.AccionesCaso, Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5, Border: 2, PaddingBottom: 10));
                     }
                     else
                     {
-                        table.AddCell(GetCell(Texto: "TOTAL:",          Rowspan: 1, Colspan: 9, HorizontalAlignment: 2, Border: 2, PaddingBottom: 10));
-                        table.AddCell(GetCell(Texto: total.ToString(),  Rowspan: 1, Colspan: 1, HorizontalAlignment: 1, Border: 2, PaddingBottom: 10));
+                        table.AddCell(GetCell(Texto: "TOTAL:", Rowspan: 1, Colspan: 9, HorizontalAlignment: 2, Border: 2, PaddingBottom: 10));
+                        table.AddCell(GetCell(Texto: total.ToString(), Rowspan: 1, Colspan: 1, HorizontalAlignment: 1, Border: 2, PaddingBottom: 10));
                     }
-                    
+
                     numeroDePaginaEncabezado = false;
                 }
 
@@ -184,51 +184,51 @@ namespace kalea2.Utilidades
 
                 PdfPTable table = new PdfPTable(10);
                 //**************************************************************** HEADER
-                table.AddCell(GetCell(Texto: "Pendientes: " + NombreBodega,  Rowspan: 1, Colspan: 3, HorizontalAlignment: 1, Border: 0, PaddingBottom: 5));
+                table.AddCell(GetCell(Texto: "Pendientes: " + NombreBodega, Rowspan: 1, Colspan: 3, HorizontalAlignment: 1, Border: 0, PaddingBottom: 5));
                 table.AddCell(GetCell(Texto: "Emisión: " + fecha.ToString(), Rowspan: 1, Colspan: 4, HorizontalAlignment: 1, Border: 0, PaddingBottom: 5));
-                table.AddCell(GetCell(Texto: "Reporte: " + fechaDeEntrega,   Rowspan: 1, Colspan: 3, HorizontalAlignment: 1, Border: 0, PaddingBottom: 5));
+                table.AddCell(GetCell(Texto: "Reporte: " + fechaDeEntrega, Rowspan: 1, Colspan: 3, HorizontalAlignment: 1, Border: 0, PaddingBottom: 5));
 
-                table.AddCell(GetCell(Texto: " ",         Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, PaddingBottom: 10));
+                table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, PaddingBottom: 10));
 
                 table.AddCell(GetCell(Texto: "Preparó: ", Rowspan: 1, Colspan: 1, HorizontalAlignment: 3, Border: 0, PaddingBottom: 10));
-                table.AddCell(GetCell(Texto: "",          Rowspan: 1, Colspan: 4, HorizontalAlignment: 3, Border: 2, PaddingBottom: 10));
+                table.AddCell(GetCell(Texto: "", Rowspan: 1, Colspan: 4, HorizontalAlignment: 3, Border: 2, PaddingBottom: 10));
                 table.AddCell(GetCell(Texto: "Entregó: ", Rowspan: 1, Colspan: 1, HorizontalAlignment: 3, Border: 0, PaddingBottom: 10));
-                table.AddCell(GetCell(Texto: "",          Rowspan: 1, Colspan: 4, HorizontalAlignment: 3, Border: 2, PaddingBottom: 10));
+                table.AddCell(GetCell(Texto: "", Rowspan: 1, Colspan: 4, HorizontalAlignment: 3, Border: 2, PaddingBottom: 10));
 
-                table.AddCell(GetCell(Texto: " ",               Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, PaddingBottom: 10));
+                table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, PaddingBottom: 10));
 
-                table.AddCell(GetCell(Texto: "Evento: ",        Rowspan: 1, Colspan: 1, HorizontalAlignment: 3, PaddingBottom: 5));
-                table.AddCell(GetCell(Texto: "Vendedor: ",      Rowspan: 1, Colspan: 1, HorizontalAlignment: 3, PaddingBottom: 5));
+                table.AddCell(GetCell(Texto: "Evento: ", Rowspan: 1, Colspan: 1, HorizontalAlignment: 3, PaddingBottom: 5));
+                table.AddCell(GetCell(Texto: "Vendedor: ", Rowspan: 1, Colspan: 1, HorizontalAlignment: 3, PaddingBottom: 5));
                 table.AddCell(GetCell(Texto: "Observaciones: ", Rowspan: 1, Colspan: 2, HorizontalAlignment: 3, PaddingBottom: 5));
-                table.AddCell(GetCell(Texto: "Inm: ",           Rowspan: 1, Colspan: 1, HorizontalAlignment: 3, PaddingBottom: 5));
-                table.AddCell(GetCell(Texto: "Código: ",        Rowspan: 1, Colspan: 1, HorizontalAlignment: 3, PaddingBottom: 5));
-                table.AddCell(GetCell(Texto: "Descripción: ",   Rowspan: 1, Colspan: 2, HorizontalAlignment: 3, PaddingBottom: 5));
-                table.AddCell(GetCell(Texto: "Bod: ",           Rowspan: 1, Colspan: 1, HorizontalAlignment: 3, PaddingBottom: 5));
-                table.AddCell(GetCell(Texto: "Cant: ",          Rowspan: 1, Colspan: 1, HorizontalAlignment: 3, PaddingBottom: 5));
+                table.AddCell(GetCell(Texto: "Inm: ", Rowspan: 1, Colspan: 1, HorizontalAlignment: 3, PaddingBottom: 5));
+                table.AddCell(GetCell(Texto: "Código: ", Rowspan: 1, Colspan: 1, HorizontalAlignment: 3, PaddingBottom: 5));
+                table.AddCell(GetCell(Texto: "Descripción: ", Rowspan: 1, Colspan: 2, HorizontalAlignment: 3, PaddingBottom: 5));
+                table.AddCell(GetCell(Texto: "Bod: ", Rowspan: 1, Colspan: 1, HorizontalAlignment: 3, PaddingBottom: 5));
+                table.AddCell(GetCell(Texto: "Cant: ", Rowspan: 1, Colspan: 1, HorizontalAlignment: 3, PaddingBottom: 5));
 
-                table.AddCell(GetCell(Texto: " ",               Rowspan: 1, Colspan: 10, Border: 2, HorizontalAlignment: 2, PaddingBottom: 10));
+                table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, Border: 2, HorizontalAlignment: 2, PaddingBottom: 10));
 
                 //**************************************************************** FICHA
 
                 foreach (var item in listado)
                 {
-                    table.AddCell(GetCell(Texto: item.Evento,   Rowspan: 1, Colspan: 1, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
+                    table.AddCell(GetCell(Texto: item.Evento, Rowspan: 1, Colspan: 1, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
                     //vendedor
-                    table.AddCell(GetCell(Texto: " ",           Rowspan: 1, Colspan: 1, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
+                    table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 1, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
                     //observaciones
-                    table.AddCell(GetCell(Texto: " ",           Rowspan: 1, Colspan: 8, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
+                    table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 8, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
 
                     foreach (var item2 in item.Productos)
                     {
-                        table.AddCell(GetCell(Texto: "",                Rowspan: 1, Colspan: 1, HorizontalAlignment: 0));
-                        table.AddCell(GetCell(Texto: "",                Rowspan: 1, Colspan: 1, HorizontalAlignment: 0));
-                        table.AddCell(GetCell(Texto: "",                Rowspan: 1, Colspan: 2, HorizontalAlignment: 0));
+                        table.AddCell(GetCell(Texto: "", Rowspan: 1, Colspan: 1, HorizontalAlignment: 0));
+                        table.AddCell(GetCell(Texto: "", Rowspan: 1, Colspan: 1, HorizontalAlignment: 0));
+                        table.AddCell(GetCell(Texto: "", Rowspan: 1, Colspan: 2, HorizontalAlignment: 0));
                         //inmediatas
-                        table.AddCell(GetCell(Texto: "",                Rowspan: 1, Colspan: 1, HorizontalAlignment: 0));
-                        table.AddCell(GetCell(Texto: item2.Sku,         Rowspan: 1, Colspan: 1, HorizontalAlignment: 0));
+                        table.AddCell(GetCell(Texto: "", Rowspan: 1, Colspan: 1, HorizontalAlignment: 0));
+                        table.AddCell(GetCell(Texto: item2.Sku, Rowspan: 1, Colspan: 1, HorizontalAlignment: 0));
                         table.AddCell(GetCell(Texto: item2.Descripcion, Rowspan: 1, Colspan: 2, HorizontalAlignment: 0));
-                        table.AddCell(GetCell(Texto: item2.Bodega,      Rowspan: 1, Colspan: 1, HorizontalAlignment: 0));
-                        table.AddCell(GetCell(Texto: item2.Cantidad,    Rowspan: 1, Colspan: 1, HorizontalAlignment: 0));
+                        table.AddCell(GetCell(Texto: item2.Bodega, Rowspan: 1, Colspan: 1, HorizontalAlignment: 0));
+                        table.AddCell(GetCell(Texto: item2.Cantidad, Rowspan: 1, Colspan: 1, HorizontalAlignment: 0));
                     }
 
                     table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, Border: 2, HorizontalAlignment: 2));
@@ -254,13 +254,8 @@ namespace kalea2.Utilidades
                 int numeroDePagina = 0;
                 bool numeroDePaginaEncabezado = false;
                 PdfPTable table = new PdfPTable(10);
-
-                List<ReportesGuias> listado = new List<ReportesGuias>();
-                
-
                 int contadorDeFilas = 0;
                 int filasEnLaHoja = 60;
-
 
                 foreach (var vehiculo in listadoVehiculos)
                 {
@@ -318,7 +313,15 @@ namespace kalea2.Utilidades
                             contadorDeFilas++;
 
                             //fila 10
-                            tablaTemp.AddCell(GetCell(Texto: "Contacto: " + item.ClienteNombre, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                            if (string.IsNullOrEmpty(item.PersonaRecepcion))
+                            {
+                                tablaTemp.AddCell(GetCell(Texto: "Contacto: " + item.ClienteNombre, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                            }
+                            else
+                            {
+                                tablaTemp.AddCell(GetCell(Texto: "Contacto: " + item.PersonaRecepcion, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                            }
+                            
                             tablaTemp.AddCell(GetCell(Texto: "Tel: " + item.ClienteTelefono, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
                             tablaTemp.AddCell(GetCell(Texto: "Dirección: " + item.ClienteDireccionEntrega, Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
                             contadorDeFilas++;
@@ -413,19 +416,10 @@ namespace kalea2.Utilidades
                 doc.NewPage();
                 doc.Close();
                 byte[] result = ms.ToArray();
-<<<<<<< HEAD
-                doc.Close();
-                return AddPageNumber(result);
-                //if (listado.Count > 0)
-                //{
-                //    doc.Close();
-                //    return AddPageNumber(result);
-=======
 
                 //if (listado.Count > 0)
                 //{
                 return AddPageNumber(result);
->>>>>>> f6b0dd5d6cef381ad8fb12ae139cd8f2f24cec6e
                 //}
                 //else
                 //{
@@ -433,14 +427,15 @@ namespace kalea2.Utilidades
                 //}
 
             }
-            
+
         }
 
 
 
-        private PdfPCell GetCell(string Texto, int Rowspan = 0, int Colspan = 0, int HorizontalAlignment = 0, int VerticalAlignment = 0,  int Border = 0, int PaddingBottom = 0, int PaddingTop = 0, float Size = 7)
+        private PdfPCell GetCell(string Texto, int Rowspan = 0, int Colspan = 0, int HorizontalAlignment = 0, int VerticalAlignment = 0, int Border = 0, int PaddingBottom = 0, int PaddingTop = 0, float Size = 7)
         {
-            Phrase frase = new Phrase() {
+            Phrase frase = new Phrase()
+            {
                 Font = FontFactory.GetFont(FontFactory.COURIER, size: Size)
             };
             frase.Add(Texto);
@@ -449,13 +444,13 @@ namespace kalea2.Utilidades
             PdfPCell cell = new PdfPCell(frase)
             {
                 HorizontalAlignment = HorizontalAlignment,
-                VerticalAlignment   = VerticalAlignment,
-                Rowspan             = Rowspan,
-                Colspan             = Colspan,
-                Border              = Border,
-                PaddingBottom       = PaddingBottom,
-                PaddingTop          = PaddingTop,
-                
+                VerticalAlignment = VerticalAlignment,
+                Rowspan = Rowspan,
+                Colspan = Colspan,
+                Border = Border,
+                PaddingBottom = PaddingBottom,
+                PaddingTop = PaddingTop,
+
             };
             return cell;
         }
@@ -480,7 +475,7 @@ namespace kalea2.Utilidades
                 bytes = stream.ToArray();
             }
             return bytes;
-            
+
         }
     }
 }

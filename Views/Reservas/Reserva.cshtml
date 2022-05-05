@@ -138,6 +138,14 @@
                                         </div>
                                         @*<input type="text" id="default-date" placeholder="28 October 2019" />*@
                                     </li>
+                                    <li>
+                                        <span class="key font-14">Tiempo armado(min):</span>
+                                        <span class="white bold font-17"></span>
+                                        <div class="col-md-12">
+                                            @Html.EditorFor(modelItem => Model.TiempoArmado, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                            @Html.ValidationMessageFor(model => model.TiempoArmado, "", new { @class = "text-danger" })
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                             <!-- End Invoice Right -->

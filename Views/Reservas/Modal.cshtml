@@ -136,6 +136,11 @@
                                                 @Html.ValidationMessageFor(model => model.NombreCliente, "", new { @class = "text-danger" })
                                             </li>
                                             <li>
+                                                <span class="key">P. Recibe</span>
+                                                @Html.EditorFor(model => model.PersonaRecepcion, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                                @Html.ValidationMessageFor(model => model.PersonaRecepcion, "", new { @class = "text-danger" })
+                                            </li>
+                                            <li>
                                                 <span class="key">Telefono</span>
                                                 @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
                                                 @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
@@ -508,6 +513,7 @@
                 var Tel = "";
                 var Celular = "";
                 var Zona = "";
+                var PersonaRecibe = "";
                 let tiempoArmado = 0;
                 $.ajax({
                 type: 'POST',
@@ -589,6 +595,9 @@
                         Tel = state.Telefono;
                         Celular = state.Telefono;
                         Zona = state.ZonaDireccion;
+                        PersonaRecibe = state.PersonaRecibe;
+                      
+                        
                         //$("#SerieSAP").append('<option value="' + state.numero + '">' +
                         //    state.serie + '</option>');
                     // here we are adding option for States
@@ -604,6 +613,7 @@
                         document.getElementById("Telefono").value = Tel;
                         document.getElementById("Celular").value = Celular;
                         document.getElementById("ZonaDireccion").value = Zona;
+                        document.getElementById("PersonaRecepcion").value = PersonaRecibe;
                         if (Tel == null || Tel == "") {
                             document.getElementById("Telefono").value = Celular;
                         }
@@ -630,6 +640,7 @@
                                 document.getElementById("DireccionFiscal").value = DiFiscal;
                                 document.getElementById("Telefono").value = Tel;
                                 document.getElementById("Celular").value = Celular;
+                                document.getElementById("PersonaRecepcion").value = PersonaRecibe;
                                 if (Tel == null || Tel == "") {
                                     document.getElementById("Telefono").value = Celular;
                                 }

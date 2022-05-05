@@ -267,7 +267,7 @@ else if (ViewBag.Exitoso != null)
                                                 }
                                                 else
                                                 {
-                                            <p class="black mb-1">Armado: @Html.DisplayFor(modelItem => item.TiempoArmado)&nbsp; &nbsp; &nbsp; &nbsp; Restriccion: 08:00 - 16:00 </p>
+                                                    <p class="black mb-1">Armado: @Html.DisplayFor(modelItem => item.TiempoArmado)&nbsp; &nbsp; &nbsp; &nbsp; Restriccion: 08:00 - 16:00 </p>
                                                 }
 
                                             </div>
@@ -367,7 +367,7 @@ else if (ViewBag.Exitoso != null)
                                         break;
                                     case "#ffff00"://AMARILLO
                                         <div class="board-card label-2 tarjetaReserva ov-hidden"
-                                             style="--colorTarjeta: @Html.DisplayFor(modelItem => item.ColorTipoEvento); --AltoTarjeta:120px;"
+                                             style="--colorTarjeta: @Html.DisplayFor(modelItem => item.ColorTipoEvento); --AltoTarjeta:@Html.DisplayFor(modelItem => item.TamanioTarjeta)px;"
                                              id="card-@Html.DisplayFor(modelItem => Model.Vehiculos[i].Codigo)-@Html.DisplayFor(modelItem => item.Id)">
 
                                             <div class="row">

@@ -136,6 +136,11 @@
                                             @Html.ValidationMessageFor(model => model.NombreCliente, "", new { @class = "text-danger" })
                                         </li>
                                         <li>
+                                            <span class="key">P. Recibe</span>
+                                            @Html.EditorFor(model => model.PersonaRecepcion, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                            @Html.ValidationMessageFor(model => model.PersonaRecepcion, "", new { @class = "text-danger" })
+                                        </li>
+                                        <li>
                                             <span class="key">Telefono</span>
                                             @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
                                             @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
@@ -552,7 +557,7 @@
                 var Tel = "";
                 var Celular = "";
                 let tiempoArmado = 0;
-
+                var PersonaRecibe = "";
                 $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetListadoArticulos", "Reservas")', // we are calling json method
@@ -626,6 +631,7 @@
                         DiFiscal = state.DireccionFiscal;
                         Tel = state.Telefono;
                         Celular = state.Telefono;
+                        PersonaRecibe = state.PersonaRecibe;
                         //$("#SerieSAP").append('<option value="' + state.numero + '">' +
                         //    state.serie + '</option>');
                     // here we are adding option for States

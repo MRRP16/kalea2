@@ -61,7 +61,14 @@ namespace kalea2.Utilidades
                     table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 3));
 
 
-                    table.AddCell(GetCell(Texto: "Contacto: " + item.ClienteNombre, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                    if (string.IsNullOrEmpty(item.PersonaRecepcion))
+                    {
+                        table.AddCell(GetCell(Texto: "Contacto: " + item.ClienteNombre, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                    }
+                    else
+                    {
+                        table.AddCell(GetCell(Texto: "Contacto: " + item.PersonaRecepcion, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                    }
                     table.AddCell(GetCell(Texto: "Tel: " + item.ClienteTelefono, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
                     table.AddCell(GetCell(Texto: "Dirección: " + item.ClienteDireccionEntrega, Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
                     table.AddCell(GetCell(Texto: "Tipo Inst.: " + item.TipoInstalacion, Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));

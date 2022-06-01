@@ -442,13 +442,13 @@ namespace kalea2.Utilidades
                 articulos = new List<Models.Reserva_Detalle_Articulos>();
 
 
-                string query = string.Format(@"SELECT T0.NO_ARTI,T1.NOMBRE_LARGO AS Descripcion,T1.Tiempo_armado,T0.Cantidad,T0.CantidadDomicilio,T0.EntregaDomicilio,T3.CONTACTO,T2.Nombre_Cliente,T2.COD_CLIENTE,T2.Observaciones, T2.DIRECCION_ENTREGA,T2.DIRECCION_FISCAL,T3.Telefono,T1.CANTIDAD_ARMADORES,T2.DISTRITO_ENTREGA
+                string query = string.Format(@"SELECT T0.NO_ARTI,T1.NOMBRE_LARGO AS Descripcion,T1.Tiempo_armado,T0.Cantidad,T0.CantidadDomicilio,T0.EntregaDomicilio,T3.CONTACTO,T2.Nombre_Cliente,T2.COD_CLIENTE,T2.Observaciones, T2.DIRECCION_ENTREGA,T2.DIRECCION_FISCAL,T3.Telefono,T1.CANTIDAD_ARMADORES,T2.DISTRITO_ENTREGA,T3.NOMBRE_FACTURA
                                 FROM Naf47.Pvlineas_movimiento T0
                                 LEFT JOIN Naf47.Arinda T1 ON T0.NO_ARTI = T1.NO_ARTI
                                 LEFT JOIN Naf47.Pvencabezado_movimientos T2 ON T2.NO_TRANSA_MOV = T0.NO_TRANSA_MOV
                                 LEFT JOIN Naf47.pvclientes T3 ON T3.COD_CLIENTE = T2.COD_CLIENTE
                                 WHERE T0.NO_TRANSA_MOV = '{0}' AND T0.ENTREGADOMICILIO = 'D'
-                                GROUP BY T0.NO_ARTI,T1.NOMBRE_LARGO,T1.Tiempo_armado,T0.Cantidad,T0.CantidadDomicilio,T0.EntregaDomicilio,T3.CONTACTO,T2.Nombre_Cliente,T2.COD_CLIENTE,T2.Observaciones, T2.DIRECCION_ENTREGA,T2.DIRECCION_FISCAL,T3.Telefono,T1.CANTIDAD_ARMADORES,T2.DISTRITO_ENTREGA;", id);
+                                GROUP BY T0.NO_ARTI,T1.NOMBRE_LARGO,T1.Tiempo_armado,T0.Cantidad,T0.CantidadDomicilio,T0.EntregaDomicilio,T3.CONTACTO,T2.Nombre_Cliente,T2.COD_CLIENTE,T2.Observaciones, T2.DIRECCION_ENTREGA,T2.DIRECCION_FISCAL,T3.Telefono,T1.CANTIDAD_ARMADORES,T2.DISTRITO_ENTREGA,T3.NOMBRE_FACTURA;", id);
 
                 var resultado = dB.ConsultarDB(query, "T_EVENTOS");
 

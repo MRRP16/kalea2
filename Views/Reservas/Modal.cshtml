@@ -151,6 +151,13 @@
                                                 @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })
                                             </li>
 
+                                            <li>
+                                                <span class="key">Nombre Cliente:</span>
+                                                @Html.DropDownListFor(modelItem => modelItem.TipoDeInstalacion, Model.TiposDeInstalacion, " -- Seleccione --", new { @class = "theme-input-style style--four" })
+
+                                                @*@Html.EditorFor(model => model.Celular, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                                @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })*@
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -497,9 +504,7 @@
         //});
         $(document).ready(function () {
             $(document).ready(function () {
-                $('.mi-selector').select2({
-                    tags: true
-                    });
+                $('.mi-selector').select2({ tags: true });
             });
             //Dropdownlist Selectedchange event
             $("#AgregarLinea").click(function () {
@@ -515,6 +520,7 @@
                 var Zona = "";
                 var PersonaRecibe = "";
                 let tiempoArmado = 0;
+
                 $.ajax({
                 type: 'POST',
                 url: '@Url.Action("GetListadoArticulos", "Reservas")', // we are calling json method
@@ -602,10 +608,12 @@
                         //    state.serie + '</option>');
                     // here we are adding option for States
                     });
+
                     Observaciones_temp = $("#ComentariosVenta").val();
 
                     var nombre = document.getElementById("NombreCliente").value;
-                   
+
+
                     if (nombre == "") {
                         document.getElementById("NombreCliente").value = Nombrecl;
                         document.getElementById("DireccionEntrega").value = DEntrega;
@@ -764,7 +772,7 @@
 
                     var nombre = document.getElementById("NombreCliente").value;
 
-                    console.log(nombre);
+                    
 
                     if (nombre == "") {
                         document.getElementById("NombreCliente").value = Nombrecl;

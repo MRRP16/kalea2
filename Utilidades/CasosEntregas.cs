@@ -17,7 +17,7 @@ namespace kalea2.Utilidades
             List<Models.Reserva> ListadoReservas = null;
             try
             {
-                var resultado = dB.ConsultarDB(String.Format("SELECT T0.*,T1.DESCRIPCION AS \"NombreVehiculo\" FROM T_ENC_ENTREGAS T0 LEFT JOIN T_VEHICULOS T1 ON T0.VEHICULO = T1.ID WHERE T0.Estado <> 'NA' ORDER BY T0.Id Desc"), "T_ENC_ENTREGAS");
+                var resultado = dB.ConsultarDB(String.Format("SELECT T0.*,T1.DESCRIPCION AS \"NombreVehiculo\" FROM T_ENC_ENTREGAS T0 LEFT JOIN T_VEHICULOS T1 ON T0.VEHICULO = T1.ID WHERE T0.Estado <> 'NA' AND ROWNUM <= 500 ORDER BY T0.Id Desc"), "T_ENC_ENTREGAS");
                 ListadoReservas = new List<Models.Reserva>();
 
                 foreach (DataRow item in resultado.Tables[0].Rows)

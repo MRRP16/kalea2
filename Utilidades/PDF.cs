@@ -328,7 +328,7 @@ namespace kalea2.Utilidades
                             {
                                 tablaTemp.AddCell(GetCell(Texto: "Contacto: " + item.PersonaRecepcion, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
                             }
-                            
+
                             tablaTemp.AddCell(GetCell(Texto: "Tel: " + item.ClienteTelefono, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
                             tablaTemp.AddCell(GetCell(Texto: "Dirección: " + item.ClienteDireccionEntrega, Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
                             contadorDeFilas++;
@@ -337,9 +337,20 @@ namespace kalea2.Utilidades
                             tablaTemp.AddCell(GetCell(Texto: "Tipo Inst.: " + item.TipoInstalacion, Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
                             contadorDeFilas++;
 
-                            //fila 12
-                            tablaTemp.AddCell(GetCell(Texto: "Obs. Evento: " + item.ObservacionesEvento, Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
-                            contadorDeFilas++;
+                            if (item.NumeroCaso.ToString() != "")
+                            {
+                                //fila 12
+                                tablaTemp.AddCell(GetCell(Texto: "Obs. Evento: ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
+                                contadorDeFilas++;
+                            }
+                            else
+                            {
+                                //fila 12
+                                tablaTemp.AddCell(GetCell(Texto: "Obs. Evento: " + item.ObservacionesEvento, Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
+                                contadorDeFilas++;
+                            }
+
+                            
 
                             //fila 13
                             tablaTemp.AddCell(GetCell(Texto: "Obs. Torre: " + item.ObservacionesTorre, Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
@@ -437,8 +448,6 @@ namespace kalea2.Utilidades
 
         }
 
-
-
         private PdfPCell GetCell(string Texto, int Rowspan = 0, int Colspan = 0, int HorizontalAlignment = 0, int VerticalAlignment = 0, int Border = 0, int PaddingBottom = 0, int PaddingTop = 0, float Size = 7)
         {
             Phrase frase = new Phrase()
@@ -461,8 +470,6 @@ namespace kalea2.Utilidades
             };
             return cell;
         }
-
-
 
         byte[] AddPageNumber(byte[] byte1)
         {

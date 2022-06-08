@@ -277,11 +277,14 @@ namespace kalea2.Utilidades
             List<ReportesGuias> listadoDeEventos = new List<ReportesGuias>();
             try
             {
-                string query = string.Format(@"SELECT t1.descripcion as vehiculo, t2.codigoevento, t2.codigoarticulo, t3.NOMBRE_LARGO AS descripcion, t2.cantidad, t4.nombre_vendedor as vendedor, t0.nombrecliente,T0.personarecepcion,T0.personarecepcion, t0.telefono, t0.celular, t0.direccionentrega, t0.nombre_factura,
-                    to_char(substr(t0.comentariosventas, 1, 500)) as comentariosventas,to_char(substr(t0.COMENTARIOSTORRE, 1, 500)) as COMENTARIOSTORRE, t0.fechainicio, t0.fecharestriccioninicio as restriccioninicio, t0.fecharectriccionfin as restriccionfin, t5.numcaso, t5.observaciones, t5.acciones, t0.id as identrega,T6.BODEGA,T7.DESCRIPCION AS TIPOINSTALACION
+                string query = string.Format(@"SELECT t1.descripcion as vehiculo, t2.codigoevento, t2.codigoarticulo, t3.NOMBRE_LARGO AS descripcion, t2.cantidad, t4.nombre_vendedor as vendedor, t0.nombrecliente,T0.personarecepcion,T0.personarecepcion,
+                    t0.telefono, t0.celular, t0.direccionentrega, t0.nombre_factura,
+                    to_char(substr(t0.comentariosventas, 1, 500)) as comentariosventas,to_char(substr(t0.COMENTARIOSTORRE, 1, 500)) as COMENTARIOSTORRE, t0.fechainicio, t0.fecharestriccioninicio as restriccioninicio, t0.fecharectriccionfin as restriccionfin,
+                    t5.numcaso, t5.observaciones, t5.acciones, t0.id as identrega,T6.BODEGA,T7.DESCRIPCION AS TIPOINSTALACION, SUM(T11.UNIDADES)  AS TOTAL
                     FROM t_enc_entregas T0 
                     LEFT JOIN t_vehiculos T1 ON t1.id = t0.vehiculo
                     LEFT JOIN t_det_entregas T2 ON t0.id = t2.identrega
+                    LEFT JOIN naf47.arinml_despachos T11 ON T11.NO_ARTI = t2.codigoarticulo AND t2.codigoevento = T11.NO_DOCU
                     LEFT JOIN naf47.arinda T3 ON t2.codigoarticulo = t3.no_arti
                     LEFT JOIN naf47.v_eventos_pendientes T4 ON t4.evento = t2.codigoevento
                     LEFT JOIN t_det_casos_entregas T5 ON t0.id = t5.identrega
@@ -354,11 +357,19 @@ namespace kalea2.Utilidades
             evento.NombreFactura            = item["nombre_factura"].ToString();
             ReportesGuiasProductos producto = new ReportesGuiasProductos();
             List<ReportesGuiasProductos> listadoProductos = new List<ReportesGuiasProductos>();
-            producto.Sku = item["codigoarticulo"].ToString();
-            producto.Descripcion = item["descripcion"].ToString();
-            producto.Cantidad = item["cantidad"].ToString();
-            producto.Bodega = item["BODEGA"].ToString();
-            listadoProductos.Add(producto);
+
+            int Total = 0;
+
+            int.TryParse(item["Total"].ToString(), out Total);
+
+            if (Total > 0)
+            {
+                producto.Sku = item["codigoarticulo"].ToString();
+                producto.Descripcion = item["descripcion"].ToString();
+                producto.Cantidad = item["cantidad"].ToString();
+                producto.Bodega = item["BODEGA"].ToString();
+                listadoProductos.Add(producto);
+            }
 
             evento.Productos = listadoProductos;
 
@@ -379,17 +390,24 @@ namespace kalea2.Utilidades
 
         private void AgregarProductoAEventoExistente(DataRow item, int posicionEnListado, List<ReportesGuias> listado)
         {
-            ReportesGuias evento = listado[posicionEnListado];
+            int Total = 0;
 
-            ReportesGuiasProductos producto = new ReportesGuiasProductos();
-            List<ReportesGuiasProductos> listadoProductos = evento.Productos;
-            producto.Sku = item["codigoarticulo"].ToString();
-            producto.Descripcion = item["descripcion"].ToString();
-            producto.Cantidad = item["cantidad"].ToString();
-            producto.Bodega = item["Bodega"].ToString();
-            listadoProductos.Add(producto);
+            int.TryParse(item["Total"].ToString(), out Total);
+            if (Total > 0)
+            {
+                ReportesGuias evento = listado[posicionEnListado];
 
-            evento.Productos = listadoProductos;
+                ReportesGuiasProductos producto = new ReportesGuiasProductos();
+                List<ReportesGuiasProductos> listadoProductos = evento.Productos;
+                producto.Sku = item["codigoarticulo"].ToString();
+                producto.Descripcion = item["descripcion"].ToString();
+                producto.Cantidad = item["cantidad"].ToString();
+                producto.Bodega = item["Bodega"].ToString();
+                listadoProductos.Add(producto);
+
+                evento.Productos = listadoProductos;
+            }
+          
         }
 
         public List<ReportesEventosEntregas> GetEventosParaEntregas(string bodegaId, string fecha)

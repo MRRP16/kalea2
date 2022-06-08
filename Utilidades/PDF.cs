@@ -38,50 +38,38 @@ namespace kalea2.Utilidades
 
                 foreach (var item in listado)
                 {
-                    //if (!numeroDePaginaEncabezado)
-                    //{
-                    //    numeroDePagina++;
-                    //    table.AddCell(GetCell(Texto: "Pagina" + numeroDePagina, Rowspan: 1, Colspan: 10, HorizontalAlignment: 3, Size: 10));
-                    //    table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2, Border: 2));
-                    //}
-
-                    //if (table.Rows > 29)
-                    //{
-                    //    doc.Add(table);
-                    //    doc.NewPage();
-                    //}
-
-                    table.AddCell(GetCell(Texto: "Evento: " + item.EventoCaso, Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
-                    table.AddCell(GetCell(Texto: "Armadores: ", Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
+                    table.AddCell(GetCell(Texto: "Evento: " + item.EventoCaso,  Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
+                    table.AddCell(GetCell(Texto: "Armadores: ",                 Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
 
                     table.AddCell(GetCell(Texto: "Restricción: " + item.HorarioRestriccion, Rowspan: 1, Colspan: 4, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
-                    table.AddCell(GetCell(Texto: "Vendedor: " + item.VendedorNombre, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
-                    table.AddCell(GetCell(Texto: "Soluciones: ", Rowspan: 1, Colspan: 3, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
+                    table.AddCell(GetCell(Texto: "Vendedor: " + item.VendedorNombre,        Rowspan: 1, Colspan: 3, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
+                    table.AddCell(GetCell(Texto: "Soluciones: ",                            Rowspan: 1, Colspan: 3, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
 
                     table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 3));
 
 
                     if (string.IsNullOrEmpty(item.PersonaRecepcion))
                     {
-                        table.AddCell(GetCell(Texto: "Contacto: " + item.ClienteNombre, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                        table.AddCell(GetCell(Texto: "Contacto: " + item.ClienteNombre,         Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
                     }
                     else
                     {
-                        table.AddCell(GetCell(Texto: "Contacto: " + item.PersonaRecepcion, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                        table.AddCell(GetCell(Texto: "Contacto: " + item.PersonaRecepcion,      Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
                     }
-                    table.AddCell(GetCell(Texto: "Tel: " + item.ClienteTelefono, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
-                    table.AddCell(GetCell(Texto: "Dirección: " + item.ClienteDireccionEntrega, Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
-                    table.AddCell(GetCell(Texto: "Tipo Inst.: " + item.TipoInstalacion, Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
+                    table.AddCell(GetCell(Texto: "Tel: " + item.ClienteTelefono,                Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                    table.AddCell(GetCell(Texto: "Dirección: " + item.ClienteDireccionEntrega,  Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
 
-                    table.AddCell(GetCell(Texto: "Obs. Evento: " + item.ObservacionesEvento, Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
-                    table.AddCell(GetCell(Texto: "Obs. Torre: " + item.ObservacionesTorre, Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
+                    table.AddCell(GetCell(Texto: "Nombre Factura: " + item.NombreFactura,       Rowspan: 1, Colspan: 5, HorizontalAlignment: 0));
+                    table.AddCell(GetCell(Texto: "Tipo Inst.: " + item.TipoInstalacion,         Rowspan: 1, Colspan: 5, HorizontalAlignment: 0));
 
-                    table.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 2));
+                    table.AddCell(GetCell(Texto: "Obs. Evento: " + item.ObservacionesEvento,    Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
+                    table.AddCell(GetCell(Texto: "Obs. Torre: " + item.ObservacionesTorre,      Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
+                    table.AddCell(GetCell(Texto: " ",                                           Rowspan: 1, Colspan: 10, HorizontalAlignment: 2));
 
-                    table.AddCell(GetCell(Texto: "CÓDIGO:", Rowspan: 1, Colspan: 1, HorizontalAlignment: 0, PaddingBottom: 5));
-                    table.AddCell(GetCell(Texto: "DESCRIPCIÓN:", Rowspan: 1, Colspan: 7, HorizontalAlignment: 0, PaddingBottom: 5));
-                    table.AddCell(GetCell(Texto: "BOD: ", Rowspan: 1, Colspan: 1, HorizontalAlignment: 0, PaddingBottom: 5));
-                    table.AddCell(GetCell(Texto: "CANT: ", Rowspan: 1, Colspan: 1, HorizontalAlignment: 1, PaddingBottom: 5));
+                    table.AddCell(GetCell(Texto: "CÓDIGO:",                                     Rowspan: 1, Colspan: 1, HorizontalAlignment: 0, PaddingBottom: 5));
+                    table.AddCell(GetCell(Texto: "DESCRIPCIÓN:",                                Rowspan: 1, Colspan: 7, HorizontalAlignment: 0, PaddingBottom: 5));
+                    table.AddCell(GetCell(Texto: "BOD: ",                                       Rowspan: 1, Colspan: 1, HorizontalAlignment: 0, PaddingBottom: 5));
+                    table.AddCell(GetCell(Texto: "CANT: ",                                      Rowspan: 1, Colspan: 1, HorizontalAlignment: 1, PaddingBottom: 5));
 
                     int total = 0;
                     foreach (var item2 in item.Productos)
@@ -305,42 +293,43 @@ namespace kalea2.Utilidades
                             PdfPTable tablaTemp = new PdfPTable(10);
 
                             //fila 7
-                            tablaTemp.AddCell(GetCell(Texto: "Evento: " + item.EventoCaso, Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
-                            tablaTemp.AddCell(GetCell(Texto: "Armadores: ", Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
+                            tablaTemp.AddCell(GetCell(Texto: "Evento: " + item.EventoCaso,                  Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
+                            tablaTemp.AddCell(GetCell(Texto: "Armadores: ",                                 Rowspan: 1, Colspan: 5, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
                             contadorDeFilas++;
 
                             //fila 8
-                            tablaTemp.AddCell(GetCell(Texto: "Restricción: " + item.HorarioRestriccion, Rowspan: 1, Colspan: 4, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
-                            tablaTemp.AddCell(GetCell(Texto: "Vendedor: " + item.VendedorNombre, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
-                            tablaTemp.AddCell(GetCell(Texto: "Soluciones: ", Rowspan: 1, Colspan: 3, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
+                            tablaTemp.AddCell(GetCell(Texto: "Restricción: " + item.HorarioRestriccion,     Rowspan: 1, Colspan: 4, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
+                            tablaTemp.AddCell(GetCell(Texto: "Vendedor: " + item.VendedorNombre,            Rowspan: 1, Colspan: 3, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
+                            tablaTemp.AddCell(GetCell(Texto: "Soluciones: ",                                Rowspan: 1, Colspan: 3, HorizontalAlignment: 0, Border: 0, PaddingTop: 5));
                             contadorDeFilas++;
 
                             //fila 9
-                            tablaTemp.AddCell(GetCell(Texto: " ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 3));
+                            tablaTemp.AddCell(GetCell(Texto: " ",                                           Rowspan: 1, Colspan: 10, HorizontalAlignment: 3));
                             contadorDeFilas++;
 
                             //fila 10
                             if (string.IsNullOrEmpty(item.PersonaRecepcion))
                             {
-                                tablaTemp.AddCell(GetCell(Texto: "Contacto: " + item.ClienteNombre, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                                tablaTemp.AddCell(GetCell(Texto: "Contacto: " + item.ClienteNombre,         Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
                             }
                             else
                             {
-                                tablaTemp.AddCell(GetCell(Texto: "Contacto: " + item.PersonaRecepcion, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                                tablaTemp.AddCell(GetCell(Texto: "Contacto: " + item.PersonaRecepcion,      Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
                             }
 
-                            tablaTemp.AddCell(GetCell(Texto: "Tel: " + item.ClienteTelefono, Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
-                            tablaTemp.AddCell(GetCell(Texto: "Dirección: " + item.ClienteDireccionEntrega, Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
+                            tablaTemp.AddCell(GetCell(Texto: "Tel: " + item.ClienteTelefono,                Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                            tablaTemp.AddCell(GetCell(Texto: "Dirección: " + item.ClienteDireccionEntrega,  Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
                             contadorDeFilas++;
 
                             //fil 11
-                            tablaTemp.AddCell(GetCell(Texto: "Tipo Inst.: " + item.TipoInstalacion, Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
+                            tablaTemp.AddCell(GetCell(Texto: "Nombre Factura: " + item.NombreFactura,           Rowspan: 1, Colspan: 5, HorizontalAlignment: 0));
+                            tablaTemp.AddCell(GetCell(Texto: "Tipo Inst.: " + item.TipoInstalacion,             Rowspan: 1, Colspan: 5, HorizontalAlignment: 0));
                             contadorDeFilas++;
 
                             if (item.NumeroCaso.ToString() != "")
                             {
                                 //fila 12
-                                tablaTemp.AddCell(GetCell(Texto: "Obs. Evento: ", Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
+                                tablaTemp.AddCell(GetCell(Texto: "Obs. Evento: ",                           Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
                                 contadorDeFilas++;
                             }
                             else
@@ -353,7 +342,7 @@ namespace kalea2.Utilidades
                             
 
                             //fila 13
-                            tablaTemp.AddCell(GetCell(Texto: "Obs. Torre: " + item.ObservacionesTorre, Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
+                            tablaTemp.AddCell(GetCell(Texto: "Obs. Torre: " + item.ObservacionesTorre,      Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
                             contadorDeFilas++;
 
                             //fila 14

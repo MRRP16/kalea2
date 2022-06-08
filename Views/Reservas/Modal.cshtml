@@ -136,6 +136,11 @@
                                                 @Html.ValidationMessageFor(model => model.NombreCliente, "", new { @class = "text-danger" })
                                             </li>
                                             <li>
+                                                <span class="key">Nombre Factura</span>
+                                                @Html.EditorFor(model => model.NombreFactura, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
+                                                @Html.ValidationMessageFor(model => model.NombreFactura, "", new { @class = "text-danger" })
+                                            </li>
+                                            <li>
                                                 <span class="key">P. Recibe</span>
                                                 @Html.EditorFor(model => model.PersonaRecepcion, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
                                                 @Html.ValidationMessageFor(model => model.PersonaRecepcion, "", new { @class = "text-danger" })
@@ -151,13 +156,6 @@
                                                 @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })
                                             </li>
 
-                                            <li>
-                                                <span class="key">Nombre Cliente:</span>
-                                                @Html.DropDownListFor(modelItem => modelItem.TipoDeInstalacion, Model.TiposDeInstalacion, " -- Seleccione --", new { @class = "theme-input-style style--four" })
-
-                                                @*@Html.EditorFor(model => model.Celular, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
-                                                @Html.ValidationMessageFor(model => model.Celular, "", new { @class = "text-danger" })*@
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -520,6 +518,7 @@
                 var Zona = "";
                 var PersonaRecibe = "";
                 let tiempoArmado = 0;
+                var NombreFactura = "";
 
                 $.ajax({
                 type: 'POST',
@@ -533,6 +532,8 @@
                 success: function (states) {
                     // states contains the JSON formatted list
                     // of states passed from the controller
+                    console.log(states);
+
                     $.each(states, function (i, state) {
                         var oRows = document.getElementById('invoice-edit-list-table').getElementsByTagName('tr');
                         var iRowCount = oRows.length;
@@ -602,6 +603,7 @@
                         Celular = state.Telefono;
                         Zona = state.ZonaDireccion;
                         PersonaRecibe = state.PersonaRecibe;
+                        NombreFactura = state.NombreFactura;
                       
                         
                         //$("#SerieSAP").append('<option value="' + state.numero + '">' +
@@ -612,6 +614,8 @@
                     Observaciones_temp = $("#ComentariosVenta").val();
 
                     var nombre = document.getElementById("NombreCliente").value;
+
+                    document.getElementById("NombreFactura").value = NombreFactura;
 
 
                     if (nombre == "") {

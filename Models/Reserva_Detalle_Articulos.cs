@@ -25,5 +25,6 @@ namespace kalea2.Models
         public string CodigoCliente { get; set; }
         public string PersonaRecibe { get; set; }
         public string Telefono { get; set; }
+        public string NombreFactura { get; set; }
     }
 }

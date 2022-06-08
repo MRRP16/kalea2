@@ -113,5 +113,6 @@ namespace kalea2.Models
         public List<SelectListItem> Casos_Pendientes;
         public List<SelectListItem> TiposDeInstalacion { get; set; }
         public int TamanioTarjetaTranspareante { get; set; }
+        public string NombreFactura { get; set; }
     }
 }

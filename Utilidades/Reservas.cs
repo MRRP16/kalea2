@@ -470,6 +470,7 @@ namespace kalea2.Utilidades
                     articulo.Telefono = item["Telefono"].ToString();
                     articulo.ZonaDireccion = item["DISTRITO_ENTREGA"].ToString();
                     articulo.PersonaRecibe = item["CONTACTO"].ToString();
+                    articulo.NombreFactura = item["NOMBRE_FACTURA"].ToString();
                     double totalT = 0;
                     try
                     {
@@ -734,7 +735,7 @@ namespace kalea2.Utilidades
 
                         string Query = @"INSERT INTO T_ENC_ENTREGAS(Id,FechaInicio,FechaArmado,FechaFin,TiempoArmado,FechaRestriccionInicio,FechaRectriccionFin,DireccionEntrega,
                                         Departamento,Municipio,Zona,Coordenadas,NombreCliente,NitCliente,Telefono,Celular,PersonaRecepcion,
-                                        ComentariosVentas,ComentariosTorre,Estado,UsrCreacion,FechaCreacion,NumeroEntregaDia,Vehiculo,TipoEvento,GeoLocalizacion,DireccionFiscal,TIPOINSTALACION) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                                        ComentariosVentas,ComentariosTorre,Estado,UsrCreacion,FechaCreacion,NumeroEntregaDia,Vehiculo,TipoEvento,GeoLocalizacion,DireccionFiscal,TIPOINSTALACION, NOMBRE_FACTURA) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
                         commandInsertar.Parameters.AddWithValue("@Id", SqlDbType.Int).Value = Convert.ToInt32(NumEntrega);
                         commandInsertar.Parameters.AddWithValue("@FechaInicio", SqlDbType.Date).Value = FechaInicio;
@@ -764,6 +765,7 @@ namespace kalea2.Utilidades
                         commandInsertar.Parameters.AddWithValue("@GeoLocalizacion", SqlDbType.VarChar).Value = reserva.Geolocalizacion;
                         commandInsertar.Parameters.AddWithValue("@DireccionFiscal", SqlDbType.VarChar).Value = reserva.DireccionFiscal;
                         commandInsertar.Parameters.AddWithValue("@TIPOINSTALACION", SqlDbType.VarChar).Value = reserva.TipoDeInstalacion;
+                        commandInsertar.Parameters.AddWithValue("@NOMBRE_FACTURA", SqlDbType.VarChar).Value = reserva.NombreFactura;
 
                         commandInsertar.CommandText = Query;
                         commandInsertar.ExecuteNonQuery();

@@ -50,16 +50,16 @@ namespace kalea2.Utilidades
 
                     if (string.IsNullOrEmpty(item.PersonaRecepcion))
                     {
-                        table.AddCell(GetCell(Texto: "Contacto: " + item.ClienteNombre,         Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                        table.AddCell(GetCell(Texto: "Recibe: " + item.ClienteNombre,         Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
                     }
                     else
                     {
-                        table.AddCell(GetCell(Texto: "Contacto: " + item.PersonaRecepcion,      Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                        table.AddCell(GetCell(Texto: "Recibe: " + item.PersonaRecepcion,      Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
                     }
                     table.AddCell(GetCell(Texto: "Tel: " + item.ClienteTelefono,                Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
                     table.AddCell(GetCell(Texto: "Dirección: " + item.ClienteDireccionEntrega,  Rowspan: 1, Colspan: 4, HorizontalAlignment: 0));
 
-                    table.AddCell(GetCell(Texto: "Nombre Factura: " + item.NombreFactura,       Rowspan: 1, Colspan: 5, HorizontalAlignment: 0));
+                    table.AddCell(GetCell(Texto: "Contacto: " + item.NombreFactura,       Rowspan: 1, Colspan: 5, HorizontalAlignment: 0));
                     table.AddCell(GetCell(Texto: "Tipo Inst.: " + item.TipoInstalacion,         Rowspan: 1, Colspan: 5, HorizontalAlignment: 0));
 
                     table.AddCell(GetCell(Texto: "Obs. Evento: " + item.ObservacionesEvento,    Rowspan: 1, Colspan: 10, HorizontalAlignment: 0, PaddingTop: 5));
@@ -310,11 +310,11 @@ namespace kalea2.Utilidades
                             //fila 10
                             if (string.IsNullOrEmpty(item.PersonaRecepcion))
                             {
-                                tablaTemp.AddCell(GetCell(Texto: "Contacto: " + item.ClienteNombre,         Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                                tablaTemp.AddCell(GetCell(Texto: "Recibe: " + item.ClienteNombre,         Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
                             }
                             else
                             {
-                                tablaTemp.AddCell(GetCell(Texto: "Contacto: " + item.PersonaRecepcion,      Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
+                                tablaTemp.AddCell(GetCell(Texto: "Recibe: " + item.PersonaRecepcion,      Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
                             }
 
                             tablaTemp.AddCell(GetCell(Texto: "Tel: " + item.ClienteTelefono,                Rowspan: 1, Colspan: 3, HorizontalAlignment: 0));
@@ -322,7 +322,7 @@ namespace kalea2.Utilidades
                             contadorDeFilas++;
 
                             //fil 11
-                            tablaTemp.AddCell(GetCell(Texto: "Nombre Factura: " + item.NombreFactura,           Rowspan: 1, Colspan: 5, HorizontalAlignment: 0));
+                            tablaTemp.AddCell(GetCell(Texto: "Cliente: " + item.NombreFactura,           Rowspan: 1, Colspan: 5, HorizontalAlignment: 0));
                             tablaTemp.AddCell(GetCell(Texto: "Tipo Inst.: " + item.TipoInstalacion,             Rowspan: 1, Colspan: 5, HorizontalAlignment: 0));
                             contadorDeFilas++;
 

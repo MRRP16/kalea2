@@ -433,18 +433,19 @@ namespace kalea2.Utilidades
                         Controllers.ReporteDeBodegaController n = new Controllers.ReporteDeBodegaController();
                         string bodegas = string.Empty;
                        
-
-                        foreach (var item in n.ListadoBodegas())
+                        foreach (var item in listadoBodegas())
                         {
                             if (!item.Codigo.Equals("0000"))
                             {
                                 //bodegas += "'" + item.Codigo + "',";
 
-                                query = string.Format(@"SELECT T4.CODIGOEVENTO AS NO_TRANSA_MOV,T4.CANTIDAD,T0.BODEGA,T4.CODIGOARTICULO AS NO_ARTI,T3.NOMBRE_LARGO AS DESCRIPCION,TO_CHAR(T5.COMENTARIOSVENTAS) AS COMENTARIOSVENTAS,T8.DESCRIPCION AS VEHICULO FROM T_DET_ENTREGAS T4
+                                query = string.Format(@"SELECT T4.CODIGOEVENTO AS NO_TRANSA_MOV,T4.CANTIDAD,T0.BODEGA,T4.CODIGOARTICULO AS NO_ARTI,T3.NOMBRE_LARGO AS DESCRIPCION,TO_CHAR(T5.COMENTARIOSVENTAS) AS COMENTARIOSVENTAS,T8.DESCRIPCION AS VEHICULO, SUM(T11.UNIDADES)  AS TOTAL
+                                                        FROM T_DET_ENTREGAS T4
                                                         INNER JOIN T_ENC_ENTREGAS T5 ON T5.ID = T4.IDENTREGA
                                                         INNER JOIN Naf47.Pvlineas_movimiento T0 ON T0.NO_ARTI = T4.CODIGOARTICULO AND T0.NO_TRANSA_MOV = T4.CODIGOEVENTO AND T0.CANTIDAD = T4.CANTIDAD AND T0.ENTREGADOMICILIO = 'D'
                                                         LEFT JOIN T_VEHICULOS T8 ON T8.ID = T5.VEHICULO
                                                         INNER JOIN naf47.arinda T3 ON T4.CODIGOARTICULO = T3.NO_ARTI
+                                                        LEFT JOIN naf47.arinml_despachos T11 ON T11.NO_ARTI = T4.CODIGOARTICULO AND T4.CODIGOEVENTO = T11.NO_DOCU
                                                         WHERE T5.FechaInicio >= to_timestamp('{0} 00:00:00', 'dd/MM/yyyy hh24:mi:ss') 
                                                         AND T5.FechaInicio <= to_timestamp('{0} 23:59:59', 'dd/MM/yyyy hh24:mi:ss')
                                                         AND T5.ESTADO = 'A'
@@ -466,11 +467,13 @@ namespace kalea2.Utilidades
                        
                         break;
                     default:
-                        query = string.Format(@"SELECT T4.CODIGOEVENTO AS NO_TRANSA_MOV,T4.CANTIDAD,T0.BODEGA,T4.CODIGOARTICULO AS NO_ARTI,T3.NOMBRE_LARGO AS DESCRIPCION,TO_CHAR(T5.COMENTARIOSVENTAS) AS COMENTARIOSVENTAS,T8.DESCRIPCION AS VEHICULO FROM T_DET_ENTREGAS T4
+                        query = string.Format(@"SELECT T4.CODIGOEVENTO AS NO_TRANSA_MOV,T4.CANTIDAD,T0.BODEGA,T4.CODIGOARTICULO AS NO_ARTI,T3.NOMBRE_LARGO AS DESCRIPCION,TO_CHAR(T5.COMENTARIOSVENTAS) AS COMENTARIOSVENTAS,T8.DESCRIPCION AS VEHICULO, SUM(T11.UNIDADES)  AS TOTAL
+                                                        FROM T_DET_ENTREGAS T4
                                                         INNER JOIN T_ENC_ENTREGAS T5 ON T5.ID = T4.IDENTREGA
                                                         INNER JOIN Naf47.Pvlineas_movimiento T0 ON T0.NO_ARTI = T4.CODIGOARTICULO AND T0.NO_TRANSA_MOV = T4.CODIGOEVENTO AND T0.CANTIDAD = T4.CANTIDAD AND T0.ENTREGADOMICILIO = 'D'
                                                         LEFT JOIN T_VEHICULOS T8 ON T8.ID = T5.VEHICULO
                                                         INNER JOIN naf47.arinda T3 ON T4.CODIGOARTICULO = T3.NO_ARTI
+                                                        LEFT JOIN naf47.arinml_despachos T11 ON T11.NO_ARTI = T4.CODIGOARTICULO AND T4.CODIGOEVENTO = T11.NO_DOCU
                                                         WHERE T5.FechaInicio >= to_timestamp('{0} 00:00:00', 'dd/MM/yyyy hh24:mi:ss') 
                                                         AND T5.FechaInicio <= to_timestamp('{0} 23:59:59', 'dd/MM/yyyy hh24:mi:ss')
                                                         AND T5.ESTADO = 'A'
@@ -493,6 +496,31 @@ namespace kalea2.Utilidades
             {
                 var error = ex.Message;
                 return null;
+            }
+        }
+
+        public List<Bodegas> listadoBodegas()
+        {
+            List<Bodegas> bodegas;
+            try
+            {
+                string query = "SELECT CODIGO,DESCRIPCION FROM Naf47.arinbo WHERE NO_CIA = '01' AND PRIORIDAD > 0";
+                var resultado = dB.ConsultarDB(query, "T_EVENTOS");
+                bodegas = new List<Bodegas>();
+                foreach (DataRow item2 in resultado.Tables[0].Rows)
+                {
+                    Bodegas bodega = new Bodegas();
+                    bodega.Codigo = item2["CODIGO"].ToString();
+                    bodega.Nombre = item2["DESCRIPCION"].ToString();
+                    bodegas.Add(bodega);
+
+                }
+                bodegas.Add(new Bodegas { Nombre = "Alsersa Z17", Codigo = "1220" });
+                return bodegas;
+            }
+            catch (Exception e)
+            {
+                return bodegas = new List<Bodegas>();
             }
         }
 
@@ -554,19 +582,30 @@ namespace kalea2.Utilidades
             string qr = string.Format("NO_ARTI = '{0}'", item["NO_ARTI"].ToString());
            
             DataRow results = resultadoArticulos.Tables[0].Select(qr).First();
+            int Total = 0;
 
-            ProductosEventosEntregas producto = new ProductosEventosEntregas
+            int.TryParse(item["Total"].ToString(), out Total);
+
+            if (Total > 0)
             {
-                Sku = item["NO_ARTI"].ToString(),
-                Descripcion = item["DESCRIPCION"].ToString(),
-                Cantidad = item["CANTIDAD"].ToString(),
-                Bodega = item["BODEGA"].ToString(),
-                Vehiculo = item["VEHICULO"].ToString(),
-                Inmediatas = results["total_inmediatas"].ToString()
+                ProductosEventosEntregas producto = new ProductosEventosEntregas
+                {
+                    Sku = item["NO_ARTI"].ToString(),
+                    Descripcion = item["DESCRIPCION"].ToString(),
+                    Cantidad = item["CANTIDAD"].ToString(),
+                    Bodega = item["BODEGA"].ToString(),
+                    Vehiculo = item["VEHICULO"].ToString(),
+                    Inmediatas = results["total_inmediatas"].ToString()
 
-            };
-            listadoProductos.Add(producto);
-            reporte.Productos = listadoProductos;
+                };
+                listadoProductos.Add(producto);
+            }
+            else
+            {
+                ProductosEventosEntregas producto = new ProductosEventosEntregas();
+                listadoProductos.Add(producto);
+            }
+                reporte.Productos = listadoProductos;
 
             listado.Add(reporte);
         }
@@ -591,18 +630,31 @@ namespace kalea2.Utilidades
 
             DataRow results = resultadoArticulos.Tables[0].Select(qr).First();
 
-            ProductosEventosEntregas producto = new ProductosEventosEntregas
-            {
-                Sku = item["NO_ARTI"].ToString(),
-                Descripcion = item["DESCRIPCION"].ToString(),
-                Cantidad = item["CANTIDAD"].ToString(),
-                Bodega = item["BODEGA"].ToString(),
-                Vehiculo = item["VEHICULO"].ToString(),
-                Inmediatas = results["total_inmediatas"].ToString()
+            int Total = 0;
 
-            };
-         
-            listadoProductos.Add(producto);
+            int.TryParse(item["Total"].ToString(), out Total);
+          
+            if (Total > 0)
+            {
+                ProductosEventosEntregas producto = new ProductosEventosEntregas
+                {
+                    Sku = item["NO_ARTI"].ToString(),
+                    Descripcion = item["DESCRIPCION"].ToString(),
+                    Cantidad = item["CANTIDAD"].ToString(),
+                    Bodega = item["BODEGA"].ToString(),
+                    Vehiculo = item["VEHICULO"].ToString(),
+                    Inmediatas = results["total_inmediatas"].ToString()
+
+                };
+
+                listadoProductos.Add(producto);
+            }
+            else
+            {
+                ProductosEventosEntregas producto = new ProductosEventosEntregas();
+                listadoProductos.Add(producto);
+            }
+
             evento.Productos = listadoProductos;
         }
     }

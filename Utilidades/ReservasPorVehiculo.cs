@@ -130,32 +130,32 @@ namespace kalea2.Utilidades
                                 DataRow[] drow = resultado.Tables[0].Select("ID = '" + reserva.Id + "'");
                                 foreach (DataRow item2 in drow)
                                 {
-                                    if (!string.IsNullOrEmpty(item2[30].ToString()))
+                                    if (!string.IsNullOrEmpty(item2[32].ToString()))
                                     {
                                         if (!string.IsNullOrEmpty(reserva.ListadoEventosCasos))
                                         {
-                                            if (!reserva.ListadoEventosCasos.Contains(item2[30].ToString()))
+                                            if (!reserva.ListadoEventosCasos.Contains(item2[32].ToString()))
                                             {
-                                                reserva.ListadoEventosCasos += item2[30].ToString() + ";";
+                                                reserva.ListadoEventosCasos += item2[32].ToString() + ";";
                                             }
                                         }
                                         else
                                         {
-                                            reserva.ListadoEventosCasos += item2[30].ToString() + ";";
+                                            reserva.ListadoEventosCasos += item2[32].ToString() + ";";
                                         }
                                     }
-                                    if (!string.IsNullOrEmpty(item2[31].ToString()))
+                                    if (!string.IsNullOrEmpty(item2[33].ToString()))
                                     {
                                         if (!string.IsNullOrEmpty(reserva.ListadoEventosCasos))
                                         {
-                                            if (!reserva.ListadoEventosCasos.Contains(item2[31].ToString()))
+                                            if (!reserva.ListadoEventosCasos.Contains(item2[33].ToString()))
                                             {
-                                                reserva.ListadoEventosCasos += item2[31].ToString() + ";";
+                                                reserva.ListadoEventosCasos += item2[33].ToString() + ";";
                                             }
                                         }
                                         else
                                         {
-                                            reserva.ListadoEventosCasos += item2[31].ToString() + ";";
+                                            reserva.ListadoEventosCasos += item2[33].ToString() + ";";
                                         }
 
                                     }

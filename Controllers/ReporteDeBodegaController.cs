@@ -13,7 +13,7 @@ namespace kalea2.Controllers
 {
     public class ReporteDeBodegaController : Controller
     {
-       
+
         public List<Bodegas> ListadoBodegas()
         {
             List<Bodegas> listadoBodegas = new List<Bodegas>();
@@ -48,7 +48,7 @@ namespace kalea2.Controllers
             Reportes reportes = new Reportes();
             List<ReportesEventosEntregas> listado = reportes.GetEventosParaEntregas(bodegaId: bodegaId, fecha: date.ToString("dd/MM/yyyy"));
 
-            List<Bodegas> listadoBodegas = ListadoBodegas();
+            List<Bodegas> listadoBodegas = reportes.listadoBodegas();
             string nombreBodega = "";
             foreach (var item in listadoBodegas)
             {
@@ -71,13 +71,16 @@ namespace kalea2.Controllers
                     {
                         if (!item.Codigo.Equals("0000"))
                         {
-                           
-                            List<ReportesEventosEntregas> listado2 = listado.Where(X => X.Bodega == item.Codigo).ToList();
-                            string nombreHoja = "BODEGA " + item.Nombre;
-                            excel.Workbook.Worksheets.Add(nombreHoja);
 
-                            var headerRow = new List<string[]>() { new string[] {
-                    "Pend: " + nombreBodega ,
+                            List<ReportesEventosEntregas> listado2 = listado.Where(X => X.Bodega == item.Codigo).ToList();
+                            if (listado2.Count > 0)
+                            {
+                                //string nombreHoja = "BODEGA " + item.Nombre;
+                                string nombreHoja = item.Nombre;
+                                excel.Workbook.Worksheets.Add(nombreHoja);
+
+                                var headerRow = new List<string[]>() { new string[] {
+                    "Pend: " + item.Nombre ,
                     null,
                      "Emisión: " + DateTime.Now.ToString("dd/MM/yy HH:MM:ss"),
                       null,
@@ -89,14 +92,14 @@ namespace kalea2.Controllers
                     null,
                 } };
 
-                            string headerRange = "A1:" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + "1";
-                            var worksheet = excel.Workbook.Worksheets[nombreHoja];
-                            worksheet.Cells[headerRange].Style.Font.Bold = true;
-                            worksheet.Cells[headerRange].LoadFromArrays(headerRow);
+                                string headerRange = "A1:" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + "1";
+                                var worksheet = excel.Workbook.Worksheets[nombreHoja];
+                                worksheet.Cells[headerRange].Style.Font.Bold = true;
+                                worksheet.Cells[headerRange].LoadFromArrays(headerRow);
 
-                            int SiguienteFila = 2;
+                                int SiguienteFila = 2;
 
-                            var RowInformacion = new List<string[]>()
+                                var RowInformacion = new List<string[]>()
                     { new string[]{
                         " ",
                         " ",
@@ -107,10 +110,10 @@ namespace kalea2.Controllers
                         " ",
                         " ",
                     } };
-                            worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
-                            SiguienteFila++;
+                                worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
+                                SiguienteFila++;
 
-                            RowInformacion = new List<string[]>()
+                                RowInformacion = new List<string[]>()
                     { new string[]{
                         "Preparó: ",
                         " ",
@@ -121,10 +124,10 @@ namespace kalea2.Controllers
                         " ",
                         " ",
                     } };
-                            worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
-                            SiguienteFila++;
+                                worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
+                                SiguienteFila++;
 
-                            RowInformacion = new List<string[]>()
+                                RowInformacion = new List<string[]>()
                     { new string[]{
                         " ",
                         " ",
@@ -135,10 +138,10 @@ namespace kalea2.Controllers
                         " ",
                         " ",
                     } };
-                            worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
-                            SiguienteFila++;
+                                worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
+                                SiguienteFila++;
 
-                            RowInformacion = new List<string[]>()
+                                RowInformacion = new List<string[]>()
                     { new string[]{
                         "Evento",
                         "Vendedor",
@@ -150,53 +153,121 @@ namespace kalea2.Controllers
                         "Cant",
                         "Ruta",
                     } };
-                            worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
-                            SiguienteFila++;
+                                worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
+                                SiguienteFila++;
 
 
-                            for (int i = 0; i < listado2.Count(); i++)
-                            {
-                                RowInformacion = new List<string[]>()
+                                for (int i = 0; i < listado2.Count(); i++)
+                                {
+                                    RowInformacion = new List<string[]>()
                             { new string[]{
                                 listado2[i].Evento,
                                 listado2[i].Vendedor,
                                 listado2[i].Observaciones,
                             } };
-                                worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
-                                SiguienteFila++;
-
-                                for (int j = 0; j < listado2[i].Productos.Count; j++)
-                                {
-                                    RowInformacion = new List<string[]>()
-                        { new string[]{
-                            "",
-                            "",
-                            "",
-                            //inmediatas
-                            listado2[i].Productos[j].Inmediatas,
-                            listado2[i].Productos[j].Sku,
-                            listado2[i].Productos[j].Descripcion,
-                            listado2[i].Productos[j].Bodega,
-                            listado2[i].Productos[j].Cantidad,
-                            listado2[i].Productos[j].Vehiculo,
-                        } };
                                     worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
                                     SiguienteFila++;
+
+                                    if (listado2[i].Productos.Count>1)
+                                    {
+                                        for (int j = 0; j < listado2[i].Productos.Count; j++)
+                                        {
+                                            if (!string.IsNullOrEmpty(listado2[i].Productos[j].Descripcion))
+                                            {
+                                                RowInformacion = new List<string[]>()
+                                            { new string[]{
+                                                "",
+                                                "",
+                                                "",
+                                                //inmediatas
+                                                listado2[i].Productos[j].Inmediatas,
+                                                listado2[i].Productos[j].Sku,
+                                                listado2[i].Productos[j].Descripcion,
+                                                listado2[i].Productos[j].Bodega,
+                                                listado2[i].Productos[j].Cantidad,
+                                                listado2[i].Productos[j].Vehiculo,
+                                            } };
+                                                worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
+                                                SiguienteFila++;
+                                            }
+                                        }
+                                    }
+                                    else if(listado2[i].Productos.Count == 1)
+                                    {
+                                        if (!string.IsNullOrEmpty(listado2[i].Productos[0].Descripcion))
+                                        {
+                                            RowInformacion = new List<string[]>()
+                                            { new string[]{
+                                                "",
+                                                "",
+                                                "",
+                                                //inmediatas
+                                                listado2[i].Productos[0].Inmediatas,
+                                                listado2[i].Productos[0].Sku,
+                                                listado2[i].Productos[0].Descripcion,
+                                                listado2[i].Productos[0].Bodega,
+                                                listado2[i].Productos[0].Cantidad,
+                                                listado2[i].Productos[0].Vehiculo,
+                                            } };
+                                            worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
+                                            SiguienteFila++;
+                                        }
+                                        else
+                                        {
+                                            RowInformacion = new List<string[]>()
+                                            { new string[]{
+                                                "",
+                                                "",
+                                                "",
+                                                //inmediatas
+                                                 "",
+                                                 "",
+                                                 "",
+                                                 "",
+                                                 "",
+                                                 "",
+                                            } };
+                                            worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
+                                            SiguienteFila++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        RowInformacion = new List<string[]>()
+                                            { new string[]{
+                                                "",
+                                                "",
+                                                "",
+                                                //inmediatas
+                                                 "",
+                                                 "",
+                                                 "",
+                                                 "",
+                                                 "",
+                                                 "",
+                                            } };
+                                        worksheet.Cells[SiguienteFila, 1].LoadFromArrays(RowInformacion);
+                                        SiguienteFila++;
+                                    }
+                                    
+                                   
+
                                 }
                             }
+
                         }
                     }
-                       
+
                     NumberFormatInfo nfi = new CultureInfo("es-GT", false).NumberFormat;
 
-                    string NombreReporte = "Pendientes_" + nombreBodega + "_" + date.Day.ToString().PadLeft(2,'0')+"_"+date.Month.ToString().PadLeft(2, '0') + "_"+date.ToString("yy").PadLeft(2, '0');
+                    string NombreReporte = "Pendientes_" + nombreBodega + "_" + date.Day.ToString().PadLeft(2, '0') + "_" + date.Month.ToString().PadLeft(2, '0') + "_" + date.ToString("yy").PadLeft(2, '0');
 
 
                     using (MemoryStream stream = new MemoryStream())
                     {
                         excel.SaveAs(stream);
                         var content = stream.ToArray();
-                        return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", NombreReporte+".xlsx");
+                        return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", NombreReporte + ".xlsx");
 
                         //archivo.SaveAs(stream);
                         //return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Grid.xlsx");
@@ -327,7 +398,7 @@ namespace kalea2.Controllers
                         //return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Grid.xlsx");
                     }
                 }
-                
+
                 //}
             }
         }

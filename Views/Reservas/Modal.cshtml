@@ -136,7 +136,7 @@
                                                 @Html.ValidationMessageFor(model => model.NombreCliente, "", new { @class = "text-danger" })
                                             </li>
                                             <li>
-                                                <span class="key">Nombre Factura</span>
+                                                <span class="key">N. Factura</span>
                                                 @Html.EditorFor(model => model.NombreFactura, new { htmlAttributes = new { @class = "theme-input-style style--four" } })
                                                 @Html.ValidationMessageFor(model => model.NombreFactura, "", new { @class = "text-danger" })
                                             </li>
@@ -797,7 +797,7 @@
                         } else {
                             Observaciones_temp = $("#ComentariosVenta").val() + "\n\nCaso " + NumCaso + ": " + Observaciones;
                         }
-                        document.getElementById("ComentariosVenta").value = Observaciones_temp;
+                        //document.getElementById("ComentariosVenta").value = Observaciones_temp;
                     } else {
 
                         Swal.fire({
@@ -831,7 +831,7 @@
                                 } else {
                                     Observaciones_temp = $("#ComentariosVenta").val() + "\n\nCaso " + NumCaso + ": " + Observaciones;
                                 }
-                                document.getElementById("ComentariosVenta").value = Observaciones_temp;
+                                //document.getElementById("ComentariosVenta").value = Observaciones_temp;
                             } else {
                                 Observaciones_temp = $("#ComentariosVenta").val();
                                 if ($("#ComentariosVenta").val() === "") {
@@ -839,7 +839,7 @@
                                 } else {
                                     Observaciones_temp = $("#ComentariosVenta").val() + "\n\nCaso " + NumCaso + ": " + Observaciones;
                                 }
-                                document.getElementById("ComentariosVenta").value = Observaciones_temp;
+                                //document.getElementById("ComentariosVenta").value = Observaciones_temp;
                             }
                         });
                     }

@@ -63,7 +63,7 @@ namespace kalea2.Models
         public string Celular { get; set; }
 
         [DataType(DataType.Text)]
-        [Required(ErrorMessage = "Ingrese un nombre de la persona que recibe")]
+        //[Required(ErrorMessage = "Ingrese un nombre de la persona que recibe")]
         public string PersonaRecepcion { get; set; }
         
         [DataType(DataType.MultilineText)]

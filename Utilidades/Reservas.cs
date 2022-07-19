@@ -121,20 +121,6 @@ namespace kalea2.Utilidades
                         DataRow[] drow = resultado.Tables[0].Select("ID = '" + reserva.Id + "'");
                         foreach (DataRow item2 in drow)
                         {
-                            if (!string.IsNullOrEmpty(item2[31].ToString()))
-                            {
-                                if (!string.IsNullOrEmpty(reserva.ListadoEventosCasos))
-                                {
-                                    if (!reserva.ListadoEventosCasos.Contains(item2[31].ToString()))
-                                    {
-                                        reserva.ListadoEventosCasos += item2[31].ToString() + ";";
-                                    }
-                                }
-                                else
-                                {
-                                    reserva.ListadoEventosCasos += item2[31].ToString() + ";";
-                                }
-                            }
                             if (!string.IsNullOrEmpty(item2[32].ToString()))
                             {
                                 if (!string.IsNullOrEmpty(reserva.ListadoEventosCasos))
@@ -147,6 +133,20 @@ namespace kalea2.Utilidades
                                 else
                                 {
                                     reserva.ListadoEventosCasos += item2[32].ToString() + ";";
+                                }
+                            }
+                            if (!string.IsNullOrEmpty(item2[33].ToString()))
+                            {
+                                if (!string.IsNullOrEmpty(reserva.ListadoEventosCasos))
+                                {
+                                    if (!reserva.ListadoEventosCasos.Contains(item2[32].ToString()))
+                                    {
+                                        reserva.ListadoEventosCasos += item2[33].ToString() + ";";
+                                    }
+                                }
+                                else
+                                {
+                                    reserva.ListadoEventosCasos += item2[33].ToString() + ";";
                                 }
 
                             }
@@ -284,6 +284,10 @@ namespace kalea2.Utilidades
                             if (reserva.TamanioTarjeta < 0)
                             {
                                 reserva.TamanioTarjeta = reserva.TamanioTarjeta * -1;
+                            }
+                            if (reserva.TamanioTarjeta <55)
+                            {
+                                reserva.TamanioTarjeta = 55;
                             }
                             respuesta.Reservaciones.Add(reserva);
                         }
@@ -444,7 +448,7 @@ namespace kalea2.Utilidades
 
                 string query = string.Format(@"SELECT T0.NO_ARTI,T1.NOMBRE_LARGO AS Descripcion,T1.Tiempo_armado,T0.Cantidad,T0.CantidadDomicilio,T0.EntregaDomicilio,T3.CONTACTO,T2.Nombre_Cliente,T2.COD_CLIENTE,T2.Observaciones, T2.DIRECCION_ENTREGA,T2.DIRECCION_FISCAL,T3.Telefono,T1.CANTIDAD_ARMADORES,T2.DISTRITO_ENTREGA,T3.NOMBRE_FACTURA
                                 FROM Naf47.Pvlineas_movimiento T0
-                                LEFT JOIN Naf47.Arinda T1 ON T0.NO_ARTI = T1.NO_ARTI
+                                LEFT JOIN Naf47.Arinda T1 ON T0.NO_ARTI = T1.NO_ARTI AND T1.NO_CIA = T0.NO_CIA
                                 LEFT JOIN Naf47.Pvencabezado_movimientos T2 ON T2.NO_TRANSA_MOV = T0.NO_TRANSA_MOV
                                 LEFT JOIN Naf47.pvclientes T3 ON T3.COD_CLIENTE = T2.COD_CLIENTE
                                 WHERE T0.NO_TRANSA_MOV = '{0}' AND T0.ENTREGADOMICILIO = 'D'
@@ -564,7 +568,8 @@ namespace kalea2.Utilidades
                 {
                     Models.Reserva_Detalle_Casos articulo = new Models.Reserva_Detalle_Casos();
                     articulo.NumCaso = item["CASO"].ToString();
-                    articulo.Observaciones = item["Observaciones"].ToString();
+                    //articulo.Observaciones = item["Observaciones"].ToString();
+                    articulo.Observaciones = string.Empty;
                     articulo.Acciones = item["Acciones"].ToString();
                     articulo.Tel = item["TELEFONO_CASA"].ToString();
                     articulo.Cel = item["TELEFONO_CEL"].ToString();
@@ -749,11 +754,11 @@ namespace kalea2.Utilidades
                         commandInsertar.Parameters.AddWithValue("@Municipio", SqlDbType.VarChar).Value = "Ciudad de Guatemala";
                         commandInsertar.Parameters.AddWithValue("@Zona", SqlDbType.VarChar).Value = reserva.ZonaDireccion;
                         commandInsertar.Parameters.AddWithValue("@Coordenadas", SqlDbType.VarChar).Value = reserva.Geolocalizacion;
-                        commandInsertar.Parameters.AddWithValue("@NombreCliente", SqlDbType.VarChar).Value = reserva.NombreCliente;
+                        commandInsertar.Parameters.AddWithValue("@NombreCliente", SqlDbType.VarChar).Value = string.IsNullOrEmpty(reserva.NombreCliente) ? "" : reserva.NombreCliente; 
                         commandInsertar.Parameters.AddWithValue("@NitCliente", SqlDbType.VarChar).Value = "0000000";
                         commandInsertar.Parameters.AddWithValue("@Telefono", SqlDbType.VarChar).Value = reserva.Telefono;
                         commandInsertar.Parameters.AddWithValue("@Celular", SqlDbType.VarChar).Value = reserva.Celular;
-                        commandInsertar.Parameters.AddWithValue("@PersonaRecepcion", SqlDbType.VarChar).Value = reserva.PersonaRecepcion;
+                        commandInsertar.Parameters.AddWithValue("@PersonaRecepcion", SqlDbType.VarChar).Value = string.IsNullOrEmpty(reserva.PersonaRecepcion) ? "" : reserva.PersonaRecepcion;
                         commandInsertar.Parameters.AddWithValue("@ComentariosVentas", SqlDbType.VarChar).Value = string.IsNullOrEmpty(reserva.ComentariosVenta) ? "" : reserva.ComentariosVenta;
                         commandInsertar.Parameters.AddWithValue("@ComentariosTorre", SqlDbType.VarChar).Value = string.IsNullOrEmpty(reserva.ComentariosTorre) ? "" : reserva.ComentariosTorre;
                         commandInsertar.Parameters.AddWithValue("@Estado", SqlDbType.VarChar).Value = "A";
@@ -765,7 +770,7 @@ namespace kalea2.Utilidades
                         commandInsertar.Parameters.AddWithValue("@GeoLocalizacion", SqlDbType.VarChar).Value = reserva.Geolocalizacion;
                         commandInsertar.Parameters.AddWithValue("@DireccionFiscal", SqlDbType.VarChar).Value = reserva.DireccionFiscal;
                         commandInsertar.Parameters.AddWithValue("@TIPOINSTALACION", SqlDbType.VarChar).Value = reserva.TipoDeInstalacion;
-                        commandInsertar.Parameters.AddWithValue("@NOMBRE_FACTURA", SqlDbType.VarChar).Value = reserva.NombreFactura;
+                        commandInsertar.Parameters.AddWithValue("@NOMBRE_FACTURA", SqlDbType.VarChar).Value = string.IsNullOrEmpty(reserva.NombreFactura) ? "" : reserva.NombreFactura; 
 
                         commandInsertar.CommandText = Query;
                         commandInsertar.ExecuteNonQuery();
